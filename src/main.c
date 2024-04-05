@@ -1,6 +1,7 @@
 #include <stdio.h>
+#include <second.h>
 
 int main() {
-	printf("Hello World!");
+	printout();
 	return 0;
 }
