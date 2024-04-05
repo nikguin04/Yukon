@@ -54,3 +54,5 @@ dkms.conf
 # CMake files
 cmake-build-debug
 cmake-build-release
+.vscode
+build
