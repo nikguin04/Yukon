@@ -1,9 +1,10 @@
 #ifndef writer_h
 #define writer_h
 #include <stdio.h>
-//#include "../controller/controller.h"
+#include "../controller/controller.h"
 
-typedef struct ControlStucture Controller;
+//extern struct ControlStucture;
+//typedef struct ControlStucture Controller;
 
 
 

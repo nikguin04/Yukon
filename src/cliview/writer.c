@@ -10,7 +10,7 @@ int readToArray(CliWriter *writer) {
 
     addIntToModelArray(writer->ctrl, &input_value);
 
-    //printf("Current int: %d", writer->ctrl->val);
+    printf("Current int: %d", writer->ctrl->val);
 
 	return 0;
 }
