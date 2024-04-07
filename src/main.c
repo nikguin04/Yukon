@@ -1,7 +1,20 @@
 #include <stdio.h>
-#include <second.h>
+#include <model/model.h>
+#include <controller/controller.h>
+#include <cliview/writer.h>
+
 
 int main() {
-	printout();
+	Model model;
+	initModel(&model);
+	Controller ctrl;
+	initController(&ctrl, &model);
+	CliWriter writer;
+	initWriter(&writer, &ctrl);
+	
+	//ctrl.model = &model;
+	for (int i = 0; i < 10; i++) {
+		readToArray(&writer);
+	}
 	return 0;
 }
