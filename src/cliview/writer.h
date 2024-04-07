@@ -17,6 +17,6 @@ typedef struct CliWriterStucture CliWriter;
 int readToArray(CliWriter *writer);
 void printList(ll_node_int *list);
 
-CliWriter initWriter(Controller *ctrl);
+void initWriter(CliWriter *writer, Controller *ctrl);
 #endif
 

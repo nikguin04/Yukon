@@ -7,14 +7,14 @@
 int main() {
 	Model model;
 	initModel(&model);
-	Controller ctrl = initController(&model);
-	CliWriter writer = initWriter(&ctrl);
-
-	readToArray(&writer);
-	/*
+	Controller ctrl;
+	initController(&ctrl, &model);
+	CliWriter writer;
+	initWriter(&writer, &ctrl);
+	
 	//ctrl.model = &model;
 	for (int i = 0; i < 10; i++) {
 		readToArray(&writer);
-	}*/
+	}
 	return 0;
 }

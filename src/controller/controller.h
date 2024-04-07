@@ -9,7 +9,7 @@ struct ControlStucture { // linked list node
 typedef struct ControlStucture Controller;
 
 
-Controller initController(Model *modelptr);
+void initController(Controller *ctrlptr, Model *modelptr);
 void addIntToModelArray(Controller *ctrl, int *intptr);
 
 #endif

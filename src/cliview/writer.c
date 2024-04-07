@@ -19,15 +19,13 @@ int readToArray(CliWriter *writer) {
 void printList(ll_node_int *list) {
     printf("Elements in list: ");
     ll_node_int *elem = list;
-    while (elem->next != NULL) {
+    while (elem != NULL) {
         printf("%d, ", elem->val);
         elem = elem->next;
     }
     printf("\n");
 }
 
-CliWriter initWriter(Controller *ctrlptr) {
-    CliWriter writer;
-    writer.ctrl = ctrlptr;
-    return writer;
+void initWriter(CliWriter *writerptr, Controller *ctrlptr) {
+    writerptr->ctrl = ctrlptr;
 }
