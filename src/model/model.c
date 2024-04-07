@@ -1,15 +1,16 @@
 #include "model.h"
 
-struct ModelStucture { // linked list node
-    CliWriter *writer;
-    ll_node_int *intlist;
-};
 
 int addToLinkedList(int *intptr) {
 
 }
 
-Model initModel() {
-
+void initModel(Model *model) {
+    //model.intlist = NULL;
+    ll_node_int list;
+    list.val = 12345;
+    list.next = NULL;
+    model->intlist = &list;
+    return model;
 }
 

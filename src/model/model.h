@@ -1,13 +1,16 @@
 #ifndef model_h
 #define model_h
 #include <stdio.h>
-#include "../cliview/writer.h"
+//#include "../controller/controller.h"
 #include "linkedlist.h"
-#endif
 
+struct ModelStucture { // linked list node
+    ll_node_int *intlist;
+};
 typedef struct ModelStucture Model;
 
 int addToLinkedList(int *intptr);
 
-Model initModel();
+void initModel(Model *model);
+#endif
 

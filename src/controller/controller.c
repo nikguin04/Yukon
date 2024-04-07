@@ -3,11 +3,12 @@
 
 
 void addIntToModelArray(Controller *ctrl, int *intptr) {
-    ctrl->val = ctrl->val + *intptr;
+    appendToEnd(&ctrl->model->intlist, *intptr);
 }
 
-Controller initController() {
+Controller initController(Model *modelptr) {
     Controller ctrl;
+    ctrl.model = modelptr;
     ctrl.val = 0;
     return ctrl;
 }

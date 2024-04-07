@@ -1,15 +1,15 @@
 #ifndef controller_h
 #define controller_h
-//#include "../model/model.h"
+#include "../model/model.h"
 
 struct ControlStucture { // linked list node
-    //Model *model;
+    Model *model;
     int val;
 };
 typedef struct ControlStucture Controller;
 
 
-Controller initController();
+Controller initController(Model *modelptr);
 void addIntToModelArray(Controller *ctrl, int *intptr);
 
 #endif

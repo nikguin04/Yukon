@@ -10,9 +10,20 @@ int readToArray(CliWriter *writer) {
 
     addIntToModelArray(writer->ctrl, &input_value);
 
-    printf("Current int: %d", writer->ctrl->val);
+    //printf("Current int: %d", writer->ctrl->val);
 
+    printList(writer->ctrl->model->intlist);
 	return 0;
+}
+
+void printList(ll_node_int *list) {
+    printf("Elements in list: ");
+    ll_node_int *elem = list;
+    while (elem->next != NULL) {
+        printf("%d, ", elem->val);
+        elem = elem->next;
+    }
+    printf("\n");
 }
 
 CliWriter initWriter(Controller *ctrlptr) {
