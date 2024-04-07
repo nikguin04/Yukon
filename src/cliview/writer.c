@@ -1,6 +1,7 @@
 #include "writer.h"
 
 
+
 int readToArray(CliWriter *writer) {
 	printf("Hello World! from writer");
     printf("Please input int into array: ");
@@ -9,7 +10,7 @@ int readToArray(CliWriter *writer) {
 
     addIntToModelArray(writer->ctrl, &input_value);
 
-    printf("Current int: %d", writer->ctrl->val);
+    //printf("Current int: %d", writer->ctrl->val);
 
 	return 0;
 }

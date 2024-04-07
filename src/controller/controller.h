@@ -1,11 +1,12 @@
 #ifndef controller_h
 #define controller_h
-#include "../model/model.h"
+//#include "../model/model.h"
 
-typedef struct ControlStucture { // linked list node
-    Model *model;
+struct ControlStucture { // linked list node
+    //Model *model;
     int val;
-} Controller;
+};
+typedef struct ControlStucture Controller;
 
 
 Controller initController();

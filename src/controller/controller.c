@@ -1,5 +1,7 @@
 #include "controller.h"
 
+
+
 void addIntToModelArray(Controller *ctrl, int *intptr) {
     ctrl->val = ctrl->val + *intptr;
 }

@@ -3,12 +3,11 @@
 #include <stdio.h>
 #include "../cliview/writer.h"
 #include "linkedlist.h"
-
+#endif
 
 typedef struct ModelStucture Model;
 
 int addToLinkedList(int *intptr);
 
-Model initModel(CliWriter *writer);
+Model initModel();
 
-#endif
