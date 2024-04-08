@@ -16,6 +16,7 @@ int main() {
 	/*for (int i = 0; i < 10; i++) {
 		readToArray(&writer);
 	}*/
-	PromptLoadDeck();
+	PromptLoadDeck(&ctrl);
+	PrintDeck(model.deck);
 	return 0;
 }

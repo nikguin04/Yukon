@@ -28,9 +28,9 @@ void initWriter(CliWriter *writerptr, Controller *ctrlptr) {
     writerptr->ctrl = ctrlptr;
 }
 
-void PromptLoadDeck() {
+void PromptLoadDeck(Controller *ctrl) {
     printf("Please input path to load deck from:");
     char input_value[255];
     scanf("%s", &input_value);
-    LoadDeckAtPath(&input_value);
+    LoadDeckAtPath(ctrl, &input_value);
 }

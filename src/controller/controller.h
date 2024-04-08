@@ -12,6 +12,6 @@ typedef struct ControlStucture Controller;
 void initController(Controller *ctrlptr, Model *modelptr);
 void addIntToModelArray(Controller *ctrl, int *intptr);
 
-void LoadDeckAtPath(char* path);
+void LoadDeckAtPath(Controller *ctrl, char* path);
 
 #endif

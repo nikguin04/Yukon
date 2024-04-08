@@ -33,8 +33,8 @@ ll_node_card* LoadDeck(char* path) {
             } else {
                 current_card->next = card;
                 current_card = current_card->next;
+                current_card->next = NULL;
             }
-            printf("val: %d, suit: %d\n", card->card.card_value, card->card.suit); // TEMP PRINT OF CARDS
 
             ch = readbuffer;
         } else if (ch - readbuffer >= 3) {
@@ -49,6 +49,7 @@ ll_node_card* LoadDeck(char* path) {
  
     // Closing the file
     fclose(ptr);
+    return first_card;
 }
 
 ll_node_card* ParseCharCard(char* card) {
@@ -97,4 +98,14 @@ ll_node_card* NewCardAllocate(int value, CardSuit suit) {
     card->card.card_value = value;
     card->card.suit = suit;
     return card;
+}
+
+void PrintDeck(ll_node_card *carddeck) {
+    ll_node_card *current = carddeck;
+    int progress = 0;
+    while (current != NULL) {
+        printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
+        current = current->next;
+    }
+
 }
