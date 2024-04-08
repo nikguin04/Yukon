@@ -1,7 +1,5 @@
 #include "writer.h"
 
-
-
 int readToArray(CliWriter *writer) {
 	printf("Hello World! from writer");
     printf("Please input int into array: ");
@@ -28,4 +26,11 @@ void printList(ll_node_int *list) {
 
 void initWriter(CliWriter *writerptr, Controller *ctrlptr) {
     writerptr->ctrl = ctrlptr;
+}
+
+void PromptLoadDeck() {
+    printf("Please input path to load deck from:");
+    char input_value[255];
+    scanf("%s", &input_value);
+    LoadDeckAtPath(&input_value);
 }

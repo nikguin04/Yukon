@@ -18,5 +18,6 @@ int readToArray(CliWriter *writer);
 void printList(ll_node_int *list);
 
 void initWriter(CliWriter *writer, Controller *ctrl);
+void PromptLoadDeck();
 #endif
 
