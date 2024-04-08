@@ -17,6 +17,6 @@ int main() {
 		readToArray(&writer);
 	}*/
 	PromptLoadDeck(&ctrl);
-	PrintDeck(model.deck);
+	//PrintDeck(model.deck); // does not work after load deck beacuse we load into columns and remove next pointers from linked list
 	return 0;
 }
