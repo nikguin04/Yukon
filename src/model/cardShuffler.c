@@ -15,14 +15,17 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
     ll_node_card* topSplitCardsFromDeck[split];
     ll_node_card* current_card = deckPointer;
     for(int i = 0; i<split; i++) {
-        printf("value: %d, suit: %c", current_card->card.card_value, current_card->card.suit);
+//        printf("value: %d, suit: %c ", current_card->card.card_value, current_card->card.suit);
         topSplitCardsFromDeck[i] = current_card;
         current_card = current_card -> next;
 
+//        printf("Value: %d, Suit: %c", topSplitCardsFromDeck[i]->card.card_value, topSplitCardsFromDeck[i]->card.suit);
+
         ll_node_card* tmp = deckPointer;
         deckPointer = deckPointer -> next;
-        free(tmp);
+//        free(tmp);
     }
+        printf("\n");
 
     ll_node_card* shuffledDeck = NULL;
     int counter = 0;
@@ -33,7 +36,7 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
             deckPointer = deckPointer -> next;
         }
         if (counter < split) {
-            printf("value: %d, suit: %c", topSplitCardsFromDeck[counter]->card.card_value, topSplitCardsFromDeck[counter]->card.suit);
+//            printf("value: %d, suit: %c", topSplitCardsFromDeck[counter]->card.card_value, topSplitCardsFromDeck[counter]->card.suit);
             appendCardToEnd(&shuffledDeck, topSplitCardsFromDeck[counter]->card);
 
         }
