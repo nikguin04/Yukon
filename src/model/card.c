@@ -104,7 +104,7 @@ void PrintDeck(ll_node_card *carddeck) {
     ll_node_card *current = carddeck;
     int progress = 0;
     while (current != NULL) {
-        printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
+        printf("card number %d = val: %d, suit: %c\n", progress++, current->card.card_value, current->card.suit);
         current = current->next;
     }
 
