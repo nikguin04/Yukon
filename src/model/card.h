@@ -32,7 +32,7 @@ typedef enum {
 
 typedef struct cardStruct { // linked list node
     int card_value;
-    enum CardSuit suit;
+    CardSuit suit;
 } Card;
 
 #include "linkedlist.h"
