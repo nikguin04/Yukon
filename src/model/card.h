@@ -7,7 +7,7 @@
 #define MIN_CARD = 1
 #define MAX_CARD = 13
 
-typedef enum {
+/*typedef enum {
     A = 'A',
     TWO = '2',
     THREE = '3',
@@ -21,7 +21,7 @@ typedef enum {
     JACK = 'J',
     QUEEN = 'Q',
     KING = 'K'
-} CardValue;
+} CardValue;*/
 
 typedef enum {
     CLUBS = 'C',
