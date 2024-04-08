@@ -1,3 +1,11 @@
+# CMake/build dirs
+cmake-build-debug
+cmake-build-release
+build
+.idea
+# Editor files
+.vscode
+
 # Prerequisites
 *.d
 
@@ -50,10 +58,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-
-# CMake files
-cmake-build-debug
-cmake-build-release
-.vscode
-build
-.idea
