@@ -9,7 +9,7 @@ void test() {
 
 ll_node_card* LoadDeck(char* path) {
     FILE* ptr;
-    char* readbuffer[4];
+    char readbuffer[4];
     char* ch = readbuffer;
  
     // Opening file in reading mode
@@ -24,8 +24,8 @@ ll_node_card* LoadDeck(char* path) {
     ll_node_card *current_card = NULL;
     do {
         *ch = fgetc(ptr);
-        if (ch == "\n") {
-            *ch == NULL;
+        if (*ch == '\n' || *ch == EOF) {
+            //*ch == NULL;
             ll_node_card *card = ParseCharCard(readbuffer);
             if (first_card == NULL) {
                 first_card = card;
@@ -34,18 +34,18 @@ ll_node_card* LoadDeck(char* path) {
                 current_card->next = card;
                 current_card = current_card->next;
             }
+            printf("val: %d, suit: %d\n", card->card.card_value, card->card.suit); // TEMP PRINT OF CARDS
 
             ch = readbuffer;
         } else if (ch - readbuffer >= 3) {
             printf("Format is wrong, read 3 or more characters on one line");
             return NULL;
+        } else {
+            ch++;
         }
-        ch++;
-        //printf("%c", ch);
- 
         // Checking if character is not EOF.
         // If it is EOF stop reading.
-    } while (ch != EOF);
+    } while (readbuffer[2] != EOF); // warning: this will fail if format is incorrect. but we catch that in a if statement
  
     // Closing the file
     fclose(ptr);

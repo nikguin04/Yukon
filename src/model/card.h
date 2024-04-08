@@ -36,7 +36,9 @@ typedef struct cardStruct { // linked list node
 } Card;
 
 #include "linkedlist.h"
+#endif
 
+#ifdef linkelist_h_finalized
 ll_node_card* LoadDeck(char* path);
 
 ll_node_card* ParseCharCard(char* card);

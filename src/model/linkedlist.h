@@ -19,4 +19,8 @@ typedef struct ll_node_i { // linked list node
 void appendToEnd(ll_node_int **list, int number);
 ll_node_int* appendElement(int number);
 
+// RELOAD cards module for load function
+#define linkelist_h_finalized
+#include "card.h"
+
 #endif
