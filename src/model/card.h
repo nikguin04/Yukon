@@ -2,6 +2,7 @@
 #define card_h
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
 #define MIN_CARD = 1
@@ -33,6 +34,7 @@ typedef enum {
 typedef struct cardStruct { // linked list node
     int card_value;
     CardSuit suit;
+    bool hidden;
 } Card;
 
 #include "linkedlist.h"
@@ -44,6 +46,8 @@ void PrintDeck(ll_node_card *carddeck);
 
 ll_node_card* ParseCharCard(char* card);
 ll_node_card* NewCardAllocate(int value, CardSuit suit);
+
+char* cardToString(Card *card, char* out);
 
 void test();
 

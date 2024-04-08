@@ -107,5 +107,32 @@ void PrintDeck(ll_node_card *carddeck) {
         printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
         current = current->next;
     }
+}
 
+char* cardToString(Card *card, char* cardStr) {
+    cardStr[2] = NULL;
+
+    switch (card->card_value)
+    {
+        case 1: cardStr[0] = 'A'; break;
+        case 2: cardStr[0] = '2'; break;
+        case 3: cardStr[0] = '3'; break;
+        case 4: cardStr[0] = '4'; break;
+        case 5: cardStr[0] = '5'; break;
+        case 6: cardStr[0] = '6'; break;
+        case 7: cardStr[0] = '7'; break;
+        case 8: cardStr[0] = '8'; break;
+        case 9: cardStr[0] = '9'; break;
+        case 10: cardStr[0] = 'T'; break;
+        case 11: cardStr[0] = 'J'; break;
+        case 12: cardStr[0] = 'Q'; break;
+        case 13: cardStr[0] = 'K'; break;
+    
+        default:
+            printf("Card number is out of bounds for parsing to string");
+            return;
+    }
+
+    cardStr[1] = card->suit;
+    return cardStr;
 }

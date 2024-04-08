@@ -7,9 +7,12 @@ void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) {
     for (int i = 0; i < COLUMN_SIZE; i++) {
         yukon->Column_FRONT[i] = deck;
         for (int a = 0; a < COLUMN_STARTSIZE[i]-1; a++) {
+            // TODO: following line should probably only be visible when starting game (used for testing)
+            deck->card.hidden = (COLUMN_STARTSIZE[i] - a > 5); // True when we are in the last 5 cards of a column (shown by default)
             deck = deck->next;
         }
         setnull = deck; deck = deck->next; setnull->next = NULL;
+        setnull->card.hidden = false; // ALSO FOR TESTING HERE!, but this is how it should work in starting the game
     }
 
 

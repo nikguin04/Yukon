@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "../controller/controller.h"
 #include "../model/linkedlist.h"
+#include "printer.h"
 
 //extern struct ControlStucture;
 //typedef struct ControlStucture Controller;
