@@ -3,14 +3,12 @@
 
 #include "linkedlist.h"
 
+#define COLUMN_SIZE 7
+static const int COLUMN_STARTSIZE[7] = {1, 6, 7, 8, 9, 10, 11};
+
+
 typedef struct yukonStruct { // linked list node
-    ll_node_card *Column_1_FRONT;
-    ll_node_card *Column_2_FRONT;
-    ll_node_card *Column_3_FRONT;
-    ll_node_card *Column_4_FRONT;
-    ll_node_card *Column_5_FRONT;
-    ll_node_card *Column_6_FRONT;
-    ll_node_card *Column_7_FRONT;
+    ll_node_card *Column_FRONT[COLUMN_SIZE];
 
     int foundation_CLUBS;
     int foundation_DIAMONDS;
