@@ -11,7 +11,9 @@ void StartReadingLoop(CliWriter *writer) {
         size_t size = 0;
         size_t len = 0;
         GetInput(&string, &size, &len);
-        MatchCommand(string, &len);
+        Command *cmd = MatchCommand(string, &len);
+
+        if (cmd != NULL) { cmd->function(writer->ctrl, string + strlen(cmd->input)); }
         free(string);
     }
 }
