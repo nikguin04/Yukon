@@ -143,3 +143,4 @@ char* cardToString(Card *card, char* cardStr) {
     cardStr[1] = card->suit;
     return cardStr;
 }
+

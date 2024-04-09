@@ -20,7 +20,7 @@ int main() {
 	//PrintDeck(model.deck); // does not work after load deck beacuse we load into columns and remove next pointers from linked list
 	print_yukon_model(model.yukon);
 
-	YukonToDeck(model.deck, model.yukon); // for testing
-	PrintDeck(model.deck);
+	/*YukonToDeck(model.deck, model.yukon); // for testing
+	PrintDeck(model.deck);*/
 	return 0;
 }

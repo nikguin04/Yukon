@@ -19,5 +19,7 @@ typedef struct yukonStruct { // linked list node
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon);
 void YukonToDeck(ll_node_card *deck, YukonStructure *yukon);
 
+ll_node_card* DuplicateCardNode(ll_node_card *card);
+
 #endif
 

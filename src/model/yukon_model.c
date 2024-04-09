@@ -1,6 +1,6 @@
 #include "yukon_model.h"
 
-void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns into a deck again
+void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns into a deck again // DO NOT USE, NOT IN GAME RULES!
     deck = yukon->Column_FRONT[0];
     ll_node_card *movingdeck = deck;
     yukon->Column_FRONT[0] = NULL;
@@ -12,19 +12,29 @@ void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns in
 }
 
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) { // Puts the deck into column structure according to yukon rules
-    // This code is a little spaghetti, but i am lazy and it works right now
-    ll_node_card *setnull;
-    if (!deck) {printf("Exiting due to nulled deck passed to DeckToYukon()\n"); exit(0);};
     
+    ll_node_card *Column_TAIL[COLUMN_SIZE];
+    ll_node_card *deckindex = deck;
+    if (!deckindex) {printf("Exiting due to nulled deck passed to DeckToYukon()\n"); exit(0);};
     for (int i = 0; i < COLUMN_SIZE; i++) {
-        yukon->Column_FRONT[i] = deck;
-        for (int a = 0; a < COLUMN_STARTSIZE[i]-1; a++) {
-            // TODO: following line should probably only be visible when starting game (used for testing)
-            deck->card.hidden = (COLUMN_STARTSIZE[i] - a > 5); // True when we are in the last 5 cards of a column (shown by default)
-            deck = deck->next;
+        yukon->Column_FRONT[i] = DuplicateCardNode(deckindex);
+        Column_TAIL[i] = yukon->Column_FRONT[i];
+        deckindex = deckindex->next;
+    } // Height = 1
+    
+    int height = 0;
+    bool atend = false;
+    while (!atend) {
+        height++;
+        atend = true;
+        for (int i = 0; i < COLUMN_SIZE; i++) {
+            if (COLUMN_STARTSIZE[i] > height) {
+                atend = false;
+                Column_TAIL[i]->next = DuplicateCardNode(deckindex);
+                Column_TAIL[i] = Column_TAIL[i]->next;
+                deckindex = deckindex->next;
+            }
         }
-        setnull = deck; deck = deck->next; setnull->next = NULL;
-        setnull->card.hidden = false; // ALSO FOR TESTING HERE!, but this is how it should work in starting the game
     }
 
 
@@ -32,4 +42,13 @@ void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) { // Puts the deck i
     yukon->foundation_DIAMONDS = 0;
     yukon->foundation_HEARTS = 0;
     yukon->foundation_SPADES = 0;
+}
+
+ll_node_card* DuplicateCardNode(ll_node_card *card) {
+    ll_node_card *newcard = (ll_node_card*) malloc(sizeof(ll_node_card));
+    newcard->card.card_value = card->card.card_value;
+    newcard->card.suit = card->card.suit;
+    newcard->card.hidden = card->card.hidden;
+    newcard->next = NULL;
+    return newcard;
 }

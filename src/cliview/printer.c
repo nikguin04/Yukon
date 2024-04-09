@@ -12,7 +12,7 @@ void print_yukon_model(YukonStructure *yukon) { // NOTE: a flush of the cli is s
         tailEmpty = true;
         for (int i = 0; i < COLUMN_SIZE; i++) { // Print column headers
             if (cur_card_ptr[i]) { // not null
-                if (!cur_card_ptr[i]->card.hidden) {
+                if (!cur_card_ptr[i]->card.hidden || true) { // TEMP TRUE
                     char cardStr[3]; cardToString(&cur_card_ptr[i]->card, cardStr);
                     printf("%s", cardStr);
                     

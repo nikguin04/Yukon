@@ -50,6 +50,7 @@ ll_node_card* NewCardAllocate(int value, CardSuit suit);
 
 char* cardToString(Card *card, char* out);
 
+
 void test();
 
 #endif
