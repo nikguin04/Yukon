@@ -7,6 +7,13 @@ void test() {
     return;
 }
 
+Card *createCard(int card_value, CardSuit suit) {
+    Card *card = malloc(sizeof(Card));
+    card -> card_value = card_value;
+    card -> suit = suit;
+    return card;
+}
+
 ll_node_card* LoadDeck(char* path) {
     FILE* ptr;
     char readbuffer[4];
@@ -104,7 +111,7 @@ void PrintDeck(ll_node_card *carddeck) {
     ll_node_card *current = carddeck;
     int progress = 0;
     while (current != NULL) {
-        printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
+        printf("card number %d = val: %d, suit: %c\n", progress++, current->card.card_value, current->card.suit);
         current = current->next;
     }
 
