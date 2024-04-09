@@ -20,6 +20,28 @@ ll_node_int* appendElement(int number) {
     return elem;
 }
 
+void insertCardAtIndex(ll_node_card **list, Card card, int index) {
+    ll_node_card *nodeToInsert = appendCardElement(card);
+
+    if(!*list ) {
+        *list = nodeToInsert;
+    }
+    ll_node_card *currentNode = *list;
+    ll_node_card *beforeIndex;
+    ll_node_card *afterIndex;
+    for (int i = 1; i <= index; i++) {
+        if (i == index - 1) {
+            beforeIndex = currentNode;
+        }
+        else if (i == index) {
+            afterIndex = currentNode;
+        }
+        currentNode = currentNode->next;
+    }
+    beforeIndex->next = nodeToInsert;
+    nodeToInsert->next = currentNode;
+}
+
 void appendCardToStartOfList(ll_node_card **list, Card card) {
     ll_node_card *newNode = appendCardElement(card);
     if (!*list) {

@@ -21,6 +21,7 @@ ll_node_int* appendElement(int number);
 void appendCardToEndOfList(ll_node_card **list, Card card);
 void appendCardToStartOfList(ll_node_card **list, Card card);
 ll_node_card* appendCardElement(Card card);
+void insertCardAtIndex(ll_node_card **list, Card card, int index);
 
 // RELOAD cards module for load function
 #define linkelist_h_finalized

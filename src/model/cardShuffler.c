@@ -47,3 +47,10 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
     }
     return shuffledDeck;
 }
+
+ll_node_card *shuffleRandom(ll_node_card** deckptr) {
+
+    ll_node_card *shuffledDeck = NULL;
+
+
+}
