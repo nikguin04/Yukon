@@ -12,5 +12,5 @@ void initController(Controller *ctrlptr, Model *modelptr) {
 }
 void LoadDeckAtPath(Controller *ctrl, char* path) {
     ctrl->model->deck = LoadDeck(path);
-    DeckToYukon(ctrl->model->deck, ctrl->model->yukon);
+    DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
 }

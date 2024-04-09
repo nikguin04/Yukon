@@ -18,7 +18,7 @@ int main() {
 	}*/
 	PromptLoadDeck(&ctrl);
 	//PrintDeck(model.deck); // does not work after load deck beacuse we load into columns and remove next pointers from linked list
-	print_yukon_model(model.yukon);
+	print_yukon_model(model.yukon, true);
 
 	/*YukonToDeck(model.deck, model.yukon); // for testing
 	PrintDeck(model.deck);*/

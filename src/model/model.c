@@ -1,9 +1,6 @@
 #include "model.h"
 
 
-int addToLinkedList(int *intptr) {
-
-}
 
 void initModel(Model *model) {
     model->intlist = NULL;

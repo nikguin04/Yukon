@@ -12,8 +12,6 @@ struct ModelStucture { // linked list node
 };
 typedef struct ModelStucture Model;
 
-int addToLinkedList(int *intptr);
-
 void initModel(Model *model);
 #endif
 
