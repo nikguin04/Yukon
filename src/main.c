@@ -27,7 +27,7 @@ int main() {
     LoadDeckAtPath(&ctrl, "C:\\Users\\AGS17\\Desktop\\Yukon\\Decks\\UnshuffledDeck.txt");
     printf("Deck before shuffling:\n");
     PrintDeck(model.deck);
-	ll_node_card *shuffledDeck = shuffleInterleaving(&model.deck, 6);
+	ll_node_card *shuffledDeck = shuffleInterleaving(&model.deck, 42);
     printf("----------------------------------------------\n");
     printf("Deck after shuffling:\n");
     model.deck = shuffledDeck;
