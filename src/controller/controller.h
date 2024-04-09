@@ -1,7 +1,7 @@
 #ifndef controller_h
 #define controller_h
 #include "../model/model.h"
-#include "command_controller.h"
+
 
 struct ControlStucture { // linked list node
     Model *model;
