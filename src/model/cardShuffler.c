@@ -12,6 +12,12 @@
 ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
     ll_node_card *deckPointer = *deckptr;
 
+// Testing stuff
+//    ll_node_card *shuffledDeck = deckPointer;
+//    Card *testCard = createCard(-1, 'C');
+//    appendCardToStartOfList(&shuffledDeck, *testCard);
+//    printf("val: %d, suit: %c\n", shuffledDeck -> card.card_value, shuffledDeck -> card.suit);
+
     ll_node_card* topSplitCardsFromDeck[split];
     ll_node_card* current_card = deckPointer;
     for(int i = 0; i<split; i++) {
@@ -30,14 +36,17 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
     ll_node_card* shuffledDeck = NULL;
     int counter = 0;
     while (deckPointer != NULL || counter < split) {
-
         if(deckPointer != NULL) {
-            appendCardToEnd(&shuffledDeck, deckPointer->card);
+//            appendCardToEndOfList(&shuffledDeck, deckPointer->card);
+            appendCardToStartOfList(&shuffledDeck, deckPointer->card);
             deckPointer = deckPointer -> next;
+
         }
         if (counter < split) {
 //            printf("value: %d, suit: %c", topSplitCardsFromDeck[counter]->card.card_value, topSplitCardsFromDeck[counter]->card.suit);
-            appendCardToEnd(&shuffledDeck, topSplitCardsFromDeck[counter]->card);
+
+//            appendCardToEndOfList(&shuffledDeck, topSplitCardsFromDeck[counter]->card);
+            appendCardToStartOfList(&shuffledDeck, topSplitCardsFromDeck[counter]->card);
 
         }
         counter++;

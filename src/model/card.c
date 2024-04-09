@@ -7,6 +7,13 @@ void test() {
     return;
 }
 
+Card *createCard(int card_value, CardSuit suit) {
+    Card *card = malloc(sizeof(Card));
+    card -> card_value = card_value;
+    card -> suit = suit;
+    return card;
+}
+
 ll_node_card* LoadDeck(char* path) {
     FILE* ptr;
     char readbuffer[4];

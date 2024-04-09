@@ -20,7 +20,18 @@ ll_node_int* appendElement(int number) {
     return elem;
 }
 
-void appendCardToEnd(ll_node_card **list, Card card) {
+void appendCardToStartOfList(ll_node_card **list, Card card) {
+    ll_node_card *newNode = appendCardElement(card);
+    if (!*list) {
+        *list = newNode;
+        return;
+    } else {
+        newNode -> next = *list;
+        *list = newNode;
+    }
+}
+
+void appendCardToEndOfList(ll_node_card **list, Card card) {
     if (!*list) { // list is null
         *list = appendCardElement(card);
         return;

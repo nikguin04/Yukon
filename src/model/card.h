@@ -41,6 +41,7 @@ typedef struct cardStruct { // linked list node
 #ifdef linkelist_h_finalized
 ll_node_card* LoadDeck(char* path);
 void PrintDeck(ll_node_card *carddeck);
+Card *createCard(int card_value, CardSuit suit);
 
 ll_node_card* ParseCharCard(char* card);
 ll_node_card* NewCardAllocate(int value, CardSuit suit);

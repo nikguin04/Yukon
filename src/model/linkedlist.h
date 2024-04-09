@@ -18,7 +18,8 @@ typedef struct ll_node_i { // linked list node
 
 void appendToEnd(ll_node_int **list, int number);
 ll_node_int* appendElement(int number);
-void appendCardToEnd(ll_node_card **list, Card card);
+void appendCardToEndOfList(ll_node_card **list, Card card);
+void appendCardToStartOfList(ll_node_card **list, Card card);
 ll_node_card* appendCardElement(Card card);
 
 // RELOAD cards module for load function
