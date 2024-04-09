@@ -1,7 +1,14 @@
 #include "yukon_model.h"
 
 void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns into a deck again
-
+    deck = yukon->Column_FRONT[0];
+    ll_node_card *movingdeck = deck;
+    yukon->Column_FRONT[0] = NULL;
+    for (int i = 1; i < COLUMN_SIZE; i++) {
+        movingdeck->next = yukon->Column_FRONT[i];
+        yukon->Column_FRONT[i] = NULL;
+        while (movingdeck->next != NULL) { movingdeck = movingdeck->next; };
+    }
 }
 
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) { // Puts the deck into column structure according to yukon rules
