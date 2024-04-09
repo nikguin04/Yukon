@@ -5,8 +5,9 @@
 #include <stdbool.h>
 
 
-#define MIN_CARD = 1
-#define MAX_CARD = 13
+#define MIN_CARD 1
+#define MAX_CARD 13
+#define DECK_LENGTH 52
 
 /*typedef enum {
     A = 'A',

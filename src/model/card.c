@@ -22,11 +22,14 @@ ll_node_card* LoadDeck(char* path) {
     
     ll_node_card *first_card = NULL;
     ll_node_card *current_card = NULL;
+    int depth_counter = 0;
     do {
         *ch = fgetc(ptr);
         if (*ch == '\n' || *ch == EOF) {
+            depth_counter++;
             //*ch == NULL;
             ll_node_card *card = ParseCharCard(readbuffer);
+            if (card == NULL) {return NULL;};
             if (first_card == NULL) {
                 first_card = card;
                 current_card = card;
@@ -37,8 +40,8 @@ ll_node_card* LoadDeck(char* path) {
             }
 
             ch = readbuffer;
-        } else if (ch - readbuffer >= 3) {
-            printf("Format is wrong, read 3 or more characters on one line");
+        } else if (ch - readbuffer >= 2) {
+            printf("Format is wrong, read 3 or more characters on one line\n");
             return NULL;
         } else {
             ch++;
@@ -49,6 +52,10 @@ ll_node_card* LoadDeck(char* path) {
  
     // Closing the file
     fclose(ptr);
+    if (depth_counter != DECK_LENGTH) {
+        printf("Wrong size of deck loaded, expected size (%d), got size (%d)\n", DECK_LENGTH, depth_counter);
+        return NULL;
+    }
     return first_card;
 }
 
@@ -65,8 +72,8 @@ ll_node_card* ParseCharCard(char* card) {
         case 'S': suit = SPADES; break;
     
         default:
-            printf("Format is wrong, did not read suit correctly");
-            return;
+            printf("Format is wrong, did not read suit correctly\n");
+            return NULL;
     }
 
     switch (val)
@@ -86,8 +93,8 @@ ll_node_card* ParseCharCard(char* card) {
         case 'K': cardint = 13; break;
     
         default:
-            printf("Format is wrong, did not read card number correctly");
-            return;
+            printf("Format is wrong, did not read card number correctly\n");
+            return NULL;
     }
 
     return NewCardAllocate(cardint, suit);

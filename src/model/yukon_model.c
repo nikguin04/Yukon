@@ -1,8 +1,13 @@
 #include "yukon_model.h"
 
-void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) {
+void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns into a deck again
+
+}
+
+void DeckToYukon(ll_node_card *deck, YukonStructure *yukon) { // Puts the deck into column structure according to yukon rules
     // This code is a little spaghetti, but i am lazy and it works right now
     ll_node_card *setnull;
+    if (!deck) {printf("Exiting due to nulled deck passed to DeckToYukon()\n"); exit(0);};
     
     for (int i = 0; i < COLUMN_SIZE; i++) {
         yukon->Column_FRONT[i] = deck;
