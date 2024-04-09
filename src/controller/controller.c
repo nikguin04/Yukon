@@ -10,3 +10,6 @@ void initController(Controller *ctrlptr, Model *modelptr) {
     ctrlptr->model = modelptr;
     ctrlptr->val = 0;
 }
+void LoadDeckAtPath(Controller *ctrl, char* path) {
+    ctrl->model->deck = LoadDeck(path);
+}

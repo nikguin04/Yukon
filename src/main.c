@@ -13,8 +13,10 @@ int main() {
 	initWriter(&writer, &ctrl);
 	
 	//ctrl.model = &model;
-	for (int i = 0; i < 10; i++) {
+	/*for (int i = 0; i < 10; i++) {
 		readToArray(&writer);
-	}
+	}*/
+	PromptLoadDeck(&ctrl);
+	PrintDeck(model.deck);
 	return 0;
 }

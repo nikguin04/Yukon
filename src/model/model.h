@@ -6,6 +6,7 @@
 
 struct ModelStucture { // linked list node
     ll_node_int *intlist;
+    ll_node_card *deck;
 };
 typedef struct ModelStucture Model;
 
