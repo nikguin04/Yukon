@@ -1,8 +1,8 @@
 #include "command_reader.h"
 
 Command commands[COMMAND_COUNT+1] = {
- {"LD", true, "Load", LoadDeckAtPath},
- {"SW", false, "Show", ShowDeck}
+ {"LD" "Load", LoadDeckAtPath},
+ {"SW" "Show", ShowDeck}
 };
 
 void StartReadingLoop(CliWriter *writer) {
@@ -13,7 +13,7 @@ void StartReadingLoop(CliWriter *writer) {
         GetInput(&string, &size, &len);
         // Free last commands from writer
         free(writer->last_command);
-        free(writer->last_command_result); // Maybe this is not needed! check this if writing result messages fails
+        //free(writer->last_command_result); // Maybe this is not needed! check this if writing result messages fails
         writer->last_command = string;
 
         Command *cmd = MatchCommand(string, &len);

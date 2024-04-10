@@ -9,7 +9,6 @@
 typedef char* (*CommandFunction)(Controller*, char*);
 typedef struct commandStruct { // linked list node
     char *input;
-    bool takes_input;
     char *friendly_name;
     CommandFunction function;
 } Command;
