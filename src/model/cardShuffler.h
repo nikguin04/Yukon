@@ -10,3 +10,4 @@
 
 
 ll_node_card *shuffleInterleaving(ll_node_card** Deckptr, int split);
+ll_node_card *shuffleRandom(ll_node_card** deckptr);

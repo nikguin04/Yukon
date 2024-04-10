@@ -6,7 +6,8 @@
 #include "card.h"
 #include "linkedlist.h"
 #include <stdbool.h>
-
+#include <stdlib.h>
+#include <time.h>
 
 
 ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
@@ -49,8 +50,21 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
 }
 
 ll_node_card *shuffleRandom(ll_node_card** deckptr) {
-
+    ll_node_card *deckPointer = *deckptr;
     ll_node_card *shuffledDeck = NULL;
 
+    int counter = 1;
+//    srand(time(NULL));
+    while(deckPointer != NULL) {
+        // Generate random number in range [1, counter]
+        ll_node_card *tmp = deckPointer;
+        deckPointer = deckPointer->next;
 
+        int indexToPlaceCardAt = ((rand() % counter) + 1);
+        insertCardAtIndex(&shuffledDeck, tmp->card, indexToPlaceCardAt);
+        counter++;
+
+        free(tmp);
+    }
+    return shuffledDeck;
 }

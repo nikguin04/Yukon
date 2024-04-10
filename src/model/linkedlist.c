@@ -22,24 +22,21 @@ ll_node_int* appendElement(int number) {
 
 void insertCardAtIndex(ll_node_card **list, Card card, int index) {
     ll_node_card *nodeToInsert = appendCardElement(card);
-
     if(!*list ) {
         *list = nodeToInsert;
-    }
-    ll_node_card *currentNode = *list;
-    ll_node_card *beforeIndex;
-    ll_node_card *afterIndex;
-    for (int i = 1; i <= index; i++) {
-        if (i == index - 1) {
-            beforeIndex = currentNode;
+    } else {
+
+        ll_node_card *currentNode = *list;
+        for (int i = 1; i < index - 1; i++) {
+            if (currentNode->next != NULL) {
+                currentNode = currentNode->next;
+            } else {
+                break;
+            }
         }
-        else if (i == index) {
-            afterIndex = currentNode;
-        }
-        currentNode = currentNode->next;
+        nodeToInsert->next = currentNode->next;
+        currentNode->next = nodeToInsert;
     }
-    beforeIndex->next = nodeToInsert;
-    nodeToInsert->next = currentNode;
 }
 
 void appendCardToStartOfList(ll_node_card **list, Card card) {

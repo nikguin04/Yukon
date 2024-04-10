@@ -3,6 +3,7 @@
 #include <controller/controller.h>
 #include <cliview/writer.h>
 #include <cardShuffler.h>
+#include <time.h>
 
 
 // THINGS TO FIX:
@@ -23,11 +24,12 @@ int main() {
 
 //	PromptLoadDeck(&ctrl);
 
-
+// Testing shuffles
     LoadDeckAtPath(&ctrl, "C:\\Users\\AGS17\\Desktop\\Yukon\\Decks\\UnshuffledDeck.txt");
     printf("Deck before shuffling:\n");
     PrintDeck(model.deck);
-	ll_node_card *shuffledDeck = shuffleInterleaving(&model.deck, 42);
+//	ll_node_card *shuffledDeck = shuffleInterleaving(&model.deck, 42);
+    ll_node_card *shuffledDeck = shuffleRandom(&model.deck);
     printf("----------------------------------------------\n");
     printf("Deck after shuffling:\n");
     model.deck = shuffledDeck;
