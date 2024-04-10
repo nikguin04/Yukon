@@ -38,7 +38,5 @@ char *cardToString(Card *card, char *out);
 
 #include "deck.h"
 
-void test();
-
 #endif
 #endif

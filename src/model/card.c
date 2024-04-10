@@ -1,12 +1,5 @@
 #include "card.h"
 
-void test() {
-	Card somecard;
-	somecard.card_value = 8;
-	somecard.suit = SPADES;
-	return;
-}
-
 Card *createCard(int card_value, CardSuit suit) {
 	Card *card = malloc(sizeof(Card));
 	card->card_value = card_value;

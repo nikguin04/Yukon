@@ -3,11 +3,10 @@
 
 #include "../model/model.h"
 
-struct ControlStucture {
+typedef struct ControlStructure {
 	Model *model;
 	int val;
-};
-typedef struct ControlStucture Controller;
+} Controller;
 
 void initController(Controller *ctrlptr, Model *modelptr);
 void addIntToModelArray(Controller *ctrl, int *intptr);

@@ -6,15 +6,11 @@
 #include "../model/linkedlist.h"
 #include "printer.h"
 
-//extern struct ControlStucture;
-//typedef struct ControlStucture Controller;
-
-struct CliWriterStucture {
+typedef struct CliWriterStructure {
 	Controller *ctrl;
 	char *last_command;
 	char *last_command_result;
-};
-typedef struct CliWriterStucture CliWriter;
+} CliWriter;
 
 int readToArray(CliWriter *writer);
 void printList(ll_node_int *list);

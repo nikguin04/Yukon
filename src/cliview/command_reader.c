@@ -67,7 +67,6 @@ Command *MatchCommand(char *cmdinput, size_t *len) {
 			if (candidate_char != cmdinput[a] || candidate_char == 0) { //  || candidate_char == (candidate_tail->command->takes_input ? '\n' : ' ')
 				candidate_tail->skip = true;
 				if ((cmdinput[a] == ' ' || cmdinput[a] == 0) && a == strlen(candidate_tail->command->input)) {
-					//printf("TEMP! found cmd!, %s\n", candidate_tail->command->friendly_name);
 					Command *ret = candidate_tail->command;
 					return ret;
 				}
