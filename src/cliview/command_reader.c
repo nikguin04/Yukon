@@ -1,8 +1,8 @@
 #include "command_reader.h"
 
 Command commands[COMMAND_COUNT+1] = {
- {"LD" "Load", LoadDeckAtPath},
- {"SW" "Show", ShowDeck}
+ {"LD", "Load", LoadDeckAtPath},
+ {"SW", "Show", ShowDeck}
 };
 
 void StartReadingLoop(CliWriter *writer) {
@@ -48,6 +48,7 @@ Command* MatchCommand(char* cmdinput, size_t *len) {
         candidate_tail->skip = false;
         candidate_tail = candidate_tail->next;
     }
+    candidate_tail = NULL;
     
     for (int a = 0; a < *len+1; a++) { // plus one here so we hit a null or space
         candidate_tail = candidatell;
