@@ -40,6 +40,7 @@ typedef struct cardStruct { // linked list node
 
 #ifdef linkelist_h_finalized
 ll_node_card* LoadDeck(char* path);
+bool SaveDeck(ll_node_card *deck, const char *path);
 void PrintDeck(ll_node_card *carddeck);
 Card *createCard(int card_value, CardSuit suit);
 
