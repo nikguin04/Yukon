@@ -6,7 +6,6 @@
 #include "linkedlist.h"
 
 typedef struct ModelStructure {
-	ll_node_int *intlist;
 	ll_node_card *deck;
 	YukonStructure *yukon;
 	bool optionIgnoreHidden;
