@@ -13,7 +13,7 @@
 ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
     ll_node_card *deckPointer = *deckptr;
 
-    ll_node_card* topSplitCardsFromDeck[split];
+    ll_node_card** topSplitCardsFromDeck = (ll_node_card**) malloc(sizeof(ll_node_card*) * split);
     ll_node_card* current_card = deckPointer;
     for(int i = 0; i<split; i++) {
         topSplitCardsFromDeck[i] = current_card;
