@@ -24,7 +24,8 @@ int main() {
 //	PromptLoadDeck(&ctrl);
 
 
-    LoadDeckAtPath(&ctrl, "C:\\Users\\AGS17\\Desktop\\Yukon\\Decks\\UnshuffledDeck.txt");
+    LoadDeckAtPath(&ctrl, "../Decks/UnshuffledDeck.txt");
+	SaveDeck(model.deck, "../Decks/SavedDeck.txt");
     printf("Deck before shuffling:\n");
     PrintDeck(model.deck);
 	ll_node_card *shuffledDeck = shuffleInterleaving(&model.deck, 42);
