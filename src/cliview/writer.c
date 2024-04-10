@@ -26,11 +26,13 @@ void printList(ll_node_int *list) {
 
 void initWriter(CliWriter *writerptr, Controller *ctrlptr) {
     writerptr->ctrl = ctrlptr;
+    writerptr->last_command = NULL;
+    writerptr->last_command_result = NULL;
 }
 
 void PromptLoadDeck(Controller *ctrl) {
     printf("Please input path to load deck from:");
     char input_value[255];
     scanf("%s", &input_value);
-    LoadDeckAtPath(ctrl, &input_value);
+    LoadDeckAtPath(ctrl, input_value);
 }

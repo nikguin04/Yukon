@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "../controller/controller.h"
 #include "../model/linkedlist.h"
+#include "printer.h"
 
 //extern struct ControlStucture;
 //typedef struct ControlStucture Controller;
@@ -11,6 +12,8 @@
 
 struct CliWriterStucture { // linked list node
     Controller *ctrl;
+    char* last_command;
+    char* last_command_result;
 };
 typedef struct CliWriterStucture CliWriter;
 

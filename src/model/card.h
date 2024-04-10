@@ -2,26 +2,12 @@
 #define card_h
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 
-#define MIN_CARD = 1
-#define MAX_CARD = 13
+#define MIN_CARD 1
+#define MAX_CARD 13
 
-/*typedef enum {
-    A = 'A',
-    TWO = '2',
-    THREE = '3',
-    FOUR = '4',
-    FIVE = '5',
-    SIX = '6',
-    SEVEN = '7',
-    EIGHT = '8',
-    NINE = '9',
-    TEN = '10',
-    JACK = 'J',
-    QUEEN = 'Q',
-    KING = 'K'
-} CardValue;*/
 
 typedef enum {
     CLUBS = 'C',
@@ -33,20 +19,26 @@ typedef enum {
 typedef struct cardStruct { // linked list node
     int card_value;
     CardSuit suit;
+    bool hidden;
 } Card;
 
 #include "linkedlist.h"
 #endif
 
 #ifdef linkelist_h_finalized
-ll_node_card* LoadDeck(char* path);
-bool SaveDeck(ll_node_card *deck, const char *path);
-void PrintDeck(ll_node_card *carddeck);
-Card *createCard(int card_value, CardSuit suit);
+    #ifndef card_ll_h
+    #define card_ll_h
+    
+	bool SaveDeck(ll_node_card *deck, const char *path);
+	Card *createCard(int card_value, CardSuit suit);
+    ll_node_card* ParseCharCard(char* card, char** msg);
+    ll_node_card* NewCardAllocate(int value, CardSuit suit);
+    ll_node_card* CardToLinkedCard(Card *c);
 
-ll_node_card* ParseCharCard(char* card);
-ll_node_card* NewCardAllocate(int value, CardSuit suit);
+    char* cardToString(Card *card, char* out);
 
-void test();
+    #include "deck.h"
+    void test();
+    #endif
 
 #endif
