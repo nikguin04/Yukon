@@ -5,12 +5,12 @@
 
 
 int main() {
-	Model model;
-	initModel(&model);
-	Controller ctrl;
-	initController(&ctrl, &model);
-	CliWriter writer;
-	initWriter(&writer, &ctrl);
+	Model *model = (Model*) malloc(sizeof(Model));
+	initModel(model);
+	Controller *ctrl = (Controller*) malloc(sizeof(Controller));
+	initController(ctrl, model);
+	CliWriter *writer = (CliWriter*) malloc(sizeof(CliWriter));
+	initWriter(writer, ctrl);
 	
 	//ctrl.model = &model;
 	/*for (int i = 0; i < 10; i++) {
@@ -23,6 +23,6 @@ int main() {
 	/*YukonToDeck(model.deck, model.yukon); // for testing
 	PrintDeck(model.deck);*/
 
-	StartReadingLoop(&writer);
+	StartReadingLoop(writer);
 	return 0;
 }

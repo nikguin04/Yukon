@@ -12,6 +12,8 @@
 
 struct CliWriterStucture { // linked list node
     Controller *ctrl;
+    char* last_command;
+    char* last_command_result;
 };
 typedef struct CliWriterStucture CliWriter;
 

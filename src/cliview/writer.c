@@ -26,6 +26,8 @@ void printList(ll_node_int *list) {
 
 void initWriter(CliWriter *writerptr, Controller *ctrlptr) {
     writerptr->ctrl = ctrlptr;
+    writerptr->last_command = NULL;
+    writerptr->last_command_result = NULL;
 }
 
 void PromptLoadDeck(Controller *ctrl) {

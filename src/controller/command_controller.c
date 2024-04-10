@@ -1,13 +1,13 @@
 #include "command_controller.h"
 
-void LoadDeckAtPath(Controller *ctrl, char* path) {
+char* LoadDeckAtPath(Controller *ctrl, char* path) {
     ctrl->model->deck = LoadDeck(path);
     DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-}
-void LoadDeckWithInput(Controller *ctrl, char* input) {
-    printf("loading deck with input: %s\n", input);
+    return "Loaded deck successfully!";
 }
 
-void ShowDeck(Controller *ctrl, char* _) {
+
+char* ShowDeck(Controller *ctrl, char* _) {
     printf("showing deck to user!\n");
+    return "Showed deck to user!";
 }

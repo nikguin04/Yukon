@@ -4,8 +4,9 @@
 #include <stdbool.h>
 #include "writer.h"
 #include "command_controller.h"
+#include "screen.h"
 
-typedef void (*CommandFunction)(Controller*, char*);
+typedef char* (*CommandFunction)(Controller*, char*);
 typedef struct commandStruct { // linked list node
     char *input;
     bool takes_input;

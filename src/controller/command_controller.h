@@ -4,9 +4,8 @@
 
 //typedef void (*CommandFunction)(Controller*, char*);
 
-void LoadDeckAtPath(Controller *ctrl, char* path);
-void LoadDeckWithInput(Controller *ctrl, char* input);
+char* LoadDeckAtPath(Controller *ctrl, char* path);
 
-void ShowDeck(Controller *ctrl, char* input);
+char* ShowDeck(Controller *ctrl, char* input);
 
 #endif

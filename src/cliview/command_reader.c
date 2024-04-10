@@ -1,7 +1,7 @@
 #include "command_reader.h"
 
 Command commands[COMMAND_COUNT+1] = {
- {"LD", true, "Load", LoadDeckWithInput},
+ {"LD", true, "Load", LoadDeckAtPath},
  {"SW", false, "Show", ShowDeck}
 };
 
@@ -11,14 +11,22 @@ void StartReadingLoop(CliWriter *writer) {
         size_t size = 0;
         size_t len = 0;
         GetInput(&string, &size, &len);
+        // Free last commands from writer
+        free(writer->last_command);
+        free(writer->last_command_result); // Maybe this is not needed! check this if writing result messages fails
+        writer->last_command = string;
+
         Command *cmd = MatchCommand(string, &len);
 
         char* parsed_arg;
         if (cmd != NULL) {
             parsed_arg = CmdArgParse(string + strlen(cmd->input));
-            cmd->function(writer->ctrl, parsed_arg);
-        } // else: check that it could be a move
-        free(string);
+            writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
+        } else { // else if: check that it could be a move
+            writer->last_command_result = "No command found!";
+        } 
+        //free(string);
+        UpdateScreen(writer);
     }
 }
 
