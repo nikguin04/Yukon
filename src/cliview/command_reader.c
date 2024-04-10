@@ -13,12 +13,25 @@ void StartReadingLoop(CliWriter *writer) {
         GetInput(&string, &size, &len);
         Command *cmd = MatchCommand(string, &len);
 
-        if (cmd != NULL) { cmd->function(writer->ctrl, string + strlen(cmd->input)); }
+        char* parsed_arg;
+        if (cmd != NULL) {
+            parsed_arg = CmdArgParse(string + strlen(cmd->input));
+            cmd->function(writer->ctrl, parsed_arg);
+        } // else: check that it could be a move
         free(string);
     }
 }
 
+char* CmdArgParse(char* input) {
+    if (input[0] == ' ') {
+        return input+1;
+    } else {
+        return NULL;
+    }
+}
+
 Command* MatchCommand(char* cmdinput, size_t *len) {
+    if (strlen(cmdinput) == 0) {printf("Command input is empty!\n"); return NULL;}
     ll_node_command *candidatell = (ll_node_command*) malloc(sizeof(ll_node_command));
     ll_node_command *candidate_tail = candidatell;
     for (int i = 0; i < COMMAND_COUNT; i++) {
@@ -39,7 +52,7 @@ Command* MatchCommand(char* cmdinput, size_t *len) {
             if (candidate_char != cmdinput[a] || candidate_char == NULL) { //  || candidate_char == (candidate_tail->command->takes_input ? '\n' : ' ')
                 candidate_tail->skip = true;
                 if ((cmdinput[a] == ' ' || cmdinput[a] == NULL) && a == strlen(candidate_tail->command->input)) {
-                    printf("TEMP! found cmd!, %s", candidate_tail->command->friendly_name);
+                    printf("TEMP! found cmd!, %s\n", candidate_tail->command->friendly_name);
                     Command* ret = candidate_tail->command;
                     return ret;
                 }
@@ -63,7 +76,7 @@ void GetInput(char** string, size_t* size, size_t* len) {
 
 
     // print the string
-    printf("<%s> is length %ld\n", *string, *len);
+    //printf("<%s> is length %ld\n", *string, *len);
 
     // free the memory used by string when returned!
 }

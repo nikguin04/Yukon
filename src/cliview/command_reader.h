@@ -28,6 +28,7 @@ void StartReadingLoop(CliWriter *writer);
 Command* MatchCommand(char* cmdinput, size_t* len);
 void GetInput(char* string, size_t* size, size_t* len);
 size_t getline(char **lineptr, size_t *n, FILE *stream);
+char* CmdArgParse(char* input);
 
 
 #endif
