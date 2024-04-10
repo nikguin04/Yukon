@@ -7,6 +7,9 @@ void print_yukon_model(YukonStructure *yukon, bool force_show) { // NOTE: a flus
         cur_card_ptr[i] = yukon->Column_FRONT[i];
     }
     printf("\n");
+    if (cur_card_ptr[0] == NULL) { // This could be put above the C# printing, but we prefer it this way so the user knows it is empty
+        return;
+    }
     bool tailEmpty = false;
     while (!tailEmpty) {
         tailEmpty = true;
