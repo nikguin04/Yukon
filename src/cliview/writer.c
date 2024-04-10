@@ -32,5 +32,5 @@ void PromptLoadDeck(Controller *ctrl) {
 	printf("Please input path to load deck from:");
 	char input_value[255];
 	scanf("%s", &input_value);
-	LoadDeckAtPath(ctrl, input_value);
+	LoadDeckFromFile(ctrl, input_value);
 }

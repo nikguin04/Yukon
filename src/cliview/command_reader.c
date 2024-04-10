@@ -1,7 +1,8 @@
 #include "command_reader.h"
 
 Command commands[COMMAND_COUNT + 1] = {
-	{"LD", "Load", LoadDeckAtPath},
+	{"LD", "Load", LoadDeckFromFile},
+	{"SD", "Save", SaveDeckToFile},
 	{"SW", "Show", ShowDeck}
 };
 

@@ -28,7 +28,6 @@ typedef struct cardStruct {
 #ifndef CARD_LL_H
 #define CARD_LL_H
 
-bool SaveDeck(ll_node_card *deck, const char *path);
 Card *CreateCard(int card_value, CardSuit suit);
 ll_node_card *ParseCharCard(const char *card, char **msg);
 ll_node_card *NewCardAllocate(int value, CardSuit suit);

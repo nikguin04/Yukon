@@ -1,9 +1,16 @@
 #include "command_controller.h"
 
-char *LoadDeckAtPath(Controller *ctrl, char *path) {
+char *LoadDeckFromFile(Controller *ctrl, char *path) {
 	char *msg;
 	ctrl->model->deck = LoadDeck(path, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	return msg;
+}
+
+char *SaveDeckToFile(Controller *ctrl, char *path) {
+	char *msg;
+	YukonToDeck(ctrl->model->deck, ctrl->model->yukon);
+	SaveDeck(ctrl->model->deck, path, &msg);
 	return msg;
 }
 

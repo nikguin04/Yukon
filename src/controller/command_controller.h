@@ -3,8 +3,8 @@
 
 #include "controller.h"
 
-char *LoadDeckAtPath(Controller *ctrl, char *path);
-
+char *LoadDeckFromFile(Controller *ctrl, char *path);
+char *SaveDeckToFile(Controller *ctrl, char *path);
 char *ShowDeck(Controller *ctrl, char *input);
 
 #endif

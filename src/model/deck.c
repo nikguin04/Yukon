@@ -66,6 +66,48 @@ ll_node_card *LoadDeck(const char *path, char **msg) {
 	return first_card;
 }
 
+bool SaveDeck(ll_node_card *deck, const char *path, char **msg) {
+	FILE *file;
+
+	// Open the file in write mode
+	file = fopen(path, "w");
+
+	if (file == NULL) {
+		*msg = "Couldn't open file to save deck";
+		return false;
+	}
+
+	ll_node_card *card = deck;
+	while (true) {
+		char value;
+		switch (card->card.card_value) {
+			case 1: value = 'A'; break;
+			case 10: value = 'T'; break;
+			case 11: value = 'J'; break;
+			case 12: value = 'Q'; break;
+			case 13: value = 'K'; break;
+			default: value = '0' + card->card.card_value;
+		}
+		fputc(value, file);
+		fputc(card->card.suit, file);
+		card = card->next;
+		if (ferror(file)) {
+			fclose(file);
+			*msg = "Error writing to file";
+			return false;
+		}
+		if (card == NULL) break;
+		// If there's a next card, put a newline, otherwise don't
+		// Because apparently final newlines aren't allowed for some reason?
+		fputc('\n', file);
+	}
+
+	// Close the file again
+	fclose(file);
+	*msg = "OK";
+	return true;
+}
+
 ll_node_card *OpenDefaultDeck() {
 	ll_node_card *first = CardToLinkedCard(&defaultDeck[0]);
 	ll_node_card *ptr = first;
