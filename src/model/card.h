@@ -42,14 +42,18 @@ typedef struct cardStruct { // linked list node
 #endif
 
 #ifdef linkelist_h_finalized
-#include "deck.h"
+    #ifndef card_ll_h
+    #define card_ll_h
+    
 
-ll_node_card* ParseCharCard(char* card);
-ll_node_card* NewCardAllocate(int value, CardSuit suit);
+    ll_node_card* ParseCharCard(char* card);
+    ll_node_card* NewCardAllocate(int value, CardSuit suit);
+    ll_node_card* CardToLinkedCard(Card *c);
 
-char* cardToString(Card *card, char* out);
+    char* cardToString(Card *card, char* out);
 
-
-void test();
+    #include "deck.h"
+    void test();
+    #endif
 
 #endif

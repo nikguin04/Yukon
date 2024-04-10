@@ -15,11 +15,15 @@ ll_node_card* LoadDeck(char* path) {
     char* ch = readbuffer;
  
     // Opening file in reading mode
+    if (path == NULL) {
+        printf("No path given to LoadDeck \n");
+        return OpenDefaultDeck();
+    }
     ptr = fopen(path, "r");
  
     if (NULL == ptr) {
         printf("file can't be opened \n");
-        return NULL;
+        return OpenDefaultDeck();
     }
     
     ll_node_card *first_card = NULL;
@@ -60,3 +64,68 @@ ll_node_card* LoadDeck(char* path) {
     }
     return first_card;
 }
+
+ll_node_card* OpenDefaultDeck() {
+    ll_node_card *first = CardToLinkedCard(&defaultDeck[0]);
+    ll_node_card *ptr = first;
+    for (int i = 1; i < DECK_LENGTH; i++) {
+        ptr->next = CardToLinkedCard(&defaultDeck[i]);
+        ptr = ptr->next;
+    }
+    return first;
+}
+
+Card defaultDeck[DECK_LENGTH] = {
+    {1, CLUBS, false},
+    {2, CLUBS, false},
+    {3, CLUBS, false},
+    {4, CLUBS, false},
+    {5, CLUBS, false},
+    {6, CLUBS, false},
+    {7, CLUBS, false},
+    {8, CLUBS, false},
+    {9, CLUBS, false},
+    {10, CLUBS, false},
+    {11, CLUBS, false},
+    {12, CLUBS, false},
+    {13, CLUBS, false},
+    {1, DIAMONDS, false},
+    {2, DIAMONDS, false},
+    {3, DIAMONDS, false},
+    {4, DIAMONDS, false},
+    {5, DIAMONDS, false},
+    {6, DIAMONDS, false},
+    {7, DIAMONDS, false},
+    {8, DIAMONDS, false},
+    {9, DIAMONDS, false},
+    {10, DIAMONDS, false},
+    {11, DIAMONDS, false},
+    {12, DIAMONDS, false},
+    {13, DIAMONDS, false},
+    {1, HEARTS, false},
+    {2, HEARTS, false},
+    {3, HEARTS, false},
+    {4, HEARTS, false},
+    {5, HEARTS, false},
+    {6, HEARTS, false},
+    {7, HEARTS, false},
+    {8, HEARTS, false},
+    {9, HEARTS, false},
+    {10, HEARTS, false},
+    {11, HEARTS, false},
+    {12, HEARTS, false},
+    {13, HEARTS, false},
+    {1, SPADES, false},
+    {2, SPADES, false},
+    {3, SPADES, false},
+    {4, SPADES, false},
+    {5, SPADES, false},
+    {6, SPADES, false},
+    {7, SPADES, false},
+    {8, SPADES, false},
+    {9, SPADES, false},
+    {10, SPADES, false},
+    {11, SPADES, false},
+    {12, SPADES, false},
+    {13, SPADES, false}
+};
