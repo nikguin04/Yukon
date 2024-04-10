@@ -5,11 +5,11 @@
 #include "yukon_model.h"
 #include "linkedlist.h"
 
-typedef struct ModelStucture {
+typedef struct ModelStructure {
 	ll_node_int *intlist;
 	ll_node_card *deck;
 	YukonStructure *yukon;
-	bool OPTION_IGNORE_HIDDEN;
+	bool optionIgnoreHidden;
 } Model;
 
 void initModel(Model *model);

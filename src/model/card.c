@@ -1,49 +1,48 @@
 #include "card.h"
 
-Card *createCard(int card_value, CardSuit suit) {
+Card *CreateCard(int card_value, CardSuit suit) {
 	Card *card = malloc(sizeof(Card));
 	card->card_value = card_value;
 	card->suit = suit;
 	return card;
 }
 
-ll_node_card *ParseCharCard(char *card, char **msg) {
-	int val = card[0];
-	int isuit = card[1];
-	CardSuit suit;
-	int cardint;
-	switch (isuit) {
-		case 'C': suit = CLUBS; break;
-		case 'D': suit = DIAMONDS; break;
-		case 'H': suit = HEARTS; break;
-		case 'S': suit = SPADES; break;
+ll_node_card *ParseCharCard(const char *card, char **msg) {
+	CardSuit suit = (CardSuit) card[1];
+	int value;
+	switch (suit) {
+		case CLUBS:
+		case DIAMONDS:
+		case HEARTS:
+		case SPADES:
+			break;
 
 		default:
 			*msg = "Format of file is wrong, did not read suit correctly";
 			return NULL;
 	}
 
-	switch (val) {
-		case 'A': cardint = 1; break;
-		case '2': cardint = 2; break;
-		case '3': cardint = 3; break;
-		case '4': cardint = 4; break;
-		case '5': cardint = 5; break;
-		case '6': cardint = 6; break;
-		case '7': cardint = 7; break;
-		case '8': cardint = 8; break;
-		case '9': cardint = 9; break;
-		case 'T': cardint = 10; break;
-		case 'J': cardint = 11; break;
-		case 'Q': cardint = 12; break;
-		case 'K': cardint = 13; break;
+	switch (card[0]) {
+		case 'A': value = 1; break;
+		case '2': value = 2; break;
+		case '3': value = 3; break;
+		case '4': value = 4; break;
+		case '5': value = 5; break;
+		case '6': value = 6; break;
+		case '7': value = 7; break;
+		case '8': value = 8; break;
+		case '9': value = 9; break;
+		case 'T': value = 10; break;
+		case 'J': value = 11; break;
+		case 'Q': value = 12; break;
+		case 'K': value = 13; break;
 
 		default:
 			*msg = "Format of file is wrong, did not read card number correctly";
 			return NULL;
 	}
 
-	return NewCardAllocate(cardint, suit);
+	return NewCardAllocate(value, suit);
 }
 
 ll_node_card *NewCardAllocate(int value, CardSuit suit) {
@@ -62,7 +61,7 @@ ll_node_card *CardToLinkedCard(Card *c) {
 }
 
 char *cardToString(Card *card, char *cardStr) {
-	cardStr[2] = NULL;
+	cardStr[2] = 0;
 
 	switch (card->card_value) {
 		case 1: cardStr[0] = 'A'; break;

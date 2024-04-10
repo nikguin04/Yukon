@@ -4,7 +4,7 @@ void addIntToModelArray(Controller *ctrl, int *intptr) {
 	appendToEnd(&ctrl->model->intlist, *intptr);
 }
 
-void initController(Controller *ctrlptr, Model *modelptr) {
-	ctrlptr->model = modelptr;
-	ctrlptr->val = 0;
+void initController(Controller *ctrl, Model *model) {
+	ctrl->model = model;
+	ctrl->val = 0;
 }

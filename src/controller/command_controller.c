@@ -9,6 +9,6 @@ char *LoadDeckAtPath(Controller *ctrl, char *path) {
 
 char *ShowDeck(Controller *ctrl, char *_) {
 	printf("Showing deck to user!\n");
-	ctrl->model->OPTION_IGNORE_HIDDEN = true;
+	ctrl->model->optionIgnoreHidden = true;
 	return "Showed deck to user!";
 }

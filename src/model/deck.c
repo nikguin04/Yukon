@@ -1,7 +1,7 @@
 #include "deck.h"
 
-void PrintDeck(ll_node_card *carddeck) {
-	ll_node_card *current = carddeck;
+void PrintDeck(ll_node_card *deck) {
+	ll_node_card *current = deck;
 	int progress = 0;
 	while (current != NULL) {
 		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
@@ -9,12 +9,12 @@ void PrintDeck(ll_node_card *carddeck) {
 	}
 }
 
-ll_node_card *LoadDeck(char *path, char **msg) {
+ll_node_card *LoadDeck(const char *path, char **msg) {
 	FILE *ptr;
 	char readbuffer[4];
 	char *ch = readbuffer;
 
-	// Opening file in reading mode
+	// Open the file in read mode
 	if (path == NULL) {
 		*msg = "No path given to LoadDeck";
 		return OpenDefaultDeck();
@@ -54,11 +54,10 @@ ll_node_card *LoadDeck(char *path, char **msg) {
 		} else {
 			ch++;
 		}
-		// Checking if character is not EOF.
-		// If it is EOF stop reading.
-	} while (readbuffer[2] != EOF); // warning: this will fail if format is incorrect. but we catch that in a if statement
+		// If character is EOF, stop reading
+	} while (readbuffer[2] != EOF); // WARNING: This will fail if format is incorrect, but we catch that in an if statement
 
-	// Closing the file
+	// Close the file again
 	fclose(ptr);
 	if (depth_counter != DECK_LENGTH) {
 		*msg = "Wrong size of deck loaded. Expected 52"; // hardcoded to 52

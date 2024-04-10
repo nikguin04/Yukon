@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include "../model/yukon_model.h"
 
-void print_yukon_model(YukonStructure *yukon, bool force_show);
+void printYukonModel(YukonStructure *yukon, bool forceShow);
 
 #endif

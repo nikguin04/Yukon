@@ -8,7 +8,7 @@ typedef struct ControlStructure {
 	int val;
 } Controller;
 
-void initController(Controller *ctrlptr, Model *modelptr);
+void initController(Controller *ctrl, Model *model);
 void addIntToModelArray(Controller *ctrl, int *intptr);
 
 #endif
