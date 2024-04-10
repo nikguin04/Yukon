@@ -46,6 +46,7 @@ ll_node_card *shuffleInterleaving(ll_node_card** deckptr, int split) {
             counter++;
         }
     }
+    free(topSplitCardsFromDeck);
     return shuffledDeck;
 }
 
