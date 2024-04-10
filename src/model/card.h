@@ -9,22 +9,6 @@
 #define MAX_CARD 13
 
 
-/*typedef enum {
-    A = 'A',
-    TWO = '2',
-    THREE = '3',
-    FOUR = '4',
-    FIVE = '5',
-    SIX = '6',
-    SEVEN = '7',
-    EIGHT = '8',
-    NINE = '9',
-    TEN = '10',
-    JACK = 'J',
-    QUEEN = 'Q',
-    KING = 'K'
-} CardValue;*/
-
 typedef enum {
     CLUBS = 'C',
     DIAMONDS = 'D',
@@ -45,7 +29,8 @@ typedef struct cardStruct { // linked list node
     #ifndef card_ll_h
     #define card_ll_h
     
-
+	bool SaveDeck(ll_node_card *deck, const char *path);
+	Card *createCard(int card_value, CardSuit suit);
     ll_node_card* ParseCharCard(char* card, char** msg);
     ll_node_card* NewCardAllocate(int value, CardSuit suit);
     ll_node_card* CardToLinkedCard(Card *c);

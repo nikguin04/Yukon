@@ -12,16 +12,6 @@ int main() {
 	CliWriter *writer = (CliWriter*) malloc(sizeof(CliWriter));
 	initWriter(writer, ctrl);
 	
-	//ctrl.model = &model;
-	/*for (int i = 0; i < 10; i++) {
-		readToArray(&writer);
-	}*/
-	/*PromptLoadDeck(&ctrl);
-	//PrintDeck(model.deck); // does not work after load deck beacuse we load into columns and remove next pointers from linked list
-	print_yukon_model(model.yukon, true);*/
-
-	/*YukonToDeck(model.deck, model.yukon); // for testing
-	PrintDeck(model.deck);*/
 
 	StartReadingLoop(writer);
 	return 0;

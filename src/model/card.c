@@ -7,6 +7,13 @@ void test() {
     return;
 }
 
+Card *createCard(int card_value, CardSuit suit) {
+    Card *card = malloc(sizeof(Card));
+    card -> card_value = card_value;
+    card -> suit = suit;
+    return card;
+}
+
 
 
 ll_node_card* ParseCharCard(char* card, char** msg) {
@@ -94,3 +101,43 @@ char* cardToString(Card *card, char* cardStr) {
     return cardStr;
 }
 
+bool SaveDeck(ll_node_card *deck, const char *path) {
+	FILE *file;
+
+	// Opening file in write mode
+	file = fopen(path, "w");
+
+	if (file == NULL) {
+		printf("Couldn't open file to save deck\n");
+		return false;
+	}
+
+	ll_node_card *card = deck;
+	while (true) {
+		char value;
+		switch (card->card.card_value) {
+			case  1: value = 'A'; break;
+			case 10: value = 'T'; break;
+			case 11: value = 'J'; break;
+			case 12: value = 'Q'; break;
+			case 13: value = 'K'; break;
+			default: value = '0' + card->card.card_value;
+		}
+		fputc(value, file);
+		fputc(card->card.suit, file);
+		card = card->next;
+		if (ferror(file)) {
+			fclose(file);
+			printf("Error writing to file\n");
+			return false;
+		}
+		if (card == NULL) break;
+		// If there's a next card, put a newline, otherwise don't
+		// Because apparently final newlines aren't allowed for some reason?
+		fputc('\n', file);
+	}
+
+	// Closing the file
+	fclose(file);
+	return true;
+}
