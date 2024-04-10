@@ -1,8 +1,7 @@
 #include <stdio.h>
-#include <model/model.h>
-#include <controller/controller.h>
-#include <cliview/writer.h>
-
+#include "model/model.h"
+#include "controller/controller.h"
+#include "cliview/command_reader.h"
 
 int main() {
 	Model *model = (Model*) malloc(sizeof(Model));

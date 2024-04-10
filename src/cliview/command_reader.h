@@ -14,7 +14,7 @@ typedef struct commandStruct { // linked list node
 } Command;
 
 #define COMMAND_COUNT 2
-Command commands[COMMAND_COUNT+1];
+extern Command commands[COMMAND_COUNT+1];
 
 
 // WORSØE PLEASE FIX WITH BEAUTIFUL MACRO!
@@ -26,7 +26,7 @@ typedef struct ll_node_cmd { // linked list node
 
 void StartReadingLoop(CliWriter *writer);
 Command* MatchCommand(char* cmdinput, size_t* len);
-void GetInput(char* string, size_t* size, size_t* len);
+void GetInput(char** string, size_t* size, size_t* len);
 size_t getline(char **lineptr, size_t *n, FILE *stream);
 char* CmdArgParse(char* input);
 
