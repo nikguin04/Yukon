@@ -1,13 +1,9 @@
-//
-// Created by AGS17 on 4/8/2024.
-//
+#ifndef CARDSHUFFLER_H
+#define CARDSHUFFLER_H
 
-#ifndef YUKON_CARDSHUFFLER_H
-#define YUKON_CARDSHUFFLER_H
-#endif //YUKON_CARDSHUFFLER_H
+#include "linkedlist.h"
 
-#include <linkedlist.h>
+ll_node_card *shuffleInterleaving(ll_node_card **Deckptr, int split);
+ll_node_card *shuffleRandom(ll_node_card **deckptr);
 
-
-ll_node_card *shuffleInterleaving(ll_node_card** Deckptr, int split);
-ll_node_card *shuffleRandom(ll_node_card** deckptr);
+#endif

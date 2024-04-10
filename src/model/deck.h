@@ -1,12 +1,14 @@
-#ifndef deck_h
-#define deck_h
+#ifndef DECK_H
+#define DECK_H
+
 #include "card.h"
+
 #define DECK_LENGTH 52
 
 extern Card defaultDeck[DECK_LENGTH];
 
-ll_node_card* LoadDeck(char* path, char** msg);
+ll_node_card *LoadDeck(char *path, char **msg);
 void PrintDeck(ll_node_card *carddeck);
-ll_node_card* OpenDefaultDeck();
+ll_node_card *OpenDefaultDeck();
 
 #endif

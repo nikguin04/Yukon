@@ -1,8 +1,8 @@
-#ifndef screen_h
-#define screen_h
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include "writer.h"
 
 void UpdateScreen(CliWriter *writer);
 
 #endif
-

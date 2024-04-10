@@ -1,5 +1,6 @@
-#ifndef writer_h
-#define writer_h
+#ifndef WRITER_H
+#define WRITER_H
+
 #include <stdio.h>
 #include "../controller/controller.h"
 #include "../model/linkedlist.h"
@@ -8,12 +9,10 @@
 //extern struct ControlStucture;
 //typedef struct ControlStucture Controller;
 
-
-
-struct CliWriterStucture { // linked list node
-    Controller *ctrl;
-    char* last_command;
-    char* last_command_result;
+struct CliWriterStucture {
+	Controller *ctrl;
+	char *last_command;
+	char *last_command_result;
 };
 typedef struct CliWriterStucture CliWriter;
 
@@ -23,4 +22,3 @@ void printList(ll_node_int *list);
 void initWriter(CliWriter *writer, Controller *ctrl);
 void PromptLoadDeck(Controller *ctrl);
 #endif
-
