@@ -7,7 +7,7 @@
 
 #define MIN_CARD 1
 #define MAX_CARD 13
-#define DECK_LENGTH 52
+
 
 /*typedef enum {
     A = 'A',
@@ -42,8 +42,7 @@ typedef struct cardStruct { // linked list node
 #endif
 
 #ifdef linkelist_h_finalized
-ll_node_card* LoadDeck(char* path);
-void PrintDeck(ll_node_card *carddeck);
+#include "deck.h"
 
 ll_node_card* ParseCharCard(char* card);
 ll_node_card* NewCardAllocate(int value, CardSuit suit);
