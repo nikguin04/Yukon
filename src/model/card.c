@@ -9,7 +9,7 @@ void test() {
 
 
 
-ll_node_card* ParseCharCard(char* card) {
+ll_node_card* ParseCharCard(char* card, char** msg) {
     int val = card[0];
     int isuit = card[1];
     CardSuit suit;
@@ -22,7 +22,7 @@ ll_node_card* ParseCharCard(char* card) {
         case 'S': suit = SPADES; break;
     
         default:
-            printf("Format is wrong, did not read suit correctly\n");
+            *msg = "Format of file is wrong, did not read suit correctly";
             return NULL;
     }
 
@@ -43,7 +43,7 @@ ll_node_card* ParseCharCard(char* card) {
         case 'K': cardint = 13; break;
     
         default:
-            printf("Format is wrong, did not read card number correctly\n");
+            *msg = "Format of file is wrong, did not read card number correctly";
             return NULL;
     }
 

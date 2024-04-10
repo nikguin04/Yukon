@@ -1,6 +1,7 @@
 #include "screen.h"
 
 void UpdateScreen(CliWriter *writer) {
+    printf("\x1B[2J\x1B[H");// Clear screen for clean printing and home
     // Check here if game is paused, etc...
     print_yukon_model(writer->ctrl->model->yukon, writer->ctrl->model->OPTION_IGNORE_HIDDEN);
 

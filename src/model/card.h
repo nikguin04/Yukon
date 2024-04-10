@@ -46,7 +46,7 @@ typedef struct cardStruct { // linked list node
     #define card_ll_h
     
 
-    ll_node_card* ParseCharCard(char* card);
+    ll_node_card* ParseCharCard(char* card, char** msg);
     ll_node_card* NewCardAllocate(int value, CardSuit suit);
     ll_node_card* CardToLinkedCard(Card *c);
 

@@ -9,20 +9,20 @@ void PrintDeck(ll_node_card *carddeck) {
     }
 }
 
-ll_node_card* LoadDeck(char* path) {
+ll_node_card* LoadDeck(char* path, char** msg) {
     FILE* ptr;
     char readbuffer[4];
     char* ch = readbuffer;
  
     // Opening file in reading mode
     if (path == NULL) {
-        printf("No path given to LoadDeck \n");
+        *msg = "No path given to LoadDeck";
         return OpenDefaultDeck();
     }
     ptr = fopen(path, "r");
  
     if (NULL == ptr) {
-        printf("file can't be opened \n");
+        *msg = "File can't be opened";
         return OpenDefaultDeck();
     }
     
@@ -34,8 +34,10 @@ ll_node_card* LoadDeck(char* path) {
         if (*ch == '\n' || *ch == EOF) {
             depth_counter++;
             //*ch == NULL;
-            ll_node_card *card = ParseCharCard(readbuffer);
-            if (card == NULL) {return NULL;};
+            ll_node_card *card = ParseCharCard(readbuffer, msg);
+            if (card == NULL) {
+                return OpenDefaultDeck();
+            };
             if (first_card == NULL) {
                 first_card = card;
                 current_card = card;
@@ -47,8 +49,8 @@ ll_node_card* LoadDeck(char* path) {
 
             ch = readbuffer;
         } else if (ch - readbuffer >= 2) {
-            printf("Format is wrong, read 3 or more characters on one line\n");
-            return NULL;
+            *msg = "Format is wrong, read 3 or more characters on one line";
+            return OpenDefaultDeck();
         } else {
             ch++;
         }
@@ -59,8 +61,8 @@ ll_node_card* LoadDeck(char* path) {
     // Closing the file
     fclose(ptr);
     if (depth_counter != DECK_LENGTH) {
-        printf("Wrong size of deck loaded, expected size (%d), got size (%d)\n", DECK_LENGTH, depth_counter);
-        return NULL;
+        *msg = "Wrong size of deck loaded. Expected 52"; // hardcoded to 52
+        return OpenDefaultDeck();
     }
     return first_card;
 }

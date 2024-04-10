@@ -1,9 +1,10 @@
 #include "command_controller.h"
 
 char* LoadDeckAtPath(Controller *ctrl, char* path) {
-    ctrl->model->deck = LoadDeck(path);
+    char *msg;
+    ctrl->model->deck = LoadDeck(path, &msg);
     DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-    return "Loaded deck successfully!";
+    return msg;
 }
 
 

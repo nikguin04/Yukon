@@ -61,14 +61,14 @@ Command* MatchCommand(char* cmdinput, size_t *len) {
             if (candidate_char != cmdinput[a] || candidate_char == NULL) { //  || candidate_char == (candidate_tail->command->takes_input ? '\n' : ' ')
                 candidate_tail->skip = true;
                 if ((cmdinput[a] == ' ' || cmdinput[a] == NULL) && a == strlen(candidate_tail->command->input)) {
-                    printf("TEMP! found cmd!, %s\n", candidate_tail->command->friendly_name);
+                    //printf("TEMP! found cmd!, %s\n", candidate_tail->command->friendly_name);
                     Command* ret = candidate_tail->command;
                     return ret;
                 }
             }
             candidate_tail = candidate_tail->next;
         }
-        if (allskip == true) {printf("COMMAND NOT FOUND!"); return NULL;}
+        if (allskip == true) {return NULL;}
     }
 }
 
