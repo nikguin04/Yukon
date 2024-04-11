@@ -4,7 +4,8 @@ Command commands[] = {
 	{"LD", "Load", LoadDeckFromFile},
 	{"SD", "Save", SaveDeckToFile},
 	{"SW", "Show", ShowDeck},
-	{}
+	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
+    {}
 };
 
 void StartReadingLoop(CliWriter *writer) {

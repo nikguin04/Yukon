@@ -3,8 +3,9 @@
 #include "linkedlist.h"
 #include <stdlib.h>
 
-ll_node_card *shuffleInterleaving(ll_node_card **deckptr, int split) {
-	ll_node_card *deckPointer = *deckptr;
+ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split) {
+//	ll_node_card *deckPointer = *deckptr;
+    printf("Split is: %d", split);
 
 	ll_node_card **topSplitCardsFromDeck = (ll_node_card **) malloc(sizeof(ll_node_card *) * split);
 	ll_node_card *current_card = deckPointer;
@@ -40,8 +41,8 @@ ll_node_card *shuffleInterleaving(ll_node_card **deckptr, int split) {
 	return shuffledDeck;
 }
 
-ll_node_card *shuffleRandom(ll_node_card **deckptr) {
-	ll_node_card *deckPointer = *deckptr;
+ll_node_card *shuffleRandom(ll_node_card *deckPointer) {
+//	ll_node_card *deckPointer = *deckptr;
 	ll_node_card *shuffledDeck = NULL;
 
 	int counter = 1;
