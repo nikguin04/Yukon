@@ -121,6 +121,7 @@ ll_node_card *OpenDefaultDeck() {
 		ptr->next = CardToLinkedCard(&defaultDeck[i]);
 		ptr = ptr->next;
 	}
+    ptr->next = NULL;
 	return first;
 }
 
