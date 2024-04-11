@@ -1,9 +1,10 @@
 #include "command_reader.h"
 
-Command commands[COMMAND_COUNT + 1] = {
+Command commands[] = {
 	{"LD", "Load", LoadDeckFromFile},
 	{"SD", "Save", SaveDeckToFile},
-	{"SW", "Show", ShowDeck}
+	{"SW", "Show", ShowDeck},
+	{}
 };
 
 void StartReadingLoop(CliWriter *writer) {
@@ -46,7 +47,7 @@ Command *MatchCommand(char *cmdinput, size_t *len) {
 	}
 	ll_node_command *candidatell = (ll_node_command *) malloc(sizeof(ll_node_command));
 	ll_node_command *candidate_tail = candidatell;
-	for (int i = 0; i < COMMAND_COUNT; i++) {
+	for (int i = 0; commands[i].input != NULL; i++) {
 		candidate_tail->command = &commands[i];
 		candidate_tail->next = (ll_node_command *) malloc(sizeof(ll_node_command));
 		candidate_tail->skip = false;
@@ -57,7 +58,7 @@ Command *MatchCommand(char *cmdinput, size_t *len) {
 	for (int a = 0; a < *len + 1; a++) { // plus one here so we hit a null or space
 		candidate_tail = candidatell;
 		bool allskip = true;
-		for (int i = 0; i < COMMAND_COUNT; i++) {
+		for (int i = 0; commands[i].input != NULL; i++) {
 			if (candidate_tail->skip) {
 				candidate_tail = candidate_tail->next;
 				continue;

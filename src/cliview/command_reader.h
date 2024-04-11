@@ -13,8 +13,7 @@ typedef struct commandStruct {
 	CommandFunction function;
 } Command;
 
-#define COMMAND_COUNT 2
-extern Command commands[COMMAND_COUNT + 1];
+extern Command commands[];
 
 // WORSØE PLEASE FIX WITH BEAUTIFUL MACRO!
 typedef struct ll_node_cmd { // linked list node
