@@ -63,6 +63,7 @@ ll_node_card *LoadDeck(const char *path, char **msg) {
 		*msg = "Wrong size of deck loaded. Expected 52"; // hardcoded to 52
 		return OpenDefaultDeck();
 	}
+	*msg = "OK";
 	return first_card;
 }
 
