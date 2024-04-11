@@ -3,7 +3,7 @@
 
 #include <string.h>
 #include "writer.h"
-#include "command_controller.h"
+#include "../controller/command_controller.h"
 #include "screen.h"
 
 typedef char *(*CommandFunction)(Controller *, char *);
