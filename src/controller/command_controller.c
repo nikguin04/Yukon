@@ -9,7 +9,6 @@ char *LoadDeckFromFile(Controller *ctrl, char *path) {
 
 char *SaveDeckToFile(Controller *ctrl, char *path) {
 	char *msg;
-	YukonToDeck(ctrl->model->deck, ctrl->model->yukon);
 	SaveDeck(ctrl->model->deck, path, &msg);
 	return msg;
 }
