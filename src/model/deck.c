@@ -9,7 +9,7 @@ void PrintDeck(ll_node_card *deck) {
 	}
 }
 
-ll_node_card *LoadDeck(const char *path, char **msg) {
+ll_node_card *LoadDeck(const char *path, const char **msg) {
 	FILE *ptr;
 	char readbuffer[4];
 	char *ch = readbuffer;
@@ -67,7 +67,7 @@ ll_node_card *LoadDeck(const char *path, char **msg) {
 	return first_card;
 }
 
-bool SaveDeck(ll_node_card *deck, const char *path, char **msg) {
+bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 	if (path == NULL) {
 		*msg = "No filename given";
 		return false;

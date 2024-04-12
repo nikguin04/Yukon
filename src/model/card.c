@@ -7,7 +7,7 @@ Card *CreateCard(int card_value, CardSuit suit) {
 	return card;
 }
 
-ll_node_card *ParseCharCard(const char *card, char **msg) {
+ll_node_card *ParseCharCard(const char *card, const char **msg) {
 	CardSuit suit = (CardSuit) card[1];
 	int value;
 	switch (suit) {

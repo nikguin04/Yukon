@@ -1,6 +1,6 @@
 #include "command_reader.h"
 
-Command commands[] = {
+const Command commands[] = {
 	{"LD", "Load",                 LoadDeckFromFile},
 	{"SD", "Save",                 SaveDeckToFile},
 	{"SW", "Show",                 ShowDeck},
@@ -17,10 +17,9 @@ void StartReadingLoop(CliWriter *writer) {
 		GetInput(&string, &size, &len);
 		// Free last commands from writer
 		free(writer->last_command);
-		//free(writer->last_command_result); // Maybe this is not needed! check this if writing result messages fails
 		writer->last_command = string;
 
-		Command *cmd = MatchCommand(string);
+		const Command *cmd = MatchCommand(string);
 
 		char *parsed_arg;
 		if (cmd != NULL) {
@@ -42,7 +41,7 @@ char *CmdArgParse(char *input) {
 	}
 }
 
-Command *MatchCommand(char *cmdinput) {
+const Command *MatchCommand(const char *cmdinput) {
 	if (strlen(cmdinput) == 0) {
 		printf("Command input is empty!\n");
 		return NULL;
@@ -52,7 +51,7 @@ Command *MatchCommand(char *cmdinput) {
 		// Check if input starts with command
 		bool test = (cmdinput == strstr(cmdinput, commands[i].input));
 		if (!test) { continue; }
-		char *nextptr = cmdinput + strlen(commands[i].input);
+		const char *nextptr = cmdinput + strlen(commands[i].input);
 		if (nextptr[0] == 0 || nextptr[0] == ' ') {
 			return &commands[i];
 		}
