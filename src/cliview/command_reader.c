@@ -18,14 +18,20 @@ void StartReadingLoop(CliWriter *writer) {
 		//free(writer->last_command_result); // Maybe this is not needed! check this if writing result messages fails
 		writer->last_command = string;
 
-		Command *cmd = MatchCommand(string, &len);
+		Command *cmd = MatchCommand(string);
 
 		char *parsed_arg;
 		if (cmd != NULL) {
 			parsed_arg = CmdArgParse(string + strlen(cmd->input));
 			writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
 		} else { // else if: check that it could be a move
-			writer->last_command_result = "No command found!";
+            int ismove = MatchMove(string);
+            if (ismove) {
+                writer->last_command_result = "Game move detected, but function is not implemented yet";
+            } else {
+                writer->last_command_result = "No command found!";
+            }
+
 		}
 		//free(string);
 		UpdateScreen(writer);
@@ -40,43 +46,29 @@ char *CmdArgParse(char *input) {
 	}
 }
 
-Command *MatchCommand(char *cmdinput, size_t *len) {
+Command *MatchCommand(char *cmdinput) {
 	if (strlen(cmdinput) == 0) {
-		printf("Command input is empty!\n");
+		printf("Command input is empty!\n"); // handle this properly
 		return NULL;
 	}
-	ll_node_command *candidatell = (ll_node_command *) malloc(sizeof(ll_node_command));
-	ll_node_command *candidate_tail = candidatell;
-	for (int i = 0; commands[i].input != NULL; i++) {
-		candidate_tail->command = &commands[i];
-		candidate_tail->next = (ll_node_command *) malloc(sizeof(ll_node_command));
-		candidate_tail->skip = false;
-		candidate_tail = candidate_tail->next;
-	}
-	candidate_tail = NULL;
 
-	for (int a = 0; a < *len + 1; a++) { // plus one here so we hit a null or space
-		candidate_tail = candidatell;
-		bool allskip = true;
-		for (int i = 0; commands[i].input != NULL; i++) {
-			if (candidate_tail->skip) {
-				candidate_tail = candidate_tail->next;
-				continue;
-			}
-			allskip = false;
-			char candidate_char = candidate_tail->command->input[a];
+    for (int i = 0; i < 3; i++) { // TODO: HARDCODED, spørg worsøe
+        bool test = (cmdinput == strstr(cmdinput, commands[i].input));// Check if input starts with command
+        if (!test) { continue;}
+        char *nextptr = cmdinput + strlen(commands[i].input);
+        if (nextptr[0] == 0 || nextptr[0] == ' ') {
+            return &commands[i];
+        }
+    }
+    return 0;
+}
 
-			if (candidate_char != cmdinput[a] || candidate_char == 0) { //  || candidate_char == (candidate_tail->command->takes_input ? '\n' : ' ')
-				candidate_tail->skip = true;
-				if ((cmdinput[a] == ' ' || cmdinput[a] == 0) && a == strlen(candidate_tail->command->input)) {
-					Command *ret = candidate_tail->command;
-					return ret;
-				}
-			}
-			candidate_tail = candidate_tail->next;
-		}
-		if (allskip) return NULL;
-	}
+int MatchMove(char *mvinput) {
+    char from[6];
+    char to[3];
+    int initret = sscanf(mvinput, "%5[^-]\x2D>%s", from, to);
+    // DO ALL GAME MOVE VALIDATION HERE!
+    return initret==2; // no move found?
 }
 
 void GetInput(char **string, size_t *size, size_t *len) {
