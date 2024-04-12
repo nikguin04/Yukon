@@ -8,4 +8,5 @@ char *SaveDeckToFile(Controller *ctrl, char *path);
 char *ShowDeck(Controller *ctrl, char *input);
 char *ShuffleInterleaving(Controller *ctrl, char *split);
 char *ShuffleRandom(Controller *ctrl, char *split);
+char *QuitAndExit(Controller *ctrl, char *split);
 #endif

@@ -1,5 +1,6 @@
 #include "command_controller.h"
 #include <cardShuffler.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 char *LoadDeckFromFile(Controller *ctrl, char *path) {
@@ -39,4 +40,9 @@ char *ShuffleRandom(Controller *ctrl, char *split) {
     ctrl->model->deck = shuffleRandom(ctrl->model->deck);
     DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
     return "Deck randomly shuffled";
+}
+
+char *QuitAndExit(Controller *_c, char *_i) {
+    printf("Exiting game\n");
+    exit(1);
 }

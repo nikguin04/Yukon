@@ -5,8 +5,9 @@ Command commands[] = {
 	{"SD", "Save", SaveDeckToFile},
 	{"SW", "Show", ShowDeck},
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
-    {"SR", "Random Shuffle", ShuffleRandom},
-    {}
+	{"SR", "Random Shuffle", ShuffleRandom},
+	{"QQ", "Quit and exit game", QuitAndExit},
+	{}
 };
 
 void StartReadingLoop(CliWriter *writer) {
@@ -48,7 +49,7 @@ Command *MatchCommand(char *cmdinput) {
 		return NULL;
 	}
 
-	for (int i = 0; i < 3; i++) { // TODO: HARDCODED, spørg Worsøe
+	for (int i = 0; i < 6; i++) { // TODO: HARDCODED, spørg Worsøe
 		// Check if input starts with command
 		bool test = (cmdinput == strstr(cmdinput, commands[i].input));
 		if (!test) { continue; }
