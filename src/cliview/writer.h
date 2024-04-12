@@ -13,5 +13,5 @@ typedef struct CliWriterStructure {
 } CliWriter;
 
 void initWriter(CliWriter *writer, Controller *ctrl);
-
+void PrintWelcome(CliWriter *writer);
 #endif

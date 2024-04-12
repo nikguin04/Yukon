@@ -11,6 +11,7 @@ int main() {
 	initController(ctrl, model);
 	initWriter(writer, ctrl);
 
+    PrintWelcome(writer);
 	StartReadingLoop(writer);
 	return 0;
 }
