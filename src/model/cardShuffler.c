@@ -4,25 +4,22 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** msg, bool randSplit) {
-    ll_node_card *originalDeckPointer = deckPointer;
-    if (randSplit) {
-        split = (rand() % 52) + 1;
-        *msg = "Deck shuffled with random split";
-    }
-    else if (split <= 0 || split >= 52) {
-        *msg = "Incorrect input";
-        return deckPointer;
-    }
-    else {
-        *msg = "Deck shuffled with interleaving shuffle";
-    }
-
+ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char **msg, bool randSplit) {
+	ll_node_card *originalDeckPointer = deckPointer;
+	if (randSplit) {
+		split = (rand() % 52) + 1;
+		*msg = "Deck shuffled with random split";
+	} else if (split <= 0 || split >= 52) {
+		*msg = "Incorrect input";
+		return deckPointer;
+	} else {
+		*msg = "Deck shuffled with interleaving shuffle";
+	}
 
 	ll_node_card **topSplitCardsFromDeck = (ll_node_card **) malloc(sizeof(ll_node_card *) * split);
-//	ll_node_card *current_card = deckPointer;
+	//ll_node_card *current_card = deckPointer;
 	for (int i = 0; i < split; i++) {
-        topSplitCardsFromDeck[i] = deckPointer;
+		topSplitCardsFromDeck[i] = deckPointer;
 		deckPointer = deckPointer->next;
 	}
 
@@ -41,17 +38,17 @@ ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** m
 		while (deckPointer != NULL) {
 			appendCardToEndOfList(&shuffledDeck, deckPointer->card);
 			ll_node_card *tmp = deckPointer;
-            deckPointer = deckPointer->next;
+			deckPointer = deckPointer->next;
 		}
 	} else if (deckPointer == NULL) {
 		while (counter < split) {
 			appendCardToEndOfList(&shuffledDeck, topSplitCardsFromDeck[counter]->card);
 			counter++;
-            freeList(deckPointer);
+			freeList(deckPointer);
 		}
 	}
 	free(topSplitCardsFromDeck);
-    return shuffledDeck;
+	return shuffledDeck;
 }
 
 ll_node_card *shuffleRandom(ll_node_card *deckPointer) {

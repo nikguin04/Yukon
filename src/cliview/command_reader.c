@@ -1,12 +1,12 @@
 #include "command_reader.h"
 
 Command commands[] = {
-	{"LD", "Load", LoadDeckFromFile},
-	{"SD", "Save", SaveDeckToFile},
-	{"SW", "Show", ShowDeck},
+	{"LD", "Load",                 LoadDeckFromFile},
+	{"SD", "Save",                 SaveDeckToFile},
+	{"SW", "Show",                 ShowDeck},
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
-	{"SR", "Random Shuffle", ShuffleRandom},
-	{"QQ", "Quit and exit game", QuitAndExit},
+	{"SR", "Random Shuffle",       ShuffleRandom},
+	{"QQ", "Quit and exit game",   QuitAndExit},
 	{}
 };
 
@@ -70,11 +70,7 @@ void GetInput(char **string, size_t *size, size_t *len) {
 	}
 	*len = strlen(*string);
 
-
-	// print the string
-	//printf("<%s> is length %ld\n", *string, *len);
-
-	// free the memory used by string when returned!
+	// TODO: Free the memory used by string when returned?
 }
 
 size_t getline(char **lineptr, size_t *n, FILE *stream) {

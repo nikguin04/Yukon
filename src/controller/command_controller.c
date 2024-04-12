@@ -23,26 +23,25 @@ char *ShowDeck(Controller *ctrl, char *_) {
 }
 
 char *ShuffleInterleaving(Controller *ctrl, char *split) {
-    char *msg;
-    if (split == NULL) {
-        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, 2, &msg, true);
-        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-        return msg;
-    }
-    else {
-        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, false);
-        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-        return msg;
-    }
+	char *msg;
+	if (split == NULL) {
+		ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, 2, &msg, true);
+		DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+		return msg;
+	} else {
+		ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, false);
+		DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+		return msg;
+	}
 }
 
 char *ShuffleRandom(Controller *ctrl, char *split) {
-    ctrl->model->deck = shuffleRandom(ctrl->model->deck);
-    DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-    return "Deck randomly shuffled";
+	ctrl->model->deck = shuffleRandom(ctrl->model->deck);
+	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	return "Deck randomly shuffled";
 }
 
 char *QuitAndExit(Controller *_c, char *_i) {
-    printf("Exiting game\n");
-    exit(1);
+	printf("Exiting game\n");
+	exit(1);
 }
