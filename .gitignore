@@ -57,3 +57,4 @@ cmake-build-release
 .vscode
 build
 .idea
+.cache
