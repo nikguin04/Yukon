@@ -10,9 +10,9 @@ ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** m
         split = (rand() % 52) + 1;
         *msg = "Deck shuffled with random split";
     }
-    else if (split <= 0 || split > 52) {
+    else if (split <= 0 || split >= 52) {
         *msg = "Incorrect input";
-        return NULL;
+        return deckPointer;
     }
     else {
         *msg = "Deck shuffled with interleaving shuffle";

@@ -24,7 +24,7 @@ char *ShowDeck(Controller *ctrl, char *_) {
 char *ShuffleInterleaving(Controller *ctrl, char *split) {
     char *msg;
     if (split == NULL) {
-        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, true);
+        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, 2, &msg, true);
         DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
         return msg;
     }
