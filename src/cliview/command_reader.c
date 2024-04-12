@@ -73,7 +73,7 @@ void GetInput(char **string, size_t *size, size_t *len) {
 
 size_t getline(char **lineptr, size_t *n, FILE *stream) {
 	char *bufptr = NULL;
-	char *p = bufptr;
+	char *p;
 	size_t size;
 	int c;
 

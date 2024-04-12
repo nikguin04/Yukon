@@ -7,7 +7,7 @@ void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns in
 	for (int i = 1; i < COLUMN_SIZE; i++) {
 		movingdeck->next = yukon->columnFront[i];
 		yukon->columnFront[i] = NULL;
-		while (movingdeck->next != NULL) { movingdeck = movingdeck->next; };
+		while (movingdeck->next != NULL) { movingdeck = movingdeck->next; }
 	}
 }
 
@@ -17,7 +17,7 @@ void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHei
 	if (!deckindex) {
 		printf("Exiting due to nulled deck passed to DeckToYukon()\n");
 		exit(0);
-	};
+	}
 	for (int i = 0; i < COLUMN_SIZE; i++) {
 		yukon->columnFront[i] = DuplicateCardNode(deckindex, true);
 		columnTail[i] = yukon->columnFront[i];

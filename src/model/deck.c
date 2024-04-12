@@ -37,7 +37,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 			ll_node_card *card = ParseCharCard(readbuffer, msg);
 			if (card == NULL) {
 				return OpenDefaultDeck();
-			};
+			}
 			if (first_card == NULL) {
 				first_card = card;
 				current_card = card;
