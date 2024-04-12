@@ -7,7 +7,6 @@ Command commands[] = {
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
 	{"SR", "Random Shuffle",       ShuffleRandom},
 	{"QQ", "Quit and exit game",   QuitAndExit},
-	{}
 };
 
 void StartReadingLoop(CliWriter *writer) {
@@ -49,7 +48,7 @@ Command *MatchCommand(char *cmdinput) {
 		return NULL;
 	}
 
-	for (int i = 0; i < 6; i++) { // TODO: HARDCODED, spørg Worsøe
+	for (int i = 0; i < COMMAND_COUNT; i++) {
 		// Check if input starts with command
 		bool test = (cmdinput == strstr(cmdinput, commands[i].input));
 		if (!test) { continue; }

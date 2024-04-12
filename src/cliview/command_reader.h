@@ -14,6 +14,7 @@ typedef struct commandStruct {
 } Command;
 
 extern Command commands[];
+#define COMMAND_COUNT sizeof(commands) / sizeof(commands[0])
 
 // WORSØE PLEASE FIX WITH BEAUTIFUL MACRO!
 typedef struct ll_node_cmd { // linked list node
