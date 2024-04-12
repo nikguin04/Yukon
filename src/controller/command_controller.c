@@ -1,5 +1,6 @@
 #include "command_controller.h"
 #include <cardShuffler.h>
+#include <stdlib.h>
 
 char *LoadDeckFromFile(Controller *ctrl, char *path) {
 	char *msg;
@@ -21,7 +22,21 @@ char *ShowDeck(Controller *ctrl, char *_) {
 }
 
 char *ShuffleInterleaving(Controller *ctrl, char *split) {
-    ll_node_card *shuffledDeck = shuffleInterleaving(ctrl->model->deck, (int)split[0]);
-    ctrl->model->deck = shuffledDeck;
-    return "Deck shuffled";
+    char *msg;
+    if (split == NULL) {
+        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, true);
+        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+        return msg;
+    }
+    else {
+        ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, false);
+        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+        return msg;
+    }
+}
+
+char *ShuffleRandom(Controller *ctrl, char *split) {
+    ctrl->model->deck = shuffleRandom(ctrl->model->deck);
+    DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+    return "Deck randomly shuffled";
 }

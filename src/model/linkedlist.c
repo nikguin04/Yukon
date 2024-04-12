@@ -1,5 +1,15 @@
 #include "linkedlist.h"
 
+
+void freeList(ll_node_card *list) {
+    ll_node_card *listPointer = list;
+    while (listPointer != NULL) {
+        ll_node_card *tmp = listPointer;
+        listPointer = listPointer->next;
+        free(tmp);
+    }
+}
+
 void insertCardAtIndex(ll_node_card **list, Card card, int index) {
 	ll_node_card *nodeToInsert = appendCardElement(card);
 	if (!*list) {

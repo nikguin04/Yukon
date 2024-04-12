@@ -5,6 +5,7 @@ Command commands[] = {
 	{"SD", "Save", SaveDeckToFile},
 	{"SW", "Show", ShowDeck},
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
+    {"SR", "Random Shuffle", ShuffleRandom},
     {}
 };
 
