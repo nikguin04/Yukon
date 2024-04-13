@@ -25,8 +25,13 @@ void StartReadingLoop(CliWriter *writer) {
 		if (cmd != NULL) {
 			parsed_arg = CmdArgParse(string + strlen(cmd->input));
 			writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
-		} else { // else if: check that it could be a move
-			writer->last_command_result = "No command found!";
+		} else {
+			Move move = MatchMove(string);
+			if (move.from != 0) {
+				// TODO: Handle move
+			} else {
+				writer->last_command_result = "Invalid command or move!";
+			}
 		}
 		//free(string);
 		UpdateScreen(writer);
@@ -56,6 +61,28 @@ const Command *MatchCommand(const char *cmdinput) {
 			return &commands[i];
 		}
 	}
+	return 0;
+}
+
+Move MatchMove(const char *input) {
+	Move move = {};
+	size_t len = strlen(input);
+	if (len != 6 && len != 9) return move;
+	char from = MatchPile(input);
+	char to = MatchPile(input + (len - 2));
+	if (from == 0 || to == 0) return move;
+	// TODO: Handle validation of arrow and colon
+	// TODO: Handle card parsing
+	move.from = from;
+	move.to = to;
+	return move;
+}
+
+char MatchPile(const char *input) {
+	int num = input[1] - '0';
+	if (num < 1) return 0;
+	else if (input[0] == 'C' && num <= 7) return (char) num;
+	else if (input[0] == 'F' && num <= 4) return (char) -num;
 	return 0;
 }
 

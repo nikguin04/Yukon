@@ -3,8 +3,9 @@
 
 #include <string.h>
 #include "writer.h"
-#include "../controller/command_controller.h"
 #include "screen.h"
+#include "../controller/command_controller.h"
+#include "../model/move.h"
 
 typedef const char *(*CommandFunction)(Controller *, char *);
 typedef struct commandStruct {
@@ -25,6 +26,8 @@ typedef struct ll_node_cmd { // linked list node
 
 void StartReadingLoop(CliWriter *writer);
 const Command *MatchCommand(const char *cmdinput);
+Move MatchMove(const char *input);
+char MatchPile(const char *input);
 void GetInput(char **string, size_t *size, size_t *len);
 size_t getline(char **lineptr, size_t *n, FILE *stream);
 char *CmdArgParse(char *input);
