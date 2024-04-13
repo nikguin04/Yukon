@@ -40,7 +40,7 @@ void PrintFoundationPiles(YukonStructure *yukon) {
 		printf("%c[%d;%dH", '\x1B', 2+2*i, 8*COLUMN_SIZE); // Move to %d line and %d column (tab size times columns)
 			char cardstr[3] = "[]";
 		if (yukon->foundationPile[i] != NULL) { cardToString(&yukon->foundationPile[i]->card, cardstr); }
-		printf("%s\tF%d", cardstr, i+1);
+		printf("%s F%d", cardstr, i+1);
 	}
 
 

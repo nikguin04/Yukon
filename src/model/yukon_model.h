@@ -12,11 +12,14 @@ typedef struct yukonStruct {
 	ll_node_card *columnFront[COLUMN_SIZE];
 
 	ll_node_card *foundationPile[FOUNDATION_SIZE];
+	bool play_phase;
 } YukonStructure;
 
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHeightArray);
 void YukonToDeck(ll_node_card *deck, YukonStructure *yukon);
 
 ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden);
+void ClearGame(YukonStructure *yukon);
+void ExposeYukonCards(YukonStructure *yukon, const int amt_to_expose, const int *columnHeightArray);
 
 #endif

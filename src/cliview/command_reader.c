@@ -7,6 +7,8 @@ const Command commands[] = {
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
 	{"SR", "Random Shuffle",       ShuffleRandom},
 	{"QQ", "Quit and exit game",   QuitAndExit},
+	{"Q", "Quit game",			   QuitGame},
+	{"P", "Play game",			   PlayGame},
 };
 
 void StartReadingLoop(CliWriter *writer) {

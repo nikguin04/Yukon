@@ -1,4 +1,5 @@
 #include "command_controller.h"
+#include "yukon_model.h"
 #include <cardShuffler.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,4 +45,30 @@ const char *ShuffleRandom(Controller *ctrl, char *split) {
 const char *QuitAndExit(Controller *_c, char *_i) {
 	printf("Exiting game\n");
 	exit(1);
+}
+
+const char *QuitGame(Controller *ctrl, char *_) {
+    if (ctrl->model->yukon->play_phase) {
+        ctrl->model->yukon->play_phase = false;
+        ClearGame(ctrl->model->yukon);
+        return "Game quit successfully";
+    } else {
+        return "Cannot quit game while not playing";
+    }
+    
+}
+
+const char *PlayGame(Controller *ctrl, char *_) {
+    if (!ctrl->model->yukon->play_phase) {
+        if (ctrl->model->deck) {
+            ctrl->model->yukon->play_phase = true;
+            DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
+            ExposeYukonCards(ctrl->model->yukon, 5, COLUMN_STARTSIZE);
+            return "Game play started successfully";
+        } else {
+            return "Cannot start game with an empty deck!";
+        }
+    } else {
+        return "Cannot play game while already playing!";
+    }
 }
