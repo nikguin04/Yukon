@@ -60,7 +60,7 @@ ll_node_card *CardToLinkedCard(Card *c) {
 	return card;
 }
 
-char *cardToString(Card *card, char *cardStr) {
+char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
 	cardStr[2] = 0;
 
 	switch (card->card_value) {

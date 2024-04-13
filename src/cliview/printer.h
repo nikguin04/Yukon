@@ -5,5 +5,6 @@
 #include "../model/yukon_model.h"
 
 void printYukonModel(YukonStructure *yukon, bool forceShow);
+void PrintFoundationPiles(YukonStructure *yukon);
 
 #endif
