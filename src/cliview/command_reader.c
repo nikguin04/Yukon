@@ -65,14 +65,47 @@ const Command *MatchCommand(const char *cmdinput) {
 }
 
 Move MatchMove(const char *input) {
+	// Returned as-is if input was invalid
 	Move move = {};
 	size_t len = strlen(input);
 	if (len != 6 && len != 9) return move;
+
+	// Make a pointer at where the arrow should start (fourth last character)
+	// Then check for the arrow and leave p right after, where the dest should be
+	const char *p = input + (len - 4);
+	if (*(p++) != '-' || *(p++) != '>') return move;
+
+	// Try to parse the source and destination, and check that they're valid
 	char from = MatchPile(input);
-	char to = MatchPile(input + (len - 2));
+	char to = MatchPile(p);
 	if (from == 0 || to == 0) return move;
-	// TODO: Handle validation of arrow and colon
-	// TODO: Handle card parsing
+
+	// If length is 9, a specific card is specified
+	if (len == 9) {
+		// You can't select a specific card from a foundation pile
+		if (from < 0) return move;
+		char cardValue;
+		CardSuit cardSuit;
+		if (input[2] != ':') return move;
+		cardSuit = (CardSuit) input[4];
+		// Not the prettiest to list them out, but it works...
+		if (cardSuit != CLUBS &&
+		    cardSuit != DIAMONDS &&
+		    cardSuit != HEARTS &&
+		    cardSuit != SPADES)
+			return move;
+		switch (input[3]) {
+			case 'A': cardValue = 1; break;
+			case 'T': cardValue = 10; break;
+			case 'J': cardValue = 11; break;
+			case 'Q': cardValue = 12; break;
+			case 'K': cardValue = 13; break;
+			default: cardValue = (char) (input[3] - '0');
+				if (cardValue < 2 || cardValue > 9) return move;
+		}
+		move.fromCardValue = cardValue;
+		move.fromCardSuit = cardSuit;
+	}
 	move.from = from;
 	move.to = to;
 	return move;
