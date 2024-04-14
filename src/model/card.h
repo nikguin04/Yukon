@@ -35,7 +35,7 @@ ll_node_card *CardToLinkedCard(Card *c);
 
 char *cardToString(Card *card, char *out);
 
-#include "deck.h"
+//#include "deck.h"
 
 #endif
 #endif
