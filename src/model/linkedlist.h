@@ -7,6 +7,7 @@
 
 typedef struct ll_node_c { // linked list node
 	Card card;
+	bool hidden;
 	struct ll_node_c *next;
 } ll_node_card;
 

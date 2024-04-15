@@ -18,7 +18,7 @@ void printYukonModel(YukonStructure *yukon, bool forceShow) { // NOTE: a flush o
 		tailEmpty = true;
 		for (int i = 0; i < NUM_COLUMNS; i++) { // Print column headers
 			if (cur_card_ptr[i] != NULL) {
-				if (forceShow || !cur_card_ptr[i]->card.hidden) {
+				if (forceShow || !cur_card_ptr[i]->hidden) {
 					char cardStr[3];
 					cardToString(&cur_card_ptr[i]->card, cardStr);
 					printf("%s", cardStr);

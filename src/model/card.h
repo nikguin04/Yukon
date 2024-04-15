@@ -17,7 +17,6 @@ typedef enum : char {
 typedef struct cardStruct {
 	char value;
 	CardSuit suit;
-	bool hidden;
 } Card;
 
 #include "linkedlist.h"

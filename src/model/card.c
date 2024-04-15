@@ -49,14 +49,15 @@ ll_node_card *NewCardAllocate(int value, CardSuit suit) {
 	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
 	card->card.value = value;
 	card->card.suit = suit;
+	card->hidden = false;
 	return card;
 }
 
 ll_node_card *CardToLinkedCard(Card *c) {
 	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
 	card->card.value = c->value;
-	card->card.hidden = c->hidden;
 	card->card.suit = c->suit;
+	card->hidden = false;
 	return card;
 }
 

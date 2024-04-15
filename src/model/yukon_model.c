@@ -38,7 +38,7 @@ void ExposeYukonCards(YukonStructure *yukon, const int amt_to_expose, const int 
 	for (int i = 0; i < NUM_COLUMNS; i++) {
 		ll_node_card *card = yukon->columnFront[i];
 		for (int a = 0; a < columnHeightArray[i]; a++) {
-			card->card.hidden = (columnHeightArray[i] - a > amt_to_expose);
+			card->hidden = (columnHeightArray[i] - a > amt_to_expose);
 			card = card->next;
 		}
 	}
@@ -48,7 +48,7 @@ ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden) {
 	ll_node_card *newCard = (ll_node_card *) malloc(sizeof(ll_node_card));
 	newCard->card.value = card->card.value;
 	newCard->card.suit = card->card.suit;
-	newCard->card.hidden = hidden;
+	newCard->hidden = hidden;
 	newCard->next = NULL;
 	return newCard;
 }
