@@ -87,3 +87,7 @@ char *CardToString(Card card, char *cardStr) {
 	cardStr[1] = card.suit;
 	return cardStr;
 }
+
+inline bool CardEquals(Card a, Card b) {
+	return a.suit == b.suit && a.value == b.value;
+}

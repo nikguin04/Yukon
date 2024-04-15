@@ -19,6 +19,8 @@ typedef struct cardStruct {
 	CardSuit suit;
 } Card;
 
+bool CardEquals(Card a, Card b);
+
 #include "linkedlist.h"
 
 #endif

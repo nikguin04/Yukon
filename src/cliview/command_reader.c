@@ -27,8 +27,13 @@ const Command commands[] = {
 		if (cmd != NULL) {
 			parsed_arg = CmdArgParse(string + strlen(cmd->input));
 			writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
-		} else { // else if: check that it could be a move
-			writer->last_command_result = "No command found!";
+		} else {
+			Move move = MatchMove(string);
+			if (move.from != 0) {
+				writer->last_command_result = PerformMove(writer->ctrl, move);
+			} else {
+				writer->last_command_result = "Invalid command or move!";
+			}
 		}
 		//free(string);
 		UpdateScreen(writer);
@@ -59,6 +64,68 @@ const Command *MatchCommand(const char *input) {
 		}
 	}
 	return 0;
+}
+
+Move MatchMove(const char *input) {
+	// Returned as-is if input was invalid
+	Move move = {};
+	size_t len = strlen(input);
+	if (len != 6 && len != 9) return move;
+
+	// Make a pointer at where the arrow should start (fourth last character)
+	// Then check for the arrow and leave p right after, where the dest should be
+	const char *p = input + (len - 4);
+	if (*(p++) != '-' || *(p++) != '>') return move;
+
+	// Try to parse the source and destination, and check that they're valid
+	char from = MatchPile(input);
+	char to = MatchPile(p);
+	if (from == 0 || to == 0) return move;
+
+	// If length is 9, a specific card is specified
+	if (len == 9) {
+		// You can't select a specific card from a foundation pile
+		if (from < 0) return move;
+		if (input[2] != ':') return move;
+		Card card = MatchCard(input + 3);
+		if (card.suit == 0) return move;
+		move.card = card;
+	}
+	move.from = from;
+	move.to = to;
+	return move;
+}
+
+char MatchPile(const char *input) {
+	int num = input[1] - '0';
+	if (num < 1) return 0;
+	else if (input[0] == 'C' && num <= 7) return (char) num;
+	else if (input[0] == 'F' && num <= 4) return (char) -num;
+	return 0;
+}
+
+Card MatchCard(const char *input) {
+	Card card = {};
+	CardSuit suit = (CardSuit) input[1];
+	// Not the prettiest to list them out, but it works...
+	if (suit != CLUBS &&
+	    suit != DIAMONDS &&
+	    suit != HEARTS &&
+	    suit != SPADES)
+		return card;
+	char value = input[0];
+	switch (value) {
+		case 'A': value = 1; break;
+		case 'T': value = 10; break;
+		case 'J': value = 11; break;
+		case 'Q': value = 12; break;
+		case 'K': value = 13; break;
+		default: value = (char) (value - '0');
+			if (value < 2 || value > 9) return card;
+	}
+	card.value = value;
+	card.suit = suit;
+	return card;
 }
 
 void GetInput(char **string, size_t *size, size_t *len) {
