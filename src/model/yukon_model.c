@@ -34,11 +34,11 @@ void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHei
 	}
 }
 
-void ExposeYukonCards(YukonStructure *yukon, const int amt_to_expose, const int *columnHeightArray) {
+void ExposeYukonCards(YukonStructure *yukon, int amountToExpose, const int *columnHeightArray) {
 	for (int i = 0; i < NUM_COLUMNS; i++) {
 		ll_node_card *card = yukon->columnFront[i];
 		for (int a = 0; a < columnHeightArray[i]; a++) {
-			card->hidden = (columnHeightArray[i] - a > amt_to_expose);
+			card->hidden = (columnHeightArray[i] - a > amountToExpose);
 			card = card->next;
 		}
 	}

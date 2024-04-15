@@ -11,7 +11,7 @@ const Command commands[] = {
 	{"P",  "Play game",            PlayGame},
 };
 
-void StartReadingLoop(CliWriter *writer) {
+[[noreturn]] void StartReadingLoop(CliWriter *writer) {
 	while (true) { // Continues until user quits
 		char *string = NULL;
 		size_t size = 0;
@@ -103,7 +103,7 @@ size_t getline(char **lineptr, size_t *n, FILE *stream) {
 		}
 		if (c == '\n')
 			break;
-		*p++ = c; // put this behind the \n check is we want to include \n
+		*p++ = (char) c; // put this behind the \n check is we want to include \n
 
 		c = fgetc(stream);
 	}

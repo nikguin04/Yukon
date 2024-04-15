@@ -20,7 +20,7 @@ void printYukonModel(YukonStructure *yukon, bool forceShow) { // NOTE: a flush o
 			if (cur_card_ptr[i] != NULL) {
 				if (forceShow || !cur_card_ptr[i]->hidden) {
 					char cardStr[3];
-					cardToString(&cur_card_ptr[i]->card, cardStr);
+					CardToString(cur_card_ptr[i]->card, cardStr);
 					printf("%s", cardStr);
 
 				} else { printf("[]"); }
@@ -39,7 +39,7 @@ void PrintFoundationPiles(YukonStructure *yukon) {
 	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
 		printf("%c[%d;%dH", '\x1B', 2 + 2 * i, 8 * NUM_COLUMNS); // Move to %d line and %d column (tab size times columns)
 		char cardstr[3] = "[]";
-		if (yukon->foundationPile[i] != NULL) { cardToString(&yukon->foundationPile[i]->card, cardstr); }
+		if (yukon->foundationPile[i] != NULL) { CardToString(yukon->foundationPile[i]->card, cardstr); }
 		printf("%s F%d", cardstr, i + 1);
 	}
 

@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnusedParameter"
+
 const char *LoadDeckFromFile(Controller *ctrl, char *path) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot load a deck while playing game";
@@ -42,7 +45,7 @@ const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 	return msg;
 }
 
-const char *ShuffleRandom(Controller *ctrl, char *split) {
+const char *ShuffleRandom(Controller *ctrl, char *_) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot shuffle deck at random while playing";
 	ctrl->model->deck = shuffleRandom(ctrl->model->deck);
@@ -50,7 +53,7 @@ const char *ShuffleRandom(Controller *ctrl, char *split) {
 	return "Deck randomly shuffled";
 }
 
-const char *QuitAndExit(Controller *_c, char *_i) {
+const char *QuitAndExit(Controller *ctrl, char *_) {
 	printf("Exiting game\n");
 	exit(1);
 }
@@ -73,3 +76,5 @@ const char *PlayGame(Controller *ctrl, char *_) {
 	ExposeYukonCards(ctrl->model->yukon, 5, COLUMN_STARTSIZE);
 	return "Game play started successfully";
 }
+
+#pragma clang diagnostic pop

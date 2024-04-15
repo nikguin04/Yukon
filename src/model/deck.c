@@ -30,7 +30,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 	ll_node_card *current_card = NULL;
 	int depth_counter = 0;
 	do {
-		*ch = fgetc(ptr);
+		*ch = (char) fgetc(ptr);
 		if (*ch == '\n' || *ch == EOF) {
 			depth_counter++;
 			//*ch == NULL;
@@ -92,7 +92,7 @@ bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 			case 11: value = 'J'; break;
 			case 12: value = 'Q'; break;
 			case 13: value = 'K'; break;
-			default: value = '0' + card->card.value;
+			default: value = (char) ('0' + card->card.value);
 		}
 		fputc(value, file);
 		fputc(card->card.suit, file);
