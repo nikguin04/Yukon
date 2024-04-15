@@ -86,27 +86,10 @@ Move MatchMove(const char *input) {
 	if (len == 9) {
 		// You can't select a specific card from a foundation pile
 		if (from < 0) return move;
-		char cardValue;
-		CardSuit cardSuit;
 		if (input[2] != ':') return move;
-		cardSuit = (CardSuit) input[4];
-		// Not the prettiest to list them out, but it works...
-		if (cardSuit != CLUBS &&
-		    cardSuit != DIAMONDS &&
-		    cardSuit != HEARTS &&
-		    cardSuit != SPADES)
-			return move;
-		switch (input[3]) {
-			case 'A': cardValue = 1; break;
-			case 'T': cardValue = 10; break;
-			case 'J': cardValue = 11; break;
-			case 'Q': cardValue = 12; break;
-			case 'K': cardValue = 13; break;
-			default: cardValue = (char) (input[3] - '0');
-				if (cardValue < 2 || cardValue > 9) return move;
-		}
-		move.fromCardValue = cardValue;
-		move.fromCardSuit = cardSuit;
+		Card card = MatchCard(input + 3);
+		if (card.suit == 0) return move;
+		move.card = card;
 	}
 	move.from = from;
 	move.to = to;
@@ -119,6 +102,30 @@ char MatchPile(const char *input) {
 	else if (input[0] == 'C' && num <= 7) return (char) num;
 	else if (input[0] == 'F' && num <= 4) return (char) -num;
 	return 0;
+}
+
+Card MatchCard(const char *input) {
+	Card card = {};
+	CardSuit suit = (CardSuit) input[1];
+	// Not the prettiest to list them out, but it works...
+	if (suit != CLUBS &&
+	    suit != DIAMONDS &&
+	    suit != HEARTS &&
+	    suit != SPADES)
+		return card;
+	char value = input[0];
+	switch (value) {
+		case 'A': value = 1; break;
+		case 'T': value = 10; break;
+		case 'J': value = 11; break;
+		case 'Q': value = 12; break;
+		case 'K': value = 13; break;
+		default: value = (char) (value - '0');
+			if (value < 2 || value > 9) return card;
+	}
+	card.value = value;
+	card.suit = suit;
+	return card;
 }
 
 void GetInput(char **string, size_t *size, size_t *len) {
