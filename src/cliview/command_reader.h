@@ -16,13 +16,6 @@ typedef struct commandStruct {
 extern const Command commands[];
 #define COMMAND_COUNT sizeof(commands) / sizeof(commands[0])
 
-// WORSØE PLEASE FIX WITH BEAUTIFUL MACRO!
-typedef struct ll_node_cmd { // linked list node
-	Command *command;
-	struct ll_node_cmd *next;
-	bool skip;
-} ll_node_command;
-
 void StartReadingLoop(CliWriter *writer);
 const Command *MatchCommand(const char *cmdinput);
 void GetInput(char **string, size_t *size, size_t *len);

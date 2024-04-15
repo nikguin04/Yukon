@@ -1,17 +1,6 @@
 #include "yukon_model.h"
 #include "linkedlist.h"
 
-/*void YukonToDeck(ll_node_card *deck, YukonStructure *yukon) { // Puts columns into a deck again // DO NOT USE, NOT IN GAME RULES!
-	deck = yukon->columnFront[0];
-	ll_node_card *movingdeck = deck;
-	yukon->columnFront[0] = NULL;
-	for (int i = 1; i < COLUMN_SIZE; i++) {
-		movingdeck->next = yukon->columnFront[i];
-		yukon->columnFront[i] = NULL;
-		while (movingdeck->next != NULL) { movingdeck = movingdeck->next; }
-	}
-}*/ // deprecated function
-
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHeightArray) { // Puts the deck into column structure according to yukon rules
 	ll_node_card *columnTail[COLUMN_SIZE];
 	ll_node_card *deckindex = deck;
@@ -43,10 +32,6 @@ void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHei
 	for (int i = 0; i < FOUNDATION_SIZE; i++) {
 		yukon->foundationPile[i] = NULL;
 	}
-	/*yukon->foundation_CLUBS = 0;
-	yukon->foundation_DIAMONDS = 0;
-	yukon->foundation_HEARTS = 0;
-	yukon->foundation_SPADES = 0;*/
 }
 
 void ExposeYukonCards(YukonStructure *yukon, const int amt_to_expose, const int *columnHeightArray) {
