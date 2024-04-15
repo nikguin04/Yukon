@@ -7,14 +7,14 @@ ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** m
     ll_node_card *originalDeckPointer = deckPointer;
     if (randSplit) {
         split = (rand() % 52) + 1;
-        *msg = "Deck shuffled with random split";
+        *msg = "Deck shuffled with interleaving shuffle and random split";
     }
     else if (split <= 0 || split >= 52) {
         *msg = "Incorrect input";
         return deckPointer;
     }
     else {
-        *msg = "Deck shuffled with interleaving shuffle";
+        *msg = "Deck shuffled with interleaving shuffle and split";
     }
 	ll_node_card **topSplitCardsFromDeck = (ll_node_card **) malloc(sizeof(ll_node_card *) * split);
 	for (int i = 0; i < split; i++) {
