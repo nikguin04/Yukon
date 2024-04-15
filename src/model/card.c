@@ -1,8 +1,8 @@
 #include "card.h"
 
-Card *CreateCard(int card_value, CardSuit suit) {
+Card *CreateCard(int value, CardSuit suit) {
 	Card *card = malloc(sizeof(Card));
-	card->card_value = card_value;
+	card->value = value;
 	card->suit = suit;
 	return card;
 }
@@ -47,14 +47,14 @@ ll_node_card *ParseCharCard(const char *card, const char **msg) {
 
 ll_node_card *NewCardAllocate(int value, CardSuit suit) {
 	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
-	card->card.card_value = value;
+	card->card.value = value;
 	card->card.suit = suit;
 	return card;
 }
 
 ll_node_card *CardToLinkedCard(Card *c) {
 	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
-	card->card.card_value = c->card_value;
+	card->card.value = c->value;
 	card->card.hidden = c->hidden;
 	card->card.suit = c->suit;
 	return card;
@@ -63,7 +63,7 @@ ll_node_card *CardToLinkedCard(Card *c) {
 char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
 	cardStr[2] = 0;
 
-	switch (card->card_value) {
+	switch (card->value) {
 		case 1: cardStr[0] = 'A'; break;
 		case 2: cardStr[0] = '2'; break;
 		case 3: cardStr[0] = '3'; break;

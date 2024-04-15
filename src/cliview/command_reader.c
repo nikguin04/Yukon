@@ -43,17 +43,17 @@ char *CmdArgParse(char *input) {
 	}
 }
 
-const Command *MatchCommand(const char *cmdinput) {
-	if (strlen(cmdinput) == 0) {
+const Command *MatchCommand(const char *input) {
+	if (strlen(input) == 0) {
 		printf("Command input is empty!\n");
 		return NULL;
 	}
 
 	for (int i = 0; i < COMMAND_COUNT; i++) {
 		// Check if input starts with command
-		bool test = (cmdinput == strstr(cmdinput, commands[i].input));
+		bool test = (input == strstr(input, commands[i].input));
 		if (!test) { continue; }
-		const char *nextptr = cmdinput + strlen(commands[i].input);
+		const char *nextptr = input + strlen(commands[i].input);
 		if (nextptr[0] == 0 || nextptr[0] == ' ') {
 			return &commands[i];
 		}

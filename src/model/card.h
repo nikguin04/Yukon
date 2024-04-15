@@ -15,7 +15,7 @@ typedef enum : char {
 } CardSuit;
 
 typedef struct cardStruct {
-	char card_value;
+	char value;
 	CardSuit suit;
 	bool hidden;
 } Card;
@@ -28,7 +28,7 @@ typedef struct cardStruct {
 #ifndef CARD_LL_H
 #define CARD_LL_H
 
-Card *CreateCard(int card_value, CardSuit suit);
+Card *CreateCard(int value, CardSuit suit);
 ll_node_card *ParseCharCard(const char *card, const char **msg);
 ll_node_card *NewCardAllocate(int value, CardSuit suit);
 ll_node_card *CardToLinkedCard(Card *c);

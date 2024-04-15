@@ -4,7 +4,7 @@ void PrintDeck(ll_node_card *deck) {
 	ll_node_card *current = deck;
 	int progress = 0;
 	while (current != NULL) {
-		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
+		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.value, current->card.suit);
 		current = current->next;
 	}
 }
@@ -86,13 +86,13 @@ bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 	ll_node_card *card = deck;
 	while (true) {
 		char value;
-		switch (card->card.card_value) {
+		switch (card->card.value) {
 			case 1: value = 'A'; break;
 			case 10: value = 'T'; break;
 			case 11: value = 'J'; break;
 			case 12: value = 'Q'; break;
 			case 13: value = 'K'; break;
-			default: value = '0' + card->card.card_value;
+			default: value = '0' + card->card.value;
 		}
 		fputc(value, file);
 		fputc(card->card.suit, file);
