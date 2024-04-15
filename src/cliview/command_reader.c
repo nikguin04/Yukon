@@ -30,7 +30,7 @@ const Command commands[] = {
 		} else {
 			Move move = MatchMove(string);
 			if (move.from != 0) {
-				// TODO: Handle move
+				writer->last_command_result = PerformMove(writer->ctrl, move);
 			} else {
 				writer->last_command_result = "Invalid command or move!";
 			}
