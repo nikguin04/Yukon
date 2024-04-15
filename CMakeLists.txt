@@ -7,6 +7,7 @@ file (GLOB_RECURSE Yukon_SOURCES CONFIGURE_DEPENDS "src/*.c")
 file (GLOB_RECURSE Yukon_HEADERS CONFIGURE_DEPENDS "src/*.h")
 
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 include_directories(SDL2Test ${SDL2_INCLUDE_DIRS})
 
 

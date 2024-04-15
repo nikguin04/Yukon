@@ -1,4 +1,5 @@
 #include "sdlinit.h"
+#include <SDL_image.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -45,15 +46,46 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
     int x_prog = 0;
     while (running) {
         /* Clear screen */
-        SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+        /*SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
         SDL_RenderClear(rend);
-        /* Draw the rectangle */
+        // Draw the rectangle 
         SDL_Rect rect = {(int) x_prog, (int) HEIGHT/2, 50, 50};
         x_prog = (x_prog + 1) % WIDTH;
 
 
         SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
-        SDL_RenderFillRect(rend, &rect);
+        SDL_RenderFillRect(rend, &rect);*/
+
+        SDL_Surface* gScreenSurface = NULL;
+        int imgFlags = IMG_INIT_PNG;
+        if( !( IMG_Init( imgFlags ) & imgFlags ) )
+        {
+            printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+            return 0;
+        }
+        else
+        {
+            //Get window surface
+            gScreenSurface = SDL_GetWindowSurface( wind );
+        }
+        char path[] = "C:\\Users\\nikla\\Desktop\\Programmering\\Yukon\\src\\res\\DEMONS.png";
+
+        SDL_Surface* loadedSurface = IMG_Load( path );
+        if( loadedSurface == NULL )
+        {
+            printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+            return 0;
+        }
+
+        SDL_Surface* optimizedSurface = NULL;
+        optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
+        if( optimizedSurface == NULL )
+        {
+            printf( "Unable to optimize image %s! SDL Error: %s\n", path, SDL_GetError() );
+            return 0;
+        }
+        SDL_FreeSurface( loadedSurface );
+
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
         SDL_Delay(1000/FPS);
