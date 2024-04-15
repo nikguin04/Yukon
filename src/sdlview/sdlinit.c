@@ -1,5 +1,4 @@
 #include "sdlinit.h"
-#include <SDL_image.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
