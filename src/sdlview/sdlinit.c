@@ -50,11 +50,11 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
         SDL_RenderClear(rend);
         // Draw the rectangle 
-        /*SDL_Rect rect = {(int) x_prog, (int) HEIGHT/2, 50, 50};
+        SDL_Rect rect = {(int) x_prog, (int) HEIGHT/2, 200, 200};
         x_prog = (x_prog + 1) % WIDTH;
 
 
-        SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
+        /*SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
         SDL_RenderFillRect(rend, &rect);*/
 
         SDL_Surface* gScreenSurface = NULL;
@@ -88,7 +88,7 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         SDL_FreeSurface( loadedSurface );
 
         SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
-        SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
+        //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, texture, NULL, &rect);
 
         /* Draw to window and loop */

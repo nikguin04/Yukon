@@ -7,7 +7,7 @@
 
 #define WIDTH 640
 #define HEIGHT 480
-#define FPS 1
+#define FPS 120
 
 
 int sdl_view_init();
