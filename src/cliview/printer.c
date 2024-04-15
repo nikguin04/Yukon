@@ -5,14 +5,11 @@
 void printYukonModel(YukonStructure *yukon, bool forceShow) { // NOTE: a flush of the cli is strongly recommended before using this is production
 	ll_node_card *cur_card_ptr[NUM_COLUMNS];
 	for (int i = 0; i < NUM_COLUMNS; i++) { // Print column headers
-		printf("C%d\t", i);
+		printf("C%d\t", i + 1);
 		cur_card_ptr[i] = yukon->columnFront[i];
 	}
 	printf("\n");
 	PrintFoundationPiles(yukon);
-	if (cur_card_ptr[0] == NULL) { // This could be put above the C# printing, but we prefer it this way so the user knows it is empty
-		return;
-	}
 	bool tailEmpty = false;
 	while (!tailEmpty) {
 		tailEmpty = true;
