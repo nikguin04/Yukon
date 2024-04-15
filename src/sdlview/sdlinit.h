@@ -2,11 +2,14 @@
 #define SDLinit_h
 
 #include "stdio.h"
-
-// for initializing and shutdown functions
 #include "SDL.h"
 
+#define WIDTH 640
+#define HEIGHT 480
+#define FPS 120
 
-void sdl_view_init();
+
+int sdl_view_init();
+int mainloop(SDL_Window *wind);
 
 #endif

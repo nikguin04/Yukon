@@ -5,6 +5,8 @@
 
 #include "sdlview/sdlinit.h"
 
+
+
 int main(int argc, char *argv[]) {
 	/*Model *model = (Model *) malloc(sizeof(Model));
 	Controller *ctrl = (Controller *) malloc(sizeof(Controller));
@@ -14,6 +16,8 @@ int main(int argc, char *argv[]) {
 	initWriter(writer, ctrl);
 
 	StartReadingLoop(writer);*/
+	printf("hello");
 	sdl_view_init();
 	return 0;
 }
+
