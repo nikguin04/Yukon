@@ -10,27 +10,26 @@
 |CXX|C:\ProgramData\mingw64\bin\g++.exe|
 
 ### Language server
-Install "clangd" from extensions to get proper language server and syntax correction for C23
+Install "clangd" from extensions to get proper language server and syntax correction for C23<br>
 
 ## SDL2 WINDOWS
-### Download
-Download "SDL2-devel-2.30.2-mingw.zip" from https://github.com/libsdl-org/SDL/releases/tag/release-2.30.2
-Extract folder inside zip file to any path on computer
-Create new file inside this new folder called "sdl-config.cmake"
-Put all of this inside the new file:
-```CMAKE
-set(SDL2_INCLUDE_DIRS "${CMAKE_CURRENT_LIST_DIR}/include")
+### Download and extract
+Download "SDL2-devel-2.30.2-mingw.zip" from https://github.com/libsdl-org/SDL/releases/tag/release-2.30.2<br>
+Extract the "x86_64-w64-mingw32" folder inside the zip file to any path on computer, and rename it to something like "SDL2_x86"<br>
 
-# Support both 32 and 64 bit builds
-if (${CMAKE_SIZEOF_VOID_P} MATCHES 8)
-  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/lib/x64/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/lib/x64/SDL2main.lib")
-else ()
-  set(SDL2_LIBRARIES "${CMAKE_CURRENT_LIST_DIR}/lib/x86/SDL2.lib;${CMAKE_CURRENT_LIST_DIR}/lib/x86/SDL2main.lib")
-endif ()
+Download "SDL2_image-devel-2.8.2-mingw.zip" from https://github.com/libsdl-org/SDL_image/releases/tag/release-2.8.2<br>
+Extract the "x86_64-w64-mingw32" folder inside the zip file to same folder as in previous step (ex: "SDL2_x86)<br>
 
-string(STRIP "${SDL2_LIBRARIES}" SDL2_LIBRARIES)
-```
+### Configure CMake
 
-Open CMake GUI to the path of this project and press configure. Then set "SDL2_DIR" to the path of the folder you extracted the SDL2 development zip into
+Open CMake GUI to the path of this project and press "Configure"<br>
+Set "SDL2_DIR" to the absolute path of a subfolder from the folder you created previously located at "\lib\cmake\SDL2"<br>
+Set "SDL2_image_DIR" to the absolute path of a subfolder from the folder you created previously located at "\lib\cmake\SDL2_image"<br>
+Then press "Configure" and "Generate"<br>
 
-Credit to https://stackoverflow.com/a/44347594/8505114
+### Add DLL to path
+
+From windows search, open "View advanced system settings"<br>
+Click "Environment variables"<br>
+Under "System variables" or "User variables" (not recommended), double click the "Path" variable.<br>
+Press "New" and enter the name of the folder you created earlier plus the subfolder "\bin"<br>
