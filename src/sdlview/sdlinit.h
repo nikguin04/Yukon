@@ -1,5 +1,5 @@
-#ifndef SDLmain_h
-#define SDLmain_h
+#ifndef SDLinit_h
+#define SDLinit_h
 
 #include "stdio.h"
 
