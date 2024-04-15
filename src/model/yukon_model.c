@@ -57,7 +57,6 @@ void ExposeYukonCards(YukonStructure *yukon, const int amt_to_expose, const int 
 			card = card->next;
 		}
 	}
-	
 }
 
 ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden) {
@@ -71,6 +70,5 @@ ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden) {
 
 void ClearGame(YukonStructure *yukon) {
 	for (int i = 0; i < COLUMN_SIZE; i++) { yukon->columnFront[i] = NULL; } // init columns to null
-	
-	for (int i = 0; i < FOUNDATION_SIZE; i++) {yukon->foundationPile[i] = NULL;} // init foundations to null
+	for (int i = 0; i < FOUNDATION_SIZE; i++) { yukon->foundationPile[i] = NULL; } // init foundations to null
 }

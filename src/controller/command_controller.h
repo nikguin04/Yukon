@@ -4,7 +4,6 @@
 #include "deck.h"
 #include "controller.h"
 
-
 const char *LoadDeckFromFile(Controller *ctrl, char *path);
 const char *SaveDeckToFile(Controller *ctrl, char *path);
 const char *ShowDeck(Controller *ctrl, char *input);
