@@ -14,7 +14,7 @@ void appendCardToEndOfList(ll_node_card **list, Card card);
 void appendCardToStartOfList(ll_node_card **list, Card card);
 ll_node_card *appendCardElement(Card card);
 void insertCardAtIndex(ll_node_card **list, Card card, int index);
-void freeList(ll_node_card *list);
+void freeList(ll_node_card **list);
 
 // Reload card.h for load function
 #define LINKEDLIST_H_FINALIZED
