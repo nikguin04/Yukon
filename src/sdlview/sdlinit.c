@@ -88,7 +88,8 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         SDL_FreeSurface( loadedSurface );
 
         SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
-        SDL_RenderCopy(rend, texture, NULL, NULL);
+        SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
+        SDL_RenderCopy(rend, texture, NULL, &rect);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
