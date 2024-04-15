@@ -15,20 +15,20 @@ void insertCardAtIndex(ll_node_card **list, Card card, int index) {
 		*list = nodeToInsert;
 	} else {
 		ll_node_card *currentNode = *list;
-		if (index == 1) {
-			nodeToInsert->next = currentNode;
-			*list = nodeToInsert;
-		} else {
-			for (int i = 1; i < index - 1; i++) {
-				if (currentNode->next != NULL) {
-					currentNode = currentNode->next;
-				} else {
-					break;
-				}
-			}
-			nodeToInsert->next = currentNode->next;
-			currentNode->next = nodeToInsert;
-		}
+        if (index == 1) {
+            nodeToInsert->next = currentNode;
+            *list = nodeToInsert;
+        } else {
+            for (int i = 1; i < index - 1; i++) {
+                if (currentNode->next != NULL) {
+                    currentNode = currentNode->next;
+                } else {
+                    break;
+                }
+            }
+            nodeToInsert->next = currentNode->next;
+            currentNode->next = nodeToInsert;
+        }
 	}
 }
 

@@ -2,6 +2,7 @@
 #include "card.h"
 #include "linkedlist.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
 ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** msg, bool randSplit) {
     ll_node_card *originalDeckPointer = deckPointer;
@@ -36,7 +37,8 @@ ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** m
 	if (counter >= split) {
 		while (deckPointer != NULL) {
 			appendCardToEndOfList(&shuffledDeck, deckPointer->card);
-			deckPointer = deckPointer->next;
+			ll_node_card *tmp = deckPointer;
+            deckPointer = deckPointer->next;
 		}
 	} else if (deckPointer == NULL) {
 		while (counter < split) {

@@ -7,7 +7,7 @@ Card *CreateCard(int card_value, CardSuit suit) {
 	return card;
 }
 
-ll_node_card *ParseCharCard(const char *card, char **msg) {
+ll_node_card *ParseCharCard(const char *card, const char **msg) {
 	CardSuit suit = (CardSuit) card[1];
 	int value;
 	switch (suit) {
@@ -60,7 +60,7 @@ ll_node_card *CardToLinkedCard(Card *c) {
 	return card;
 }
 
-char *cardToString(Card *card, char *cardStr) {
+char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
 	cardStr[2] = 0;
 
 	switch (card->card_value) {

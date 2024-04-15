@@ -9,7 +9,7 @@
 typedef struct CliWriterStructure {
 	Controller *ctrl;
 	char *last_command;
-	char *last_command_result;
+	const char *last_command_result;
 } CliWriter;
 
 void initWriter(CliWriter *writer, Controller *ctrl);

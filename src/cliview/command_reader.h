@@ -6,14 +6,15 @@
 #include "../controller/command_controller.h"
 #include "screen.h"
 
-typedef char *(*CommandFunction)(Controller *, char *);
+typedef const char *(*CommandFunction)(Controller *, char *);
 typedef struct commandStruct {
-	char *input;
-	char *friendly_name;
-	CommandFunction function;
+	const char *input;
+	const char *friendly_name;
+	const CommandFunction function;
 } Command;
 
-extern Command commands[];
+extern const Command commands[];
+#define COMMAND_COUNT sizeof(commands) / sizeof(commands[0])
 
 // WORSØE PLEASE FIX WITH BEAUTIFUL MACRO!
 typedef struct ll_node_cmd { // linked list node
@@ -23,7 +24,7 @@ typedef struct ll_node_cmd { // linked list node
 } ll_node_command;
 
 void StartReadingLoop(CliWriter *writer);
-Command *MatchCommand(char *cmdinput, size_t *len);
+const Command *MatchCommand(const char *cmdinput);
 void GetInput(char **string, size_t *size, size_t *len);
 size_t getline(char **lineptr, size_t *n, FILE *stream);
 char *CmdArgParse(char *input);

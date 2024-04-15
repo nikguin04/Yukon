@@ -29,13 +29,13 @@ typedef struct cardStruct {
 #define CARD_LL_H
 
 Card *CreateCard(int card_value, CardSuit suit);
-ll_node_card *ParseCharCard(const char *card, char **msg);
+ll_node_card *ParseCharCard(const char *card, const char **msg);
 ll_node_card *NewCardAllocate(int value, CardSuit suit);
 ll_node_card *CardToLinkedCard(Card *c);
 
 char *cardToString(Card *card, char *out);
 
-#include "deck.h"
+//#include "deck.h"
 
 #endif
 #endif
