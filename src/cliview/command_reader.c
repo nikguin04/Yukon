@@ -7,9 +7,11 @@ const Command commands[] = {
 	{"SI", "Interleaving Shuffle", ShuffleInterleaving},
 	{"SR", "Random Shuffle",       ShuffleRandom},
 	{"QQ", "Quit and exit game",   QuitAndExit},
+	{"Q",  "Quit game",            QuitGame},
+	{"P",  "Play game",            PlayGame},
 };
 
-void StartReadingLoop(CliWriter *writer) {
+[[noreturn]] void StartReadingLoop(CliWriter *writer) {
 	while (true) { // Continues until user quits
 		char *string = NULL;
 		size_t size = 0;
@@ -46,17 +48,17 @@ char *CmdArgParse(char *input) {
 	}
 }
 
-const Command *MatchCommand(const char *cmdinput) {
-	if (strlen(cmdinput) == 0) {
+const Command *MatchCommand(const char *input) {
+	if (strlen(input) == 0) {
 		printf("Command input is empty!\n");
 		return NULL;
 	}
 
 	for (int i = 0; i < COMMAND_COUNT; i++) {
 		// Check if input starts with command
-		bool test = (cmdinput == strstr(cmdinput, commands[i].input));
+		bool test = (input == strstr(input, commands[i].input));
 		if (!test) { continue; }
-		const char *nextptr = cmdinput + strlen(commands[i].input);
+		const char *nextptr = input + strlen(commands[i].input);
 		if (nextptr[0] == 0 || nextptr[0] == ' ') {
 			return &commands[i];
 		}
@@ -161,7 +163,7 @@ size_t getline(char **lineptr, size_t *n, FILE *stream) {
 		}
 		if (c == '\n')
 			break;
-		*p++ = c; // put this behind the \n check is we want to include \n
+		*p++ = (char) c; // put this behind the \n check is we want to include \n
 
 		c = fgetc(stream);
 	}
