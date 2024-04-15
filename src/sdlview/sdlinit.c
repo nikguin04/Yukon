@@ -22,7 +22,8 @@ int sdl_view_init() {
 
     mainloop(wind);
 
-    SDL_DestroyWindow(wind);
+    SDL_DestroyWindow(wind);	
+    IMG_Quit();
     SDL_Quit();
     return 1;
 
@@ -32,6 +33,7 @@ int sdl_view_init() {
 int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/platformer.c
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     SDL_Renderer* rend = SDL_CreateRenderer(wind, -1, render_flags);
+    SDL_Event event;
     if (!rend)
     {
         printf("Error creating renderer: %s\n", SDL_GetError());
@@ -45,10 +47,10 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
     int x_prog = 0;
     while (running) {
         /* Clear screen */
-        /*SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
         SDL_RenderClear(rend);
         // Draw the rectangle 
-        SDL_Rect rect = {(int) x_prog, (int) HEIGHT/2, 50, 50};
+        /*SDL_Rect rect = {(int) x_prog, (int) HEIGHT/2, 50, 50};
         x_prog = (x_prog + 1) % WIDTH;
 
 
@@ -85,8 +87,19 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         }
         SDL_FreeSurface( loadedSurface );
 
+        SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
+        SDL_RenderCopy(rend, texture, NULL, NULL);
+
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
         SDL_Delay(1000/FPS);
+
+        SDL_WaitEvent(&event);
+ 
+        switch (event.type)
+        {
+            case SDL_QUIT:
+                break;
+        }
     }
 }
