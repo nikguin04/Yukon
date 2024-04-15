@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** msg, bool randSplit) {
+ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, const char** msg, bool randSplit) {
     ll_node_card *originalDeckPointer = deckPointer;
     if (randSplit) {
         split = (rand() % 52) + 1;
@@ -15,7 +15,7 @@ ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, char** m
         return deckPointer;
     }
     else {
-        *msg = "Deck shuffled with interleaving shuffle and split";
+        *msg = "Deck shuffled with interleaving shuffle";
     }
 	ll_node_card **topSplitCardsFromDeck = (ll_node_card **) malloc(sizeof(ll_node_card *) * split);
 	for (int i = 0; i < split; i++) {
