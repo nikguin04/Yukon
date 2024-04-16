@@ -50,7 +50,7 @@ const char *PerformMove(Controller *ctrl, Move move) {
 				dest = *destPointer;
 			}
 			if (dest->card.suit == node->card.suit) return "Suits have to differ";
-			if (dest->card.value - 1 != node->card.value) return "Value must be one lower";
+			if (dest->card.value - 1 != node->card.value) return "Rank must be one lower";
 		}
 	} else {
 		// Move to foundation
@@ -61,7 +61,7 @@ const char *PerformMove(Controller *ctrl, Move move) {
 		} else {
 			Card destCard = (*destPointer)->card;
 			if (destCard.suit != node->card.suit) return "Suits have to match";
-			if (destCard.value + 1 != node->card.value) return "Value must be one higher";
+			if (destCard.value + 1 != node->card.value) return "Rank must be one higher";
 		}
 	}
 	// ------------------------------

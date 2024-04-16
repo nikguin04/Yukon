@@ -38,7 +38,7 @@ ll_node_card *ParseCharCard(const char *card, const char **msg) {
 		case 'K': value = 13; break;
 
 		default:
-			*msg = "Format of file is wrong, did not read card number correctly";
+			*msg = "Format of file is wrong, did not read rank correctly";
 			return NULL;
 	}
 
