@@ -111,6 +111,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
 
         // RENDER FPS TEXT
+        UpdateFpsCounter(fcm);
         SDL_Rect fps_textrect = {50, 50, 250, 75}; // TODO: free all memory from here, or do all this at init
         SDL_Color fps_textcol = {20, 255, 20, 255};
         SDL_Surface *fps_surface = TTF_RenderText_Solid(manager->font, manager->fpstext, fps_textcol);
