@@ -6,7 +6,9 @@
 #include <time.h>
 
 typedef struct FpsCounterManager_struct {
-    char **str_ptr;
+    char str[16];
+    int count;
+    clock_t last_update;
     clock_t start;
     
 } FpsCounterManager;
