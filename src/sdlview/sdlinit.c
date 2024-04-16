@@ -69,7 +69,7 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
             //Get window surface
             gScreenSurface = SDL_GetWindowSurface( wind );
         }
-        char path[] = "C:\\Users\\nikla\\Desktop\\Programmering\\Yukon\\src\\res\\DEMONS.png";
+        char path[] = "resource\\DEMONS.png";
 
         SDL_Surface* loadedSurface = IMG_Load( path );
         if( loadedSurface == NULL )

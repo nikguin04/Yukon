@@ -23,3 +23,6 @@ add_executable(Yukon ${Yukon_SOURCES})
 target_include_directories(Yukon PRIVATE ${Yukon_INCLUDE_DIRS})
 set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
 target_link_libraries(Yukon ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+
+# Copy resources
+FILE(COPY src/resource/ DESTINATION "${CMAKE_BINARY_DIR}/resource/")
