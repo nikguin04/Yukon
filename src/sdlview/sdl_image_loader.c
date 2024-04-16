@@ -1,6 +1,6 @@
 #include "sdl_image_loader.h"
 
-SDL_Surface *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface) {
+SDL_Texture *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface, SDL_Renderer *rend) {
     
 
     SDL_Surface* loadedSurface = IMG_Load( path );
@@ -18,5 +18,7 @@ SDL_Surface *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface) {
         return 0;
     }
     SDL_FreeSurface( loadedSurface );
-    return optimizedSurface;
+    SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
+    SDL_FreeSurface( optimizedSurface );
+    return texture;
 }

@@ -72,7 +72,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
     }
 
     char path[] = "resource\\DEMONS.png";
-    manager->tempimg = LoadOptimizedImage(path, gScreenSurface);
+    manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
 
 
     bool running = true;
@@ -92,9 +92,9 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         
         
 
-        SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, manager->tempimg); // TODO: maybe do this at init?
+         // TODO: maybe do this at init?
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
-        SDL_RenderCopy(rend, texture, NULL, &rect);
+        SDL_RenderCopy(rend, manager->temptexture, NULL, &rect);
         
 
         sdltexttest(manager);
@@ -111,7 +111,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
         // Render then free/destroy
         SDL_FreeSurface(surface);
-        SDL_DestroyTexture(texture);
+        //SDL_DestroyTexture(texture);
         SDL_DestroyTexture(texttexture);
 
         SDL_Delay(1000/FPS);

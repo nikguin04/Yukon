@@ -3,6 +3,6 @@
 
 #include "sdlmanager.h"
 
-SDL_Surface *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface);
+SDL_Texture *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface, SDL_Renderer *rend);
 
 #endif
