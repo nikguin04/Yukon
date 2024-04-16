@@ -69,8 +69,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 	if (path == NULL) {
-		*msg = "No filename given";
-		return false;
+		path = "cards.txt";
 	}
 
 	FILE *file;
