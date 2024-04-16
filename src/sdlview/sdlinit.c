@@ -1,7 +1,4 @@
 #include "sdlinit.h"
-#include "sdltext.h"
-#include <SDL_pixels.h>
-#include <SDL_render.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -107,9 +104,10 @@ int mainloop(GUIManager *manager) { // taken from https://www.matsson.com/prog/p
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, texture, NULL, &rect);
 
+        sdltexttest(manager);
         SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100};
         SDL_Color textcol = {100, 200, 255, 255};
-        SDL_Surface *surface = TTF_RenderText_Solid(manager->font, "Hello, world!", textcol);
+        SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
         SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
 

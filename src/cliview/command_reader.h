@@ -1,7 +1,6 @@
 #ifndef COMMAND_READER_H
 #define COMMAND_READER_H
 
-#include <string.h>
 #include "writer.h"
 #include "../controller/command_controller.h"
 #include "screen.h"
