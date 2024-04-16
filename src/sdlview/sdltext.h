@@ -1,8 +1,8 @@
 #ifndef SDLtext_h
 #define SDLtext_h
 
-#include "sdlinit.h"
+#include "sdlmanager.h"
 
-void sdltexttest(GUIManager *manager);
+void sdltexttest(SDLManager *manager);
 
 #endif

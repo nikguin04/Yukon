@@ -1,5 +1,5 @@
 #include "sdltext.h"
 
-void sdltexttest(GUIManager *manager) {
+void sdltexttest(SDLManager *manager) {
     manager->statusmsg = "hello123";
 }

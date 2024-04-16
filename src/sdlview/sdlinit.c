@@ -7,7 +7,7 @@ int sdl_view_init() {
     }
     printf("SDL initialized!\n");
 
-    GUIManager manager;
+    SDLManager manager;
 
     /* Create a window */
     manager.wind = SDL_CreateWindow("Hello Platformer!",
@@ -43,7 +43,7 @@ int sdl_view_init() {
 }
 
 
-int mainloop(GUIManager *manager) { // taken from https://www.matsson.com/prog/platformer.c
+int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/platformer.c
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     SDL_Renderer* rend = SDL_CreateRenderer(manager->wind, -1, render_flags);
     SDL_Event event;
