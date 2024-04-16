@@ -1,4 +1,5 @@
 #include "sdlinit.h"
+#include "sdl_fps_counter.h"
 #include "sdl_image_loader.h"
 #include "sdltext.h"
 #include <SDL_events.h>
@@ -79,6 +80,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
     manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
     sdltexttest("Hello, world!", manager);
 
+    FpsCounterManager *fcm = InitFpsCounter(manager);
 
     bool running = true;
     int x_prog = 0;
@@ -101,12 +103,19 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, manager->temptexture, NULL, &rect);
         
-
+        // RENDER MOUSE LOCATION TEXT
         SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100}; // TODO: free all memory from here, or do all this at init
         SDL_Color textcol = {100, 200, 255, 255};
         SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
         SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
+
+        // RENDER FPS TEXT
+        SDL_Rect fps_textrect = {50, 50, 250, 75}; // TODO: free all memory from here, or do all this at init
+        SDL_Color fps_textcol = {20, 255, 20, 255};
+        SDL_Surface *fps_surface = TTF_RenderText_Solid(manager->font, manager->fpstext, fps_textcol);
+        SDL_Texture *fps_texttexture = SDL_CreateTextureFromSurface(rend, fps_surface);
+        SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
 
         
 
@@ -117,6 +126,8 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         SDL_FreeSurface(surface);
         //SDL_DestroyTexture(texture);
         SDL_DestroyTexture(texttexture);
+        SDL_FreeSurface(fps_surface);
+        SDL_DestroyTexture(fps_texttexture);
 
         SDL_Delay(1000/FPS);
 

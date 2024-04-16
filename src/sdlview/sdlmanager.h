@@ -11,6 +11,7 @@ typedef struct GUI_Struct_struct {
     SDL_Window *wind;
     TTF_Font* font;
     char* statusmsg;
+    char *fpstext;
     SDL_Texture *temptexture;
 } SDLManager;
 
