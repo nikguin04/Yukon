@@ -30,7 +30,10 @@ const Command commands[] = {
 		} else {
 			Move move = MatchMove(string);
 			if (move.from != 0) {
-				writer->last_command_result = PerformMove(writer->ctrl, move);
+				if (writer->ctrl->model->yukon->play_phase)
+					writer->last_command_result = PerformMove(writer->ctrl, move);
+				else
+					writer->last_command_result = "Can't make moves when not playing";
 			} else {
 				writer->last_command_result = "Invalid command or move!";
 			}
