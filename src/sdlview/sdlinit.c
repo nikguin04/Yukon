@@ -1,4 +1,7 @@
 #include "sdlinit.h"
+#include "sdl_image_loader.h"
+#include <SDL_render.h>
+#include <SDL_stdinc.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -55,6 +58,22 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         return 0;
     }
 
+    SDL_Surface* gScreenSurface = NULL;
+    int imgFlags = IMG_INIT_PNG;
+    if( !( IMG_Init( imgFlags ) & imgFlags ) )
+    {
+        printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
+        return 0;
+    }
+    else
+    {
+        //Get window surface
+        gScreenSurface = SDL_GetWindowSurface( manager->wind );
+    }
+
+    char path[] = "resource\\DEMONS.png";
+    manager->tempimg = LoadOptimizedImage(path, gScreenSurface);
+
 
     bool running = true;
     int x_prog = 0;
@@ -70,52 +89,31 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         /*SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
         SDL_RenderFillRect(rend, &rect);*/
 
-        SDL_Surface* gScreenSurface = NULL;
-        int imgFlags = IMG_INIT_PNG;
-        if( !( IMG_Init( imgFlags ) & imgFlags ) )
-        {
-            printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-            return 0;
-        }
-        else
-        {
-            //Get window surface
-            gScreenSurface = SDL_GetWindowSurface( manager->wind );
-        }
-        char path[] = "resource\\DEMONS.png";
+        
+        
 
-        SDL_Surface* loadedSurface = IMG_Load( path );
-        if( loadedSurface == NULL )
-        {
-            printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
-            return 0;
-        }
-
-        SDL_Surface* optimizedSurface = NULL;
-        optimizedSurface = SDL_ConvertSurface( loadedSurface, gScreenSurface->format, 0 );
-        if( optimizedSurface == NULL )
-        {
-            printf( "Unable to optimize image %s! SDL Error: %s\n", path, SDL_GetError() );
-            return 0;
-        }
-        SDL_FreeSurface( loadedSurface );
-
-        SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
+        SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, manager->tempimg); // TODO: maybe do this at init?
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, texture, NULL, &rect);
+        
 
         sdltexttest(manager);
-        SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100};
+        SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100}; // TODO: free all memory from here, or do all this at init
         SDL_Color textcol = {100, 200, 255, 255};
         SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
         SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
 
-        SDL_FreeSurface(surface);
-        //SDL_DestroyTexture(texture);
+        
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
+
+        // Render then free/destroy
+        SDL_FreeSurface(surface);
+        SDL_DestroyTexture(texture);
+        SDL_DestroyTexture(texttexture);
+
         SDL_Delay(1000/FPS);
 
         SDL_WaitEvent(&event);

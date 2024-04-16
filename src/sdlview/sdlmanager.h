@@ -10,6 +10,7 @@ typedef struct GUI_Struct_struct {
     SDL_Window *wind;
     TTF_Font* font;
     char* statusmsg;
+    SDL_Surface *tempimg;
 } SDLManager;
 
 #endif
