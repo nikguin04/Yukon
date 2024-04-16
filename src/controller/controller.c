@@ -49,10 +49,7 @@ const char *PerformMove(Controller *ctrl, Move move) {
 			while (*(destPointer = &dest->next) != NULL) {
 				dest = *destPointer;
 			}
-			CardSuit d = dest->card.suit;
-			CardSuit s = node->card.suit;
-			if ((d == SPADES || d == CLUBS) == (s == SPADES || s == CLUBS))
-				return "Cards must have opposite colour";
+			if (dest->card.suit == node->card.suit) return "Suits have to differ";
 			if (dest->card.value - 1 != node->card.value) return "Value must be one lower";
 		}
 	} else {
