@@ -1,7 +1,10 @@
 #include "sdlinit.h"
 #include "sdl_image_loader.h"
+#include "sdltext.h"
+#include <SDL_events.h>
 #include <SDL_render.h>
 #include <SDL_stdinc.h>
+#include <stdio.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -50,6 +53,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     SDL_Renderer* rend = SDL_CreateRenderer(manager->wind, -1, render_flags);
     SDL_Event event;
+    int mouseX=0, mouseY=0;
     if (!rend)
     {
         printf("Error creating renderer: %s\n", SDL_GetError());
@@ -73,6 +77,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
     char path[] = "resource\\DEMONS.png";
     manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
+    sdltexttest("Hello, world!", manager);
 
 
     bool running = true;
@@ -97,7 +102,6 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         SDL_RenderCopy(rend, manager->temptexture, NULL, &rect);
         
 
-        sdltexttest(manager);
         SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100}; // TODO: free all memory from here, or do all this at init
         SDL_Color textcol = {100, 200, 255, 255};
         SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
@@ -116,12 +120,20 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
         SDL_Delay(1000/FPS);
 
-        SDL_WaitEvent(&event);
- 
-        switch (event.type)
-        {
-            case SDL_QUIT:
-                break;
+        //SDL_WaitEvent(&event);
+        
+        if (SDL_PollEvent(&event)) {
+            switch (event.type)
+            {
+                case SDL_MOUSEBUTTONDOWN:
+                    SDL_GetMouseState(&mouseX, &mouseY);
+                    char printtext[32];
+                    sprintf(printtext, "Mouse: %d:%d", mouseX, mouseY);
+                    sdltexttest(printtext, manager);
+                    break;
+                case SDL_QUIT:
+                    break;
+            }   
         }
     }
 }

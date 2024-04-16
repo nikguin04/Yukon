@@ -3,6 +3,6 @@
 
 #include "sdlmanager.h"
 
-void sdltexttest(SDLManager *manager);
+void sdltexttest(char* str, SDLManager *manager);
 
 #endif
