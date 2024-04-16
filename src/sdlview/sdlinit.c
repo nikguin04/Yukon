@@ -1,4 +1,7 @@
 #include "sdlinit.h"
+#include "sdltext.h"
+#include <SDL_pixels.h>
+#include <SDL_render.h>
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -7,22 +10,35 @@ int sdl_view_init() {
     }
     printf("SDL initialized!\n");
 
+    GUIManager manager;
+
     /* Create a window */
-    SDL_Window *wind = SDL_CreateWindow("Hello Platformer!",
+    manager.wind = SDL_CreateWindow("Hello Platformer!",
                                       SDL_WINDOWPOS_CENTERED,
                                       SDL_WINDOWPOS_CENTERED,
                                       WIDTH, HEIGHT, 0);
 
-    if (!wind)
+    if (!manager.wind)
     {
         printf("Error creating window: %s\n", SDL_GetError());
         SDL_Quit();
         return 0;
     }
 
-    mainloop(wind);
+    if (TTF_Init()==-1) {
+        printf("Failed to initialize TTF: %s", SDL_GetError());
+        return 1;
+    }
 
-    SDL_DestroyWindow(wind);	
+    manager.font = TTF_OpenFont("resource/aptos.ttf", 32);
+    if (manager.font==NULL){
+        printf("Failed to load font: %s", SDL_GetError());
+    }
+
+
+    mainloop(&manager);
+
+    SDL_DestroyWindow(manager.wind);	
     IMG_Quit();
     SDL_Quit();
     return 1;
@@ -30,14 +46,14 @@ int sdl_view_init() {
 }
 
 
-int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/platformer.c
+int mainloop(GUIManager *manager) { // taken from https://www.matsson.com/prog/platformer.c
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
-    SDL_Renderer* rend = SDL_CreateRenderer(wind, -1, render_flags);
+    SDL_Renderer* rend = SDL_CreateRenderer(manager->wind, -1, render_flags);
     SDL_Event event;
     if (!rend)
     {
         printf("Error creating renderer: %s\n", SDL_GetError());
-        SDL_DestroyWindow(wind);
+        SDL_DestroyWindow(manager->wind);
         SDL_Quit();
         return 0;
     }
@@ -67,7 +83,7 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         else
         {
             //Get window surface
-            gScreenSurface = SDL_GetWindowSurface( wind );
+            gScreenSurface = SDL_GetWindowSurface( manager->wind );
         }
         char path[] = "resource\\DEMONS.png";
 
@@ -90,6 +106,15 @@ int mainloop(SDL_Window *wind) { // taken from https://www.matsson.com/prog/plat
         SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, optimizedSurface);
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, texture, NULL, &rect);
+
+        SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100};
+        SDL_Color textcol = {100, 200, 255, 255};
+        SDL_Surface *surface = TTF_RenderText_Solid(manager->font, "Hello, world!", textcol);
+        SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
+        SDL_RenderCopy(rend, texttexture, NULL, &textrect);
+
+        SDL_FreeSurface(surface);
+        //SDL_DestroyTexture(texture);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);

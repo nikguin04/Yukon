@@ -8,6 +8,7 @@ file (GLOB_RECURSE Yukon_HEADERS CONFIGURE_DEPENDS "src/*.h")
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 
 
@@ -22,7 +23,8 @@ list (REMOVE_DUPLICATES Yukon_INCLUDE_DIRS)
 add_executable(Yukon ${Yukon_SOURCES})
 target_include_directories(Yukon PRIVATE ${Yukon_INCLUDE_DIRS})
 set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
-target_link_libraries(Yukon ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+set(SDL2_TTF_LIBRARIES SDL2_ttf::SDL2_ttf)
+target_link_libraries(Yukon ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
 # Copy resources
 FILE(COPY src/resource/ DESTINATION "${CMAKE_BINARY_DIR}/resource/")
