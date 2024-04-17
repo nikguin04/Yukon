@@ -69,6 +69,7 @@ const char *QuitGame(Controller *ctrl, char *_) {
 		return "Cannot quit game while not playing";
 	ctrl->model->yukon->play_phase = false;
 	ClearGame(ctrl->model->yukon);
+	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
 	return "OK";
 }
 
