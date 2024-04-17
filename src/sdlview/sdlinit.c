@@ -110,10 +110,14 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, manager->temptexture, NULL, &rect);
         
-        // RENDER Message TEXT
+        // Get and render Mouse location TEXT
+        SDL_GetMouseState(&mouseX, &mouseY);
+        char printtext[32];
+        sprintf(printtext, "Mouse: %d:%d", mouseX, mouseY);
+        sdltexttest(printtext, manager);
         SDL_Color textcol = {100, 200, 255, 255};
         SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
-        SDL_Rect textrect = {WIDTH/100, HEIGHT-WIDTH/100-surface->h, surface->w, surface->h}; // TODO: free all memory from here, or do all this at init
+        SDL_Rect textrect = {WIDTH-WIDTH/6, HEIGHT-WIDTH/100-surface->h, surface->w, surface->h}; // TODO: free all memory from here, or do all this at init
         SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
 
@@ -144,10 +148,7 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
             switch (event.type)
             {
                 case SDL_MOUSEBUTTONDOWN:
-                    SDL_GetMouseState(&mouseX, &mouseY);
-                    char printtext[32];
-                    sprintf(printtext, "Mouse: %d:%d", mouseX, mouseY);
-                    sdltexttest(printtext, manager);
+                    // DO SOMETHING WITH MOUSE BTN DOWN
                     break;
                 case SDL_QUIT:
                     break;
