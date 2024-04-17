@@ -59,7 +59,7 @@ const char *ShuffleRandom(Controller *ctrl, char *_) {
     }
 	ctrl->model->deck = shuffleRandom(ctrl->model->deck, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-	return msg;
+	return "Deck randomly shuffled";
 }
 
 const char *QuitAndExit(Controller *ctrl, char *_) {
