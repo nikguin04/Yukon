@@ -7,6 +7,8 @@ void freeList(ll_node_card **list) {
 		listPointer = listPointer->next;
 		free(tmp);
 	}
+	// Make sure not to leave a dangling pointer
+	*list = NULL;
 }
 
 void insertCardAtIndex(ll_node_card **list, Card card, int index) {

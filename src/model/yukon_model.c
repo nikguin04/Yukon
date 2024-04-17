@@ -54,6 +54,6 @@ ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden) {
 }
 
 void ClearGame(YukonStructure *yukon) {
-	for (int i = 0; i < NUM_COLUMNS; i++) { yukon->columnFront[i] = NULL; } // init columns to null
-	for (int i = 0; i < NUM_FOUNDATIONS; i++) { yukon->foundationPile[i] = NULL; } // init foundations to null
+	for (int i = 0; i < NUM_COLUMNS; i++) { freeList(&yukon->columnFront[i]); }
+	for (int i = 0; i < NUM_FOUNDATIONS; i++) { freeList(&yukon->foundationPile[i]); }
 }

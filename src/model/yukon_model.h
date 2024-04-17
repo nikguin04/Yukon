@@ -10,7 +10,6 @@ static const int COLUMN_LOADSIZE[7] = {8, 8, 8, 7, 7, 7, 7};
 
 typedef struct yukonStruct {
 	ll_node_card *columnFront[NUM_COLUMNS];
-
 	ll_node_card *foundationPile[NUM_FOUNDATIONS];
 	bool play_phase;
 } YukonStructure;
