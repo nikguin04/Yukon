@@ -23,9 +23,10 @@ const Command commands[] = {
 
 		const Command *cmd = MatchCommand(string);
 
-		char *parsed_arg;
-		if (cmd != NULL) {
-			parsed_arg = CmdArgParse(string + strlen(cmd->input));
+		if (*string == 0) {
+			writer->last_command_result = "";
+		} else if (cmd != NULL) {
+			char *parsed_arg = CmdArgParse(string + strlen(cmd->input));
 			writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
 		} else {
 			Move move = MatchMove(string);
