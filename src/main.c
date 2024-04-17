@@ -5,7 +5,17 @@
 
 #include "sdlview/sdlinit.h"
 
+#ifdef __unix__                    /* __unix__ is usually defined by compilers targeting Unix systems */
 
+    #define OS_Unix
+
+#elif defined(_WIN32) || defined(WIN32)     /* _Win32 is usually defined by compilers targeting 32 or   64 bit Windows systems */
+
+    #define OS_Windows
+    #include <windows.h>
+	#include <WinUser.h>
+
+#endif
 
 int main(int argc, char *argv[]) {
 	/*Model *model = (Model *) malloc(sizeof(Model));
@@ -17,6 +27,9 @@ int main(int argc, char *argv[]) {
 
 	StartReadingLoop(writer);*/
 	printf("hello");
+	#ifdef OS_Windows
+		SetProcessDPIAware(); // This disables scaling on screens (good for high res screens)
+	#endif
 	sdl_view_init();
 	return 0;
 }

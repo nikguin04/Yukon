@@ -13,8 +13,8 @@
 #include <SDL_stdinc.h>
 #include <stdio.h>
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 1600
+#define HEIGHT 900
 #define FPS 120
 
 

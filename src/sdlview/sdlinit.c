@@ -1,5 +1,6 @@
 #include "sdlinit.h"
 #include "sdl_cards.h"
+#include <SDL_video.h>
 
 
 int sdl_view_init() {
@@ -119,7 +120,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
 
         // RENDER TEST FOR CARD IMAGES
-        SDL_Rect cardtestrect = {200, 50, 150, 208};
+        SDL_Rect cardtestrect = {800, 200, 150, 208};
         SDL_RenderCopy(rend, sdl_cm.card_textures[5], NULL, &cardtestrect);
 
         /* Draw to window and loop */
