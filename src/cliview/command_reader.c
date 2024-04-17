@@ -12,6 +12,12 @@ const Command commands[] = {
 };
 
 [[noreturn]] void StartReadingLoop(CliWriter *writer) {
+	// Avoid giving null pointers to printf inside UpdateScreen, which is UB
+	// In this case, calloc just gives an empty string (1 null char)
+	writer->last_command = calloc(1, sizeof(char));
+	writer->last_command_result = "";
+	// Print an initial screen, so we don't just get an empty one
+	UpdateScreen(writer);
 	while (true) { // Continues until user quits
 		char *string = NULL;
 		size_t size = 0;
