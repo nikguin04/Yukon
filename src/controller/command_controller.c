@@ -27,7 +27,8 @@ const char *SaveDeckToFile(Controller *ctrl, char *path) {
 const char *ShowDeck(Controller *ctrl, char *_) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot show deck while playing";
-	printf("Showing deck to user!\n");
+	if (ctrl->model->deck == NULL)
+		return "Cannot show an empty deck!";
 	ctrl->model->optionIgnoreHidden = true;
 	return "OK";
 }
