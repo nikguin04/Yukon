@@ -62,7 +62,6 @@ int sdl_view_init(Controller *ctrl) {
 
     SDL_Cardmanager sdl_cm;
     initCard_Textures(&sdl_cm, gScreenSurface, rend);
-    LoadDeckFromFile(ctrl, ""); // INIT DECK TEMPORARY!
 
 
     mainloop(ctrl, &manager, gScreenSurface, rend, &sdl_cm);
@@ -88,6 +87,10 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
     sdltexttest("Hello, world!", manager);
 
     FpsCounterManager *fcm = InitFpsCounter(manager);
+
+    
+    const char *funcmsg; 
+    funcmsg = LoadDeckFromFile(ctrl, ""); // INIT DECK TEMPORARY!
 
     bool running = true;
     int x_prog = 0;
@@ -128,6 +131,15 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
         SDL_Rect fps_textrect = {WIDTH/100, WIDTH/100, fps_surface->w, fps_surface->h}; // TODO: free all memory from here, or do all this at init
         SDL_Texture *fps_texttexture = SDL_CreateTextureFromSurface(rend, fps_surface);
         SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
+
+
+        // RENDER Function message TETX
+        SDL_Color fmsg_textcol = {100, 200, 255, 255};
+        SDL_Surface *fmsg_surface = TTF_RenderText_Solid(manager->font, funcmsg, fmsg_textcol);
+        SDL_Rect fmsg_textrect = {WIDTH/100, HEIGHT-WIDTH/100-fmsg_surface->h, fmsg_surface->w, fmsg_surface->h}; // TODO: free all memory from here, or do all this at init
+        SDL_Texture *fmsg_texttexture = SDL_CreateTextureFromSurface(rend, fmsg_surface);
+        SDL_RenderCopy(rend, fmsg_texttexture, NULL, &fmsg_textrect);
+
 
 
         /* Draw to window and loop */
