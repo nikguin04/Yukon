@@ -28,10 +28,10 @@ void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Surface *gScreenSurface
 }
 
 void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager) {
-    float xSize = 0.12;// changge all the sizes and gaps later
-    float ySize = 0.16;  
-    float xGap = 0.15;
-    float yGap = 0.05;
+    float xSize = 0.10;// changge all the sizes and gaps later, size is 768x1063
+    float ySize = 0.1384;  
+    float xGap = 0.12;
+    float yGap = 0.04;
 
     for (int a = 0; a < COLUMN_SIZE; a++) {
         ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
@@ -40,7 +40,7 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
             int cardIndex = getCardAbsoluteIndex(&curcard->card);
             SDL_Texture *tex = cardmanager->card_textures[cardIndex];
 
-            SDL_Rect cardrect = {WIDTH*xGap*(a+1), WIDTH*yGap*(++b), WIDTH*xSize, HEIGHT*ySize}; 
+            SDL_Rect cardrect = {WIDTH*xGap*(a+1), WIDTH*yGap*(++b), WIDTH*xSize, WIDTH*ySize}; 
             SDL_RenderCopy(rend, tex, NULL, &cardrect);
             curcard = curcard->next;
         }

@@ -125,9 +125,6 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
         SDL_Texture *fps_texttexture = SDL_CreateTextureFromSurface(rend, fps_surface);
         SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
 
-        // RENDER TEST FOR CARD IMAGES
-        SDL_Rect cardtestrect = {800, 200, 150, 208};
-        SDL_RenderCopy(rend, sdl_cm->card_textures[5], NULL, &cardtestrect);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
