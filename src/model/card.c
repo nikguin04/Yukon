@@ -1,15 +1,15 @@
 #include "card.h"
 
-Card *CreateCard(int card_value, CardSuit suit) {
+Card *CreateCard(char value, CardSuit suit) {
 	Card *card = malloc(sizeof(Card));
-	card->card_value = card_value;
+	card->value = value;
 	card->suit = suit;
 	return card;
 }
 
 ll_node_card *ParseCharCard(const char *card, const char **msg) {
 	CardSuit suit = (CardSuit) card[1];
-	int value;
+	char value;
 	switch (suit) {
 		case CLUBS:
 		case DIAMONDS:
@@ -38,32 +38,33 @@ ll_node_card *ParseCharCard(const char *card, const char **msg) {
 		case 'K': value = 13; break;
 
 		default:
-			*msg = "Format of file is wrong, did not read card number correctly";
+			*msg = "Format of file is wrong, did not read rank correctly";
 			return NULL;
 	}
 
 	return NewCardAllocate(value, suit);
 }
 
-ll_node_card *NewCardAllocate(int value, CardSuit suit) {
+ll_node_card *NewCardAllocate(char value, CardSuit suit) {
 	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
-	card->card.card_value = value;
+	card->card.value = value;
 	card->card.suit = suit;
+	card->hidden = false;
 	return card;
 }
 
-ll_node_card *CardToLinkedCard(Card *c) {
-	ll_node_card *card = (ll_node_card *) malloc(sizeof(ll_node_card));
-	card->card.card_value = c->card_value;
-	card->card.hidden = c->hidden;
-	card->card.suit = c->suit;
-	return card;
+ll_node_card *CardToLinkedCard(Card *card) {
+	ll_node_card *node = (ll_node_card *) malloc(sizeof(ll_node_card));
+	node->card.value = card->value;
+	node->card.suit = card->suit;
+	node->hidden = false;
+	return node;
 }
 
-char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
+char *CardToString(Card card, char *cardStr) {
 	cardStr[2] = 0;
 
-	switch (card->card_value) {
+	switch (card.value) {
 		case 1: cardStr[0] = 'A'; break;
 		case 2: cardStr[0] = '2'; break;
 		case 3: cardStr[0] = '3'; break;
@@ -83,8 +84,12 @@ char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
 			return NULL;
 	}
 
-	cardStr[1] = card->suit;
+	cardStr[1] = card.suit;
 	return cardStr;
+}
+
+inline bool CardEquals(Card a, Card b) {
+	return a.suit == b.suit && a.value == b.value;
 }
 
 int getCardAbsoluteIndex(Card *card) {

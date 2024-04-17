@@ -4,7 +4,7 @@ void PrintDeck(ll_node_card *deck) {
 	ll_node_card *current = deck;
 	int progress = 0;
 	while (current != NULL) {
-		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.card_value, current->card.suit);
+		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.value, current->card.suit);
 		current = current->next;
 	}
 }
@@ -16,7 +16,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 	// Open the file in read mode
 	if (path == NULL) {
-		*msg = "No path given to LoadDeck";
+		*msg = "OK";
 		return OpenDefaultDeck();
 	}
 	ptr = fopen(path, "r");
@@ -30,7 +30,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 	ll_node_card *current_card = NULL;
 	int depth_counter = 0;
 	do {
-		*ch = fgetc(ptr);
+		*ch = (char) fgetc(ptr);
 		if (*ch == '\n' || *ch == EOF) {
 			depth_counter++;
 			//*ch == NULL;
@@ -69,8 +69,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 	if (path == NULL) {
-		*msg = "No filename given";
-		return false;
+		path = "cards.txt";
 	}
 
 	FILE *file;
@@ -86,13 +85,13 @@ bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
 	ll_node_card *card = deck;
 	while (true) {
 		char value;
-		switch (card->card.card_value) {
+		switch (card->card.value) {
 			case 1: value = 'A'; break;
 			case 10: value = 'T'; break;
 			case 11: value = 'J'; break;
 			case 12: value = 'Q'; break;
 			case 13: value = 'K'; break;
-			default: value = '0' + card->card.card_value;
+			default: value = (char) ('0' + card->card.value);
 		}
 		fputc(value, file);
 		fputc(card->card.suit, file);
@@ -121,61 +120,61 @@ ll_node_card *OpenDefaultDeck() {
 		ptr->next = CardToLinkedCard(&defaultDeck[i]);
 		ptr = ptr->next;
 	}
-    ptr->next = NULL;
+	ptr->next = NULL;
 	return first;
 }
 
 Card defaultDeck[DECK_LENGTH] = {
-	{1,  CLUBS,    false},
-	{2,  CLUBS,    false},
-	{3,  CLUBS,    false},
-	{4,  CLUBS,    false},
-	{5,  CLUBS,    false},
-	{6,  CLUBS,    false},
-	{7,  CLUBS,    false},
-	{8,  CLUBS,    false},
-	{9,  CLUBS,    false},
-	{10, CLUBS,    false},
-	{11, CLUBS,    false},
-	{12, CLUBS,    false},
-	{13, CLUBS,    false},
-	{1,  DIAMONDS, false},
-	{2,  DIAMONDS, false},
-	{3,  DIAMONDS, false},
-	{4,  DIAMONDS, false},
-	{5,  DIAMONDS, false},
-	{6,  DIAMONDS, false},
-	{7,  DIAMONDS, false},
-	{8,  DIAMONDS, false},
-	{9,  DIAMONDS, false},
-	{10, DIAMONDS, false},
-	{11, DIAMONDS, false},
-	{12, DIAMONDS, false},
-	{13, DIAMONDS, false},
-	{1,  HEARTS,   false},
-	{2,  HEARTS,   false},
-	{3,  HEARTS,   false},
-	{4,  HEARTS,   false},
-	{5,  HEARTS,   false},
-	{6,  HEARTS,   false},
-	{7,  HEARTS,   false},
-	{8,  HEARTS,   false},
-	{9,  HEARTS,   false},
-	{10, HEARTS,   false},
-	{11, HEARTS,   false},
-	{12, HEARTS,   false},
-	{13, HEARTS,   false},
-	{1,  SPADES,   false},
-	{2,  SPADES,   false},
-	{3,  SPADES,   false},
-	{4,  SPADES,   false},
-	{5,  SPADES,   false},
-	{6,  SPADES,   false},
-	{7,  SPADES,   false},
-	{8,  SPADES,   false},
-	{9,  SPADES,   false},
-	{10, SPADES,   false},
-	{11, SPADES,   false},
-	{12, SPADES,   false},
-	{13, SPADES,   false}
+	{1,  CLUBS},
+	{2,  CLUBS},
+	{3,  CLUBS},
+	{4,  CLUBS},
+	{5,  CLUBS},
+	{6,  CLUBS},
+	{7,  CLUBS},
+	{8,  CLUBS},
+	{9,  CLUBS},
+	{10, CLUBS},
+	{11, CLUBS},
+	{12, CLUBS},
+	{13, CLUBS},
+	{1,  DIAMONDS},
+	{2,  DIAMONDS},
+	{3,  DIAMONDS},
+	{4,  DIAMONDS},
+	{5,  DIAMONDS},
+	{6,  DIAMONDS},
+	{7,  DIAMONDS},
+	{8,  DIAMONDS},
+	{9,  DIAMONDS},
+	{10, DIAMONDS},
+	{11, DIAMONDS},
+	{12, DIAMONDS},
+	{13, DIAMONDS},
+	{1,  HEARTS},
+	{2,  HEARTS},
+	{3,  HEARTS},
+	{4,  HEARTS},
+	{5,  HEARTS},
+	{6,  HEARTS},
+	{7,  HEARTS},
+	{8,  HEARTS},
+	{9,  HEARTS},
+	{10, HEARTS},
+	{11, HEARTS},
+	{12, HEARTS},
+	{13, HEARTS},
+	{1,  SPADES},
+	{2,  SPADES},
+	{3,  SPADES},
+	{4,  SPADES},
+	{5,  SPADES},
+	{6,  SPADES},
+	{7,  SPADES},
+	{8,  SPADES},
+	{9,  SPADES},
+	{10, SPADES},
+	{11, SPADES},
+	{12, SPADES},
+	{13, SPADES},
 };

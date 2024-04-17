@@ -3,9 +3,12 @@
 
 void initModel(Model *model) {
 	model->deck = NULL;
-	model->yukon = (YukonStructure *) malloc(sizeof(YukonStructure));
-	ClearGame(model->yukon);
-
 	model->optionIgnoreHidden = false;
+
+	model->yukon = (YukonStructure *) malloc(sizeof(YukonStructure));
 	model->yukon->play_phase = false;
+
+	// Initialise all the yukon pointers to NULL
+	for (int i = 0; i < NUM_COLUMNS; i++) { model->yukon->columnFront[i] = NULL; }
+	for (int i = 0; i < NUM_FOUNDATIONS; i++) { model->yukon->foundationPile[i] = NULL; }
 }

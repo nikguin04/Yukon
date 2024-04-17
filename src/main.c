@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "model/model.h"
 #include "controller/controller.h"
 #include "cliview/command_reader.h"
