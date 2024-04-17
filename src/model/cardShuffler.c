@@ -6,9 +6,10 @@
 ll_node_card *shuffleInterleaving(ll_node_card *deckPointer, int split, const char **msg, bool randSplit) {
 	ll_node_card *originalDeckPointer = deckPointer;
 	if (deckPointer == NULL) {
-        *msg = "No deck to shuffle";
-    }
-    if (randSplit) {
+		*msg = "No deck to shuffle";
+		return NULL;
+	}
+	if (randSplit) {
 		split = (rand() % 52) + 1;
 		*msg = "Deck shuffled with interleaving shuffle and random split";
 	} else if (split <= 0 || split >= 52) {
