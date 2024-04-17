@@ -19,7 +19,7 @@ void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Surface *gScreenSurface
     for (int i = 0; i < DECK_LENGTH; i++) {
         char cardstr[3];
         char path[64];
-        cardToString(&defaultDeck[i], cardstr);
+        CardToString(defaultDeck[i], cardstr);
         sprintf(path, "resource\\ModernCards\\%s.png", cardstr);
         SDL_Texture *texture = LoadOptimizedImage(path, gScreenSurface, rend);
         cardmanager->card_textures[i] = texture;
@@ -33,7 +33,7 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
     float xGap = 0.12;
     float yGap = 0.04;
 
-    for (int a = 0; a < COLUMN_SIZE; a++) {
+    for (int a = 0; a < NUM_COLUMNS; a++) {
         ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
         int b = 0;
         while (curcard != NULL) {

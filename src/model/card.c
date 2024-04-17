@@ -94,10 +94,10 @@ inline bool CardEquals(Card a, Card b) {
 
 int getCardAbsoluteIndex(Card *card) {
 	switch (card->suit) {
-		case CLUBS: return card->card_value + 13*0-1; break;
-		case DIAMONDS: return card->card_value + 13*1-1; break;
-		case HEARTS: return card->card_value + 13*2-1; break;
-		case SPADES: return card->card_value + 13*3-1; break;
+		case CLUBS: return card->value + 13*0-1; break;
+		case DIAMONDS: return card->value + 13*1-1; break;
+		case HEARTS: return card->value + 13*2-1; break;
+		case SPADES: return card->value + 13*3-1; break;
 		default:
 			return -1;
 	}
