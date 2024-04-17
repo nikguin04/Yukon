@@ -1,4 +1,5 @@
 #include "sdlinit.h"
+#include "sdl_cards.h"
 
 
 int sdl_view_init() {
@@ -75,7 +76,8 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
     char path[] = "resource\\DEMONS.png";
     manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
-    initCard_Textures(gScreenSurface, rend);
+    SDL_Cardmanager sdl_cm;
+    initCard_Textures(&sdl_cm, gScreenSurface, rend);
     sdltexttest("Hello, world!", manager);
 
     FpsCounterManager *fcm = InitFpsCounter(manager);
@@ -118,7 +120,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
         // RENDER TEST FOR CARD IMAGES
         SDL_Rect cardtestrect = {200, 50, 150, 208};
-        SDL_RenderCopy(rend, manager->temptexture, NULL, &cardtestrect);
+        SDL_RenderCopy(rend, sdl_cm.card_textures[5], NULL, &cardtestrect);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
