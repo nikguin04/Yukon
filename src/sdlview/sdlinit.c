@@ -3,7 +3,7 @@
 #include <SDL_video.h>
 
 
-int sdl_view_init() {
+int sdl_view_init(Controller *ctrl) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("Error initializing SDL, %s\n", SDL_GetError());
         return 0;
@@ -30,31 +30,14 @@ int sdl_view_init() {
         return 1;
     }
 
-    manager.font = TTF_OpenFont("resource/aptos.ttf", 32);
-    if (manager.font==NULL){
-        printf("Failed to load font: %s", SDL_GetError());
-    }
-
-
-    mainloop(&manager);
-
-    SDL_DestroyWindow(manager.wind);	
-    IMG_Quit();
-    SDL_Quit();
-    return 1;
-
-}
-
-
-int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/platformer.c
     Uint32 render_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
-    SDL_Renderer* rend = SDL_CreateRenderer(manager->wind, -1, render_flags);
-    SDL_Event event;
-    int mouseX=0, mouseY=0;
+    SDL_Renderer* rend = SDL_CreateRenderer(manager.wind, -1, render_flags);
+
+
     if (!rend)
     {
         printf("Error creating renderer: %s\n", SDL_GetError());
-        SDL_DestroyWindow(manager->wind);
+        SDL_DestroyWindow(manager.wind);
         SDL_Quit();
         return 0;
     }
@@ -69,16 +52,39 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
     else
     {
         //Get window surface
-        gScreenSurface = SDL_GetWindowSurface( manager->wind );
+        gScreenSurface = SDL_GetWindowSurface( manager.wind );
     }
 
+    manager.font = TTF_OpenFont("resource/aptos.ttf", 32);
+    if (manager.font==NULL){
+        printf("Failed to load font: %s", SDL_GetError());
+    }
+
+    SDL_Cardmanager sdl_cm;
+    initCard_Textures(&sdl_cm, gScreenSurface, rend);
+    LoadDeckFromFile(ctrl, ""); // INIT DECK TEMPORARY!
+
+
+    mainloop(ctrl, &manager, gScreenSurface, rend, &sdl_cm);
+
+    SDL_DestroyWindow(manager.wind);	
+    IMG_Quit();
+    SDL_Quit();
+    return 1;
+
+}
+
+
+int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface, SDL_Renderer *rend, SDL_Cardmanager *sdl_cm) { // taken from https://www.matsson.com/prog/platformer.c
+
+    SDL_Event event;
+    int mouseX=0, mouseY=0;
     EventObserver event_observers[EventObserverCount];
 
 
     char path[] = "resource\\DEMONS.png";
     manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
-    SDL_Cardmanager sdl_cm;
-    initCard_Textures(&sdl_cm, gScreenSurface, rend);
+
     sdltexttest("Hello, world!", manager);
 
     FpsCounterManager *fcm = InitFpsCounter(manager);
@@ -97,7 +103,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         /*SDL_SetRenderDrawColor(rend, 255, 0, 0, 255);
         SDL_RenderFillRect(rend, &rect);*/
 
-        
+        SDL_cards_render(rend, ctrl, sdl_cm);
         
 
          // TODO: maybe do this at init?
@@ -121,7 +127,7 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
 
         // RENDER TEST FOR CARD IMAGES
         SDL_Rect cardtestrect = {800, 200, 150, 208};
-        SDL_RenderCopy(rend, sdl_cm.card_textures[5], NULL, &cardtestrect);
+        SDL_RenderCopy(rend, sdl_cm->card_textures[5], NULL, &cardtestrect);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);

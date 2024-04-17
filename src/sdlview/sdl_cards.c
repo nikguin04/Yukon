@@ -1,5 +1,8 @@
 #include "sdl_cards.h"
 #include "deck.h"
+#include "linkedlist.h"
+#include "sdlinit.h"
+#include "yukon_model.h"
 #include <SDL_main.h>
 #include <SDL_render.h>
 #include <stdlib.h>
@@ -22,4 +25,25 @@ void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Surface *gScreenSurface
         cardmanager->card_textures[i] = texture;
     }
     
+}
+
+void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager) {
+    float xSize = 0.12;// changge all the sizes and gaps later
+    float ySize = 0.16;  
+    float xGap = 0.15;
+    float yGap = 0.05;
+
+    for (int a = 0; a < COLUMN_SIZE; a++) {
+        ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
+        int b = 0;
+        while (curcard != NULL) {
+            int cardIndex = getCardAbsoluteIndex(&curcard->card);
+            SDL_Texture *tex = cardmanager->card_textures[cardIndex];
+
+            SDL_Rect cardrect = {WIDTH*xGap*(a+1), WIDTH*yGap*(++b), WIDTH*xSize, HEIGHT*ySize}; 
+            SDL_RenderCopy(rend, tex, NULL, &cardrect);
+            curcard = curcard->next;
+        }
+    } 
+
 }

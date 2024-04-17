@@ -5,6 +5,7 @@
 
 #include "sdlview/sdlinit.h"
 
+
 #ifdef __unix__                    /* __unix__ is usually defined by compilers targeting Unix systems */
 
     #define OS_Unix
@@ -18,19 +19,20 @@
 #endif
 
 int main(int argc, char *argv[]) {
-	/*Model *model = (Model *) malloc(sizeof(Model));
+	Model *model = (Model *) malloc(sizeof(Model));
 	Controller *ctrl = (Controller *) malloc(sizeof(Controller));
 	CliWriter *writer = (CliWriter *) malloc(sizeof(CliWriter));
 	initModel(model);
 	initController(ctrl, model);
 	initWriter(writer, ctrl);
 
-	StartReadingLoop(writer);*/
+	//StartReadingLoop(writer);
 	printf("hello");
+	
 	#ifdef OS_Windows
 		SetProcessDPIAware(); // This disables scaling on screens (good for high res screens)
 	#endif
-	sdl_view_init();
+	sdl_view_init(ctrl);
 	return 0;
 }
 

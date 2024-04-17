@@ -12,6 +12,8 @@
 #include <SDL_render.h>
 #include <SDL_stdinc.h>
 #include <stdio.h>
+#include "../controller/controller.h"
+#include "../controller/command_controller.h"
 
 #define WIDTH 1600
 #define HEIGHT 900
@@ -21,7 +23,7 @@
 
 #include "sdltext.h"
 
-int sdl_view_init();
-int mainloop(SDLManager *manager);
+int sdl_view_init(Controller *ctrl);
+int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface, SDL_Renderer *rend, SDL_Cardmanager *sdl_cm);
 
 #endif

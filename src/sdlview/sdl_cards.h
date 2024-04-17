@@ -10,6 +10,7 @@
 #include <SDL_surface.h>
 #include "deck.h"
 #include <stdio.h> 
+#include "../controller/controller.h"
 
 void Cards_GetEvent(SDLManager *manager, SDL_Event *event);
 
@@ -18,5 +19,7 @@ typedef struct SDL_Cardmanager_struct {
 } SDL_Cardmanager;
 
 void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Surface *gScreenSurface, SDL_Renderer *rend);
+
+void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager);
 
 #endif
