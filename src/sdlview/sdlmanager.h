@@ -1,7 +1,6 @@
 #ifndef sdlmanager_h
 #define sdlmanager_h
 
-#include "sdlmanager.h"
 #include <SDL_events.h>
 #include <stdio.h>
 #include <SDL_image.h>

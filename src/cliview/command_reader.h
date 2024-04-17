@@ -4,6 +4,7 @@
 #include "writer.h"
 #include "../controller/command_controller.h"
 #include "screen.h"
+#include <string.h>
 
 typedef const char *(*CommandFunction)(Controller *, char *);
 typedef struct commandStruct {

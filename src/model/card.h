@@ -34,6 +34,7 @@ ll_node_card *NewCardAllocate(int value, CardSuit suit);
 ll_node_card *CardToLinkedCard(Card *c);
 
 char *cardToString(Card *card, char *out);
+int getCardAbsoluteIndex(Card *card); // Index in a unshuffled deck
 
 //#include "deck.h"
 

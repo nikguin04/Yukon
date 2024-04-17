@@ -86,3 +86,14 @@ char *cardToString(Card *card, char *cardStr) { // memory leak, not freed?
 	cardStr[1] = card->suit;
 	return cardStr;
 }
+
+int getCardAbsoluteIndex(Card *card) {
+	switch (card->suit) {
+		case CLUBS: return card->card_value + 13*0-1; break;
+		case DIAMONDS: return card->card_value + 13*1-1; break;
+		case HEARTS: return card->card_value + 13*2-1; break;
+		case SPADES: return card->card_value + 13*3-1; break;
+		default:
+			return -1;
+	}
+}

@@ -1,12 +1,5 @@
 #include "sdlinit.h"
-#include "sdl_cards.h"
-#include "sdl_fps_counter.h"
-#include "sdl_image_loader.h"
-#include "sdltext.h"
-#include <SDL_events.h>
-#include <SDL_render.h>
-#include <SDL_stdinc.h>
-#include <stdio.h>
+
 
 int sdl_view_init() {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -123,7 +116,9 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         SDL_Texture *fps_texttexture = SDL_CreateTextureFromSurface(rend, fps_surface);
         SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
 
-        
+        // RENDER TEST FOR CARD IMAGES
+        SDL_Rect cardtestrect = {200, 50, 150, 208};
+        SDL_RenderCopy(rend, manager->temptexture, NULL, &cardtestrect);
 
         /* Draw to window and loop */
         SDL_RenderPresent(rend);
