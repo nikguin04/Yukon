@@ -6,6 +6,9 @@ set(CMAKE_C_STANDARD 23)
 file (GLOB_RECURSE Yukon_SOURCES CONFIGURE_DEPENDS "src/*.c")
 file (GLOB_RECURSE Yukon_HEADERS CONFIGURE_DEPENDS "src/*.h")
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mconsole")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mconsole")
+
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
