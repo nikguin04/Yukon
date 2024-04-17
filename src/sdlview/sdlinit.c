@@ -1,4 +1,5 @@
 #include "sdlinit.h"
+#include "sdl_cards.h"
 #include "sdl_fps_counter.h"
 #include "sdl_image_loader.h"
 #include "sdltext.h"
@@ -76,8 +77,12 @@ int mainloop(SDLManager *manager) { // taken from https://www.matsson.com/prog/p
         gScreenSurface = SDL_GetWindowSurface( manager->wind );
     }
 
+    EventObserver event_observers[EventObserverCount];
+
+
     char path[] = "resource\\DEMONS.png";
     manager->temptexture = LoadOptimizedImage(path, gScreenSurface, rend);
+    initCard_Textures(gScreenSurface, rend);
     sdltexttest("Hello, world!", manager);
 
     FpsCounterManager *fcm = InitFpsCounter(manager);

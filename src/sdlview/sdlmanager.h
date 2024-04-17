@@ -1,6 +1,8 @@
 #ifndef sdlmanager_h
 #define sdlmanager_h
 
+#include "sdlmanager.h"
+#include <SDL_events.h>
 #include <stdio.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -14,5 +16,13 @@ typedef struct GUI_Struct_struct {
     char *fpstext;
     SDL_Texture *temptexture;
 } SDLManager;
+
+typedef const void (*EventTriggerFunction)(SDLManager *, SDL_Event *);
+typedef struct Event_obs_struct {
+    const EventTriggerFunction func;
+} EventObserver;
+#define EventObserverCount 1
+
+
 
 #endif
