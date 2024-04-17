@@ -110,18 +110,18 @@ int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface,
         //SDL_Rect rect = {(int) WIDTH/2 - 200/2, (int) HEIGHT/2 - 200/2, 200, 200};
         SDL_RenderCopy(rend, manager->temptexture, NULL, &rect);
         
-        // RENDER MOUSE LOCATION TEXT
-        SDL_Rect textrect = {50, (int) HEIGHT/4, 400, 100}; // TODO: free all memory from here, or do all this at init
+        // RENDER Message TEXT
         SDL_Color textcol = {100, 200, 255, 255};
         SDL_Surface *surface = TTF_RenderText_Solid(manager->font, manager->statusmsg, textcol);
+        SDL_Rect textrect = {WIDTH/100, HEIGHT-WIDTH/100-surface->h, surface->w, surface->h}; // TODO: free all memory from here, or do all this at init
         SDL_Texture *texttexture = SDL_CreateTextureFromSurface(rend, surface);
         SDL_RenderCopy(rend, texttexture, NULL, &textrect);
 
         // RENDER FPS TEXT
         UpdateFpsCounter(fcm);
-        SDL_Rect fps_textrect = {50, 50, 250, 75}; // TODO: free all memory from here, or do all this at init
         SDL_Color fps_textcol = {20, 255, 20, 255};
         SDL_Surface *fps_surface = TTF_RenderText_Solid(manager->font, manager->fpstext, fps_textcol);
+        SDL_Rect fps_textrect = {WIDTH/100, WIDTH/100, fps_surface->w, fps_surface->h}; // TODO: free all memory from here, or do all this at init
         SDL_Texture *fps_texttexture = SDL_CreateTextureFromSurface(rend, fps_surface);
         SDL_RenderCopy(rend, fps_texttexture, NULL, &fps_textrect);
 
