@@ -10,4 +10,5 @@ void UpdateScreen(CliWriter *writer) {
 	if (writer->ctrl->model->optionIgnoreHidden) { writer->ctrl->model->optionIgnoreHidden = false; }
 	printf("LAST Command: %s\n", writer->last_command);
 	printf("Message: %s\n", writer->last_command_result);
+	printf("INPUT > ");
 }
