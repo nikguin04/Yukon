@@ -2,7 +2,26 @@
 #include "sdl_cards.h"
 #include <SDL_video.h>
 
+#define NK_INTERNAL_H
+#define NK_INCLUDE_FIXED_TYPES
+#include "nuklear/nuklear.h"
+
 int sdl_view_init(Controller *ctrl) {
+
+    SDL_Window *win;
+    SDL_Renderer *renderer;
+    int running = 1;
+    int flags = 0;
+    float font_scale = 1;
+
+    /* GUI */
+    struct nk_context *ctx;
+    struct nk_colorf bg;
+
+    /* SDL setup */
+    SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
+    SDL_Init(SDL_INIT_VIDEO);
+
 
 }
 
