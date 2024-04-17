@@ -36,7 +36,10 @@ const char *ShowDeck(Controller *ctrl, char *_) {
 const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot shuffle deck interleaving while playing";
-	const char *msg;
+    if (ctrl -> model -> deck == NULL) {
+        return "No deck to shuffle";
+    }
+    const char *msg;
 	if (split == NULL) {
 		ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, 2, &msg, true);
 	} else {
@@ -49,9 +52,14 @@ const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 const char *ShuffleRandom(Controller *ctrl, char *_) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot shuffle deck at random while playing";
-	ctrl->model->deck = shuffleRandom(ctrl->model->deck);
+    const char *msg;
+    if (ctrl -> model -> deck == NULL) {
+        msg = "No deck to shuffle";
+        return msg;
+    }
+	ctrl->model->deck = shuffleRandom(ctrl->model->deck, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-	return "OK";
+	return msg;
 }
 
 const char *QuitAndExit(Controller *ctrl, char *_) {
