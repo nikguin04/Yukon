@@ -2,8 +2,11 @@
 #include "sdl_cards.h"
 #include <SDL_video.h>
 
-
 int sdl_view_init(Controller *ctrl) {
+
+}
+
+/*int sdl_view_init(Controller *ctrl) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         printf("Error initializing SDL, %s\n", SDL_GetError());
         return 0;
@@ -12,7 +15,7 @@ int sdl_view_init(Controller *ctrl) {
 
     SDLManager manager;
 
-    /* Create a window */
+    // Create a window 
     manager.wind = SDL_CreateWindow("Hello Platformer!",
                                       SDL_WINDOWPOS_CENTERED,
                                       SDL_WINDOWPOS_CENTERED,
@@ -71,7 +74,7 @@ int sdl_view_init(Controller *ctrl) {
     SDL_Quit();
     return 1;
 
-}
+}*/
 
 
 int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface, SDL_Renderer *rend, SDL_Cardmanager *sdl_cm) { // taken from https://www.matsson.com/prog/platformer.c
