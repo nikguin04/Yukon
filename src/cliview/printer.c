@@ -36,13 +36,13 @@ void printYukonModel(YukonStructure *yukon, bool forceShow) { // NOTE: a flush o
 }
 
 void PrintFoundationPiles(YukonStructure *yukon) {
-	printf("%c7", '\x1B'); // DEC: save cursor position
+	printf("\x1B""7"); // DEC: save cursor position
 	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
-		printf("%c[%d;%dH", '\x1B', 3 + 2 * i, 1 + 8 * NUM_COLUMNS); // Move to %d line and %d column (tab size times columns)
+		printf("\x1B[%d;%dH", 3 + 2 * i, 1 + 8 * NUM_COLUMNS); // Move to %d line and %d column (tab size times columns)
 		char cardstr[3] = "[]";
 		if (yukon->foundationPile[i] != NULL) { CardToString(yukon->foundationPile[i]->card, cardstr); }
 		printf("%s F%d", cardstr, i + 1);
 	}
 
-	printf("%c8", '\x1B'); // DEC: load cursor position
+	printf("\x1B""8"); // DEC: load cursor position
 }

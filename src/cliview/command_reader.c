@@ -59,8 +59,7 @@ char *CmdArgParse(char *input) {
 }
 
 const Command *MatchCommand(const char *input) {
-	if (strlen(input) == 0) {
-		printf("Command input is empty!\n");
+	if (*input == 0) {
 		return NULL;
 	}
 
@@ -73,7 +72,7 @@ const Command *MatchCommand(const char *input) {
 			return &commands[i];
 		}
 	}
-	return 0;
+	return NULL;
 }
 
 Move MatchMove(const char *input) {
@@ -185,9 +184,9 @@ size_t getline(char **lineptr, size_t *n, FILE *stream) {
 		c = fgetc(stream);
 	}
 
-	*p++ = '\0';
+	*p = '\0';
 	*lineptr = bufptr;
 	*n = size;
 
-	return p - bufptr - 1;
+	return p - bufptr;
 }
