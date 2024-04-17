@@ -16,7 +16,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 	// Open the file in read mode
 	if (path == NULL) {
-		*msg = "No path given to LoadDeck";
+		*msg = "OK";
 		return OpenDefaultDeck();
 	}
 	ptr = fopen(path, "r");

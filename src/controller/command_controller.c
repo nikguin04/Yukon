@@ -29,7 +29,7 @@ const char *ShowDeck(Controller *ctrl, char *_) {
 		return "Cannot show deck while playing";
 	printf("Showing deck to user!\n");
 	ctrl->model->optionIgnoreHidden = true;
-	return "Showed deck to user!";
+	return "OK";
 }
 
 const char *ShuffleInterleaving(Controller *ctrl, char *split) {
@@ -50,7 +50,7 @@ const char *ShuffleRandom(Controller *ctrl, char *_) {
 		return "Cannot shuffle deck at random while playing";
 	ctrl->model->deck = shuffleRandom(ctrl->model->deck);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
-	return "Deck randomly shuffled";
+	return "OK";
 }
 
 const char *QuitAndExit(Controller *ctrl, char *_) {
@@ -63,7 +63,7 @@ const char *QuitGame(Controller *ctrl, char *_) {
 		return "Cannot quit game while not playing";
 	ctrl->model->yukon->play_phase = false;
 	ClearGame(ctrl->model->yukon);
-	return "Game quit successfully";
+	return "OK";
 }
 
 const char *PlayGame(Controller *ctrl, char *_) {
@@ -74,7 +74,7 @@ const char *PlayGame(Controller *ctrl, char *_) {
 	ctrl->model->yukon->play_phase = true;
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
 	ExposeYukonCards(ctrl->model->yukon, 5, COLUMN_STARTSIZE);
-	return "Game play started successfully";
+	return "OK";
 }
 
 #pragma clang diagnostic pop
