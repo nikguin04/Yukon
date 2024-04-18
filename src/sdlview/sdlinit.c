@@ -100,7 +100,7 @@ int sdl_view_init(Controller *ctrl) {
     // TEMP INIT OF DECK
         const char *msg;
         ctrl->model->deck = LoadDeck(path, &msg);
-        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
     //
     SDL_Cardmanager sdl_cm;
     initCard_Textures(&sdl_cm, renderer);
@@ -149,21 +149,33 @@ int sdl_view_init(Controller *ctrl) {
                 nk_combo_end(ctx);
             }
 
-            
+            ll_node_card *cur[NUM_COLUMNS];
             for (int i = 0; i < NUM_COLUMNS; i++) {
-                ll_node_card *column = ctrl->model->yukon->columnFront[i];
-                ll_node_card *cur = column;
-                int column_index = 0;
-                while (cur != NULL) {
-                    struct nk_image nki = nk_image_ptr(sdl_cm.card_textures[getCardAbsoluteIndex(&cur->card)]);
-                    nk_layout_row_static(ctx, 100, 140, 1); // SIZE IS NOT CORRECT!
-                    if (nk_button_image(ctx, nki)) {
-                        printf("Button image clicked!\n");
+                cur[i] = ctrl->model->yukon->columnFront[i];
+            }
+            bool all_cur_done = false;
+            while (!all_cur_done) {
+                all_cur_done = true;
+                nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
+                for (int i = 0; i < NUM_COLUMNS; i++) {
+                    if (cur[i]) {
+                        all_cur_done = false;
+                        struct nk_image nki = nk_image_ptr(sdl_cm.card_textures[getCardAbsoluteIndex(&cur[i]->card)]);
+                        
+                        if (nk_button_image(ctx, nki)) {
+                            char dbgstr[10];
+                            CardToString(cur[i]->card, dbgstr);
+                            printf("Button image clicked: %s\n", dbgstr);
+                        }
+                        cur[i] = cur[i]->next;
+                    } else {
+                        // FILL RECT HERE!
+                        struct nk_rect dimensions = nk_rect(0.0F, 0.0F, 100, 140);
+                        nk_panel_alloc_space(&dimensions, ctx);
                     }
-                    column_index++;
-                    cur = cur->next;
                 }
             }
+
             
             
         }
