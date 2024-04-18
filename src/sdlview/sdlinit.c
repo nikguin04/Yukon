@@ -1,15 +1,19 @@
 #include "sdlinit.h"
 #include "sdl_cards.h"
+#include <SDL_render.h>
 #include <SDL_video.h>
 #include <stdio.h>
 
 #include "nuklear/nuklear_sdl_renderer.h"
+#include "sdl_image_loader.h"
+
 /*#define NK_INTERNAL_H
 #define NK_INCLUDE_FIXED_TYPES
 #include "nuklear/nuklear_sdl_renderer.h"*/
 
 int sdl_view_init(Controller *ctrl) {
 
+    
     SDL_Window *win;
     SDL_Renderer *renderer;
     int running = 1;
@@ -86,7 +90,8 @@ int sdl_view_init(Controller *ctrl) {
     bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
     
 
-
+    char path[] = "resource\\DEMONS.png";
+    SDL_Texture *tex = LoadSDLImage(path, renderer);
     while (running)
     {
         /* Input */
@@ -130,6 +135,32 @@ int sdl_view_init(Controller *ctrl) {
                 bg.a = nk_propertyf(ctx, "#A:", 0, bg.a, 1.0f, 0.01f,0.005f);
                 nk_combo_end(ctx);
             }
+            nk_layout_row_static(ctx, 100, 100, 1);
+            struct nk_image nki;
+            nki.handle.ptr = tex;
+            nki.w = 100;
+            nki.h = 100;
+            nki.region[0] = 1;
+            struct nk_rect imgr = {100,100,100,100};
+            struct nk_command_buffer *nkcb;
+            nkcb = nk_window_get_canvas(ctx);
+            //nk_command_buffer_init(&nkcb, 0, 0);
+            struct nk_color col;
+            col.a = 255;
+            col.g = 255;
+            nk_draw_image(nkcb, imgr, &nki, col);
+            //nk_image(ctx, nki);
+            /*if (nk_button_image(ctx, nki)) {
+                printf("IMAGE CLICKED!\n");
+            }*/
+
+            
+            
+            /*struct nk_image img;
+            nk_image(ctx, img)
+            if((struct nk_context *, struct nk_image img)) {
+                printf("Image pressed");
+            }*/
         }
         nk_end(ctx);
 
@@ -163,6 +194,8 @@ int sdl_view_init(Controller *ctrl) {
         SDL_Quit();
         return 0;
 }
+
+
 
 /*int sdl_view_init(Controller *ctrl) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {

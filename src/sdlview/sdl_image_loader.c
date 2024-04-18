@@ -22,3 +22,19 @@ SDL_Texture *LoadOptimizedImage(char *path, SDL_Surface *gScreenSurface, SDL_Ren
     SDL_FreeSurface( optimizedSurface );
     return texture;
 }
+
+SDL_Texture *LoadSDLImage(char *path, SDL_Renderer *rend) {
+    
+
+    SDL_Surface* loadedSurface = IMG_Load( path );
+    if( loadedSurface == NULL )
+    {
+        printf( "Unable to load image %s! SDL_image Error: %s\n", path, IMG_GetError() );
+        return 0;
+    }
+
+    
+    SDL_Texture * texture = SDL_CreateTextureFromSurface(rend, loadedSurface);
+    SDL_FreeSurface( loadedSurface );
+    return texture;
+}
