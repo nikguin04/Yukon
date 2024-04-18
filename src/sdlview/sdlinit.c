@@ -135,32 +135,13 @@ int sdl_view_init(Controller *ctrl) {
                 bg.a = nk_propertyf(ctx, "#A:", 0, bg.a, 1.0f, 0.01f,0.005f);
                 nk_combo_end(ctx);
             }
-            nk_layout_row_static(ctx, 100, 100, 1);
-            struct nk_image nki;
-            nki.handle.ptr = tex;
-            nki.w = 100;
-            nki.h = 100;
-            nki.region[0] = 1;
-            struct nk_rect imgr = {100,100,100,100};
-            struct nk_command_buffer *nkcb;
-            nkcb = nk_window_get_canvas(ctx);
-            //nk_command_buffer_init(&nkcb, 0, 0);
-            struct nk_color col;
-            col.a = 255;
-            col.g = 255;
-            nk_draw_image(nkcb, imgr, &nki, col);
-            //nk_image(ctx, nki);
-            /*if (nk_button_image(ctx, nki)) {
-                printf("IMAGE CLICKED!\n");
-            }*/
 
+            struct nk_image nki = nk_image_ptr(tex);
+            nk_layout_row_static(ctx, 100, 100, 1);
+            if (nk_button_image(ctx, nki)) {
+                printf("Button image clicked!\n");
+            }
             
-            
-            /*struct nk_image img;
-            nk_image(ctx, img)
-            if((struct nk_context *, struct nk_image img)) {
-                printf("Image pressed");
-            }*/
         }
         nk_end(ctx);
 
