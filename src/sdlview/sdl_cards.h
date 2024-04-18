@@ -12,6 +12,9 @@
 #include <stdio.h> 
 #include "../controller/controller.h"
 
+
+
+
 void Cards_GetEvent(SDLManager *manager, SDL_Event *event);
 
 typedef struct SDL_Cardmanager_struct {
@@ -23,5 +26,8 @@ void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend);
 void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager);
 
 struct nk_rect* getCardRect(YukonStructure *yukon, int column, int ll_index);
+
+struct nk_context;
+void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager *sdl_cm);
 
 #endif

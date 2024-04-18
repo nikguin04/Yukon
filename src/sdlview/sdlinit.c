@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #define NK_ASSERT
+
 #include "nuklear/nuklear_sdl_renderer.h"
 #include "sdl_image_loader.h"
 
@@ -76,13 +77,8 @@ int sdl_view_init(Controller *ctrl) {
         /* set up the font atlas and add desired font; note that font sizes are
          * multiplied by font_scale to produce better results at higher DPIs */
         nk_sdl_font_stash_begin(&atlas);
-        font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/DroidSans.ttf", 14 * font_scale, &config);*/
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/Roboto-Regular.ttf", 16 * font_scale, &config);*/
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/kenvector_future_thin.ttf", 13 * font_scale, &config);*/
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/ProggyClean.ttf", 12 * font_scale, &config);*/
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/ProggyTiny.ttf", 10 * font_scale, &config);*/
-        /*font = nk_font_atlas_add_from_file(atlas, "../../../extra_font/Cousine-Regular.ttf", 13 * font_scale, &config);*/
+        //font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
+        font = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 14 * font_scale, &config);
         nk_sdl_font_stash_end();
 
         /* this hack makes the font appear to be scaled down to the desired
@@ -94,12 +90,11 @@ int sdl_view_init(Controller *ctrl) {
     bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
     
 
-    char path[] = "resource\\DEMONS.png";
-    SDL_Texture *tex = LoadSDLImage(path, renderer);
 
-    // TEMP INIT OF DECK
+    // TEMP INIT OF DECK 
+    // TODO: Remove this when we have a load button
         const char *msg;
-        ctrl->model->deck = LoadDeck(path, &msg);
+        ctrl->model->deck = LoadDeck("", &msg);
         DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
     //
     SDL_Cardmanager sdl_cm;
@@ -149,57 +144,14 @@ int sdl_view_init(Controller *ctrl) {
                 nk_combo_end(ctx);
             }
             
-            const int yNegativeGap = 50;
-            ll_node_card *cur[NUM_COLUMNS];
-            for (int i = 0; i < NUM_COLUMNS; i++) {
-                cur[i] = ctrl->model->yukon->columnFront[i];
-            }
-            bool all_cur_done = false;
-            while (!all_cur_done) {
-                all_cur_done = true;
-                
-                nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
-                for (int i = 0; i < NUM_COLUMNS; i++) {
-                    if (cur[i]) {
-                        all_cur_done = false;
-                        struct nk_image nki = nk_image_ptr(sdl_cm.card_textures[getCardAbsoluteIndex(&cur[i]->card)]);
-                        
-                        if (nk_button_image(ctx, nki)) {
-                            char dbgstr[10];
-                            CardToString(cur[i]->card, dbgstr);
-                            printf("Button image clicked: %s\n", dbgstr);
-                        }
-                        cur[i] = cur[i]->next;
-                    } else {
-                        // FILL RECT HERE!
-                        nk_spacing(ctx, 1);
-                    }
-                }
-                nk_layout_row_dynamic(ctx, -yNegativeGap, 1);
-                nk_spacing(ctx, 1); 
-            }
-            nk_layout_row_dynamic(ctx, yNegativeGap, 1); // Cancel out the last gap
-            nk_spacing(ctx, 1); 
-
+            
+            RenderCardColumns(ctrl, ctx, &sdl_cm);
             
             
         }
         nk_end(ctx);
 
-        /* -------------- EXAMPLES ---------------- */
-        #ifdef INCLUDE_CALCULATOR
-          calculator(ctx);
-        #endif
-        #ifdef INCLUDE_CANVAS
-        canvas(ctx);
-        #endif
-        #ifdef INCLUDE_OVERVIEW
-          overview(ctx);
-        #endif
-        #ifdef INCLUDE_NODE_EDITOR
-          node_editor(ctx);
-        #endif
-        /* ----------------------------------------- */
+
 
         SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255, bg.a * 255);
         SDL_RenderClear(renderer);

@@ -27,6 +27,6 @@
 #include "sdltext.h"
 
 int sdl_view_init(Controller *ctrl);
-int mainloop(Controller *ctrl, SDLManager *manager, SDL_Surface *gScreenSurface, SDL_Renderer *rend, SDL_Cardmanager *sdl_cm);
+
 
 #endif

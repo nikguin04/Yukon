@@ -1,6 +1,7 @@
 #include "sdl_cards.h"
 #include "deck.h"
 #include "linkedlist.h"
+
 #include "sdl_image_loader.h"
 #include "sdlinit.h"
 #include "yukon_model.h"
@@ -8,8 +9,17 @@
 #include <SDL_render.h>
 #include <stdlib.h>
 
-#define IMPORTED_NK_SDL_REND_H
-#include "nuklear/nuklear_sdl_renderer.h"
+
+#define NK_ASSERT
+#define NK_INCLUDE_FIXED_TYPES
+#define NK_INCLUDE_STANDARD_IO
+#define NK_INCLUDE_STANDARD_VARARGS
+#define NK_INCLUDE_DEFAULT_ALLOCATOR
+#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
+#define NK_INCLUDE_FONT_BAKING
+#define NK_INCLUDE_DEFAULT_FONT
+#define NK_SDL_RENDERER_IMPLEMENTATION
+#include "nuklear/nuklear.h"
 
 
 
@@ -54,4 +64,39 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
 
 struct nk_rect* getCardRect(YukonStructure *yukon, int column, int ll_index) {
     return NULL;
+}
+
+
+void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager *sdl_cm) {
+    const int yNegativeGap = 50;
+            ll_node_card *cur[NUM_COLUMNS];
+            for (int i = 0; i < NUM_COLUMNS; i++) {
+                cur[i] = ctrl->model->yukon->columnFront[i];
+            }
+            bool all_cur_done = false;
+            while (!all_cur_done) {
+                all_cur_done = true;
+                
+                nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
+                for (int i = 0; i < NUM_COLUMNS; i++) {
+                    if (cur[i]) {
+                        all_cur_done = false;
+                        struct nk_image nki = nk_image_ptr(sdl_cm->card_textures[getCardAbsoluteIndex(&cur[i]->card)]);
+                        
+                        if (nk_button_image(ctx, nki)) {
+                            char dbgstr[10];
+                            CardToString(cur[i]->card, dbgstr);
+                            printf("Button image clicked: %s\n", dbgstr);
+                        }
+                        cur[i] = cur[i]->next;
+                    } else {
+                        // FILL RECT HERE!
+                        nk_spacing(ctx, 1);
+                    }
+                }
+                nk_layout_row_dynamic(ctx, -yNegativeGap, 1);
+                nk_spacing(ctx, 1); 
+            }
+            nk_layout_row_dynamic(ctx, yNegativeGap, 1); // Cancel out the last gap
+            nk_spacing(ctx, 1); 
 }
