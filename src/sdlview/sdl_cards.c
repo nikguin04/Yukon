@@ -10,16 +10,7 @@
 #include <stdlib.h>
 
 
-#define NK_ASSERT
-#define NK_INCLUDE_FIXED_TYPES
-#define NK_INCLUDE_STANDARD_IO
-#define NK_INCLUDE_STANDARD_VARARGS
-#define NK_INCLUDE_DEFAULT_ALLOCATOR
-#define NK_INCLUDE_VERTEX_BUFFER_OUTPUT
-#define NK_INCLUDE_FONT_BAKING
-#define NK_INCLUDE_DEFAULT_FONT
-#define NK_SDL_RENDERER_IMPLEMENTATION
-#include "nuklear/nuklear.h"
+
 
 
 
@@ -81,8 +72,11 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
                 for (int i = 0; i < NUM_COLUMNS; i++) {
                     if (cur[i]) {
                         all_cur_done = false;
-                        struct nk_image nki = nk_image_ptr(sdl_cm->card_textures[getCardAbsoluteIndex(&cur[i]->card)]);
-                        
+                        int index = getCardAbsoluteIndex(&cur[i]->card);
+                        struct nk_image nki = nk_image_ptr(sdl_cm->card_textures[index]);
+                        struct nk_rect img_bounds = nk_widget_bounds(ctx);
+                        sdl_cm->cardRects[index] = &img_bounds; // WARNING: This might be overwritten
+                        //printf("h:%f, w:%f, x:%f, y:%f\n", img_bounds.h, img_bounds.w, img_bounds.x, img_bounds.y); // TEMP BOUND PRINT
                         if (nk_button_image(ctx, nki)) {
                             char dbgstr[10];
                             CardToString(cur[i]->card, dbgstr);

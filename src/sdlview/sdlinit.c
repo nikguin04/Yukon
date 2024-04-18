@@ -2,6 +2,7 @@
 //#include "nuklear.h"
 #include "deck.h"
 #include "sdl_cards.h"
+#include "sdl_deck.h"
 #include "yukon_model.h"
 #include <SDL_render.h>
 #include <SDL_video.h>
@@ -91,14 +92,10 @@ int sdl_view_init(Controller *ctrl) {
     
 
 
-    // TEMP INIT OF DECK 
-    // TODO: Remove this when we have a load button
-        const char *msg;
-        ctrl->model->deck = LoadDeck("", &msg);
-        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
-    //
+    
     SDL_Cardmanager sdl_cm;
     initCard_Textures(&sdl_cm, renderer);
+    SDL_initdeck(ctrl, &sdl_cm);
 
     while (running)
     {
