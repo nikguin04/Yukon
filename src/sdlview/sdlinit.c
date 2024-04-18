@@ -1,6 +1,8 @@
 #include "sdlinit.h"
 //#include "nuklear.h"
+#include "deck.h"
 #include "sdl_cards.h"
+#include "yukon_model.h"
 #include <SDL_render.h>
 #include <SDL_video.h>
 #include <stdio.h>
@@ -94,6 +96,15 @@ int sdl_view_init(Controller *ctrl) {
 
     char path[] = "resource\\DEMONS.png";
     SDL_Texture *tex = LoadSDLImage(path, renderer);
+
+    // TEMP INIT OF DECK
+        const char *msg;
+        ctrl->model->deck = LoadDeck(path, &msg);
+        DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+    //
+    SDL_Cardmanager sdl_cm;
+    initCard_Textures(&sdl_cm, renderer);
+
     while (running)
     {
         /* Input */
@@ -138,11 +149,22 @@ int sdl_view_init(Controller *ctrl) {
                 nk_combo_end(ctx);
             }
 
-            struct nk_image nki = nk_image_ptr(tex);
-            nk_layout_row_static(ctx, 100, 100, 1);
-            if (nk_button_image(ctx, nki)) {
-                printf("Button image clicked!\n");
+            
+            for (int i = 0; i < NUM_COLUMNS; i++) {
+                ll_node_card *column = ctrl->model->yukon->columnFront[i];
+                ll_node_card *cur = column;
+                int column_index = 0;
+                while (cur != NULL) {
+                    struct nk_image nki = nk_image_ptr(sdl_cm.card_textures[getCardAbsoluteIndex(&cur->card)]);
+                    nk_layout_row_static(ctx, 100, 140, 1); // SIZE IS NOT CORRECT!
+                    if (nk_button_image(ctx, nki)) {
+                        printf("Button image clicked!\n");
+                    }
+                    column_index++;
+                    cur = cur->next;
+                }
             }
+            
             
         }
         nk_end(ctx);

@@ -18,8 +18,10 @@ typedef struct SDL_Cardmanager_struct {
     SDL_Texture *card_textures[DECK_LENGTH];
 } SDL_Cardmanager;
 
-void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Surface *gScreenSurface, SDL_Renderer *rend);
+void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend);
 
 void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager);
+
+struct nk_rect* getCardRect(YukonStructure *yukon, int column, int ll_index);
 
 #endif
