@@ -7,6 +7,9 @@
 #include <SDL_render.h>
 #include <stdlib.h>
 
+#define IMPORTED_NK_SDL_REND_H
+#include "nuklear/nuklear_sdl_renderer.h"
+
 
 
 void Cards_GetEvent(SDLManager *manager, SDL_Event *event) {

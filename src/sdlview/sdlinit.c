@@ -1,9 +1,11 @@
 #include "sdlinit.h"
+//#include "nuklear.h"
 #include "sdl_cards.h"
 #include <SDL_render.h>
 #include <SDL_video.h>
 #include <stdio.h>
 
+#define NK_ASSERT
 #include "nuklear/nuklear_sdl_renderer.h"
 #include "sdl_image_loader.h"
 

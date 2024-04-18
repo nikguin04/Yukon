@@ -8,6 +8,8 @@
  *
  * ===============================================================
  */
+#ifndef IMPORTED_NK_SDL_REND_H
+#define IMPORTED_NK_SDL_REND_H
 #ifndef NK_SDL_RENDERER_H_
 #define NK_SDL_RENDERER_H_
 
@@ -393,3 +395,4 @@ void nk_sdl_shutdown(void)
 }
 
 #endif /* NK_SDL_RENDERER_IMPLEMENTATION */
+#endif
