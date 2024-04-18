@@ -148,7 +148,8 @@ int sdl_view_init(Controller *ctrl) {
                 bg.a = nk_propertyf(ctx, "#A:", 0, bg.a, 1.0f, 0.01f,0.005f);
                 nk_combo_end(ctx);
             }
-
+            
+            const int yNegativeGap = 50;
             ll_node_card *cur[NUM_COLUMNS];
             for (int i = 0; i < NUM_COLUMNS; i++) {
                 cur[i] = ctrl->model->yukon->columnFront[i];
@@ -156,6 +157,7 @@ int sdl_view_init(Controller *ctrl) {
             bool all_cur_done = false;
             while (!all_cur_done) {
                 all_cur_done = true;
+                
                 nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
                 for (int i = 0; i < NUM_COLUMNS; i++) {
                     if (cur[i]) {
@@ -170,11 +172,14 @@ int sdl_view_init(Controller *ctrl) {
                         cur[i] = cur[i]->next;
                     } else {
                         // FILL RECT HERE!
-                        struct nk_rect dimensions = nk_rect(0.0F, 0.0F, 100, 140);
-                        nk_panel_alloc_space(&dimensions, ctx);
+                        nk_spacing(ctx, 1);
                     }
                 }
+                nk_layout_row_dynamic(ctx, -yNegativeGap, 1);
+                nk_spacing(ctx, 1); 
             }
+            nk_layout_row_dynamic(ctx, yNegativeGap, 1); // Cancel out the last gap
+            nk_spacing(ctx, 1); 
 
             
             
