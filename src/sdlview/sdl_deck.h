@@ -7,6 +7,8 @@
 
 void SDL_initdeck(Controller *ctrl, SDL_Cardmanager *sdl_cm);
 
-void CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
+ll_node_card* CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
+
+void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
 
 #endif

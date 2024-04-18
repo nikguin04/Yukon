@@ -4,6 +4,7 @@
 #include "sdl_cards.h"
 #include "sdl_deck.h"
 #include "yukon_model.h"
+#include <SDL_events.h>
 #include <SDL_render.h>
 #include <SDL_video.h>
 #include <stdio.h>
@@ -102,9 +103,12 @@ int sdl_view_init(Controller *ctrl) {
         /* Input */
         SDL_Event evt;
         nk_input_begin(ctx);
-        while (SDL_PollEvent(&evt)) {
+        while (SDL_PollEvent(&evt)) { // make this a switch case??
             if (evt.type == SDL_QUIT) goto cleanup;
             nk_sdl_handle_event(&evt);
+            if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP) {
+                CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm);
+            }
         }
         nk_sdl_handle_grab(); /* optional grabbing behavior */
         nk_input_end(ctx);
@@ -143,7 +147,7 @@ int sdl_view_init(Controller *ctrl) {
             
             
             RenderCardColumns(ctrl, ctx, &sdl_cm);
-            CheckCardHover(ctrl, &ctx->input, &sdl_cm);
+            //CheckCardHover(ctrl, &ctx->input, &sdl_cm);
             
             
         }
