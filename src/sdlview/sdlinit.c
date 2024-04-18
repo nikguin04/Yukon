@@ -143,6 +143,7 @@ int sdl_view_init(Controller *ctrl) {
             
             
             RenderCardColumns(ctrl, ctx, &sdl_cm);
+            CheckCardHover(ctrl, &ctx->input, &sdl_cm);
             
             
         }

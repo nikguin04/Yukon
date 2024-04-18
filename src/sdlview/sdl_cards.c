@@ -75,7 +75,7 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
                         int index = getCardAbsoluteIndex(&cur[i]->card);
                         struct nk_image nki = nk_image_ptr(sdl_cm->card_textures[index]);
                         struct nk_rect img_bounds = nk_widget_bounds(ctx);
-                        sdl_cm->cardRects[index] = &img_bounds; // WARNING: This might be overwritten
+                        sdl_cm->cardRects[index] = img_bounds; // WARNING: This might be a memory leak
                         //printf("h:%f, w:%f, x:%f, y:%f\n", img_bounds.h, img_bounds.w, img_bounds.x, img_bounds.y); // TEMP BOUND PRINT
                         if (nk_button_image(ctx, nki)) {
                             char dbgstr[10];
