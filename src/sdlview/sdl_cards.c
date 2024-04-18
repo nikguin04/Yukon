@@ -77,11 +77,12 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
                         struct nk_rect img_bounds = nk_widget_bounds(ctx);
                         sdl_cm->cardRects[index] = img_bounds; // WARNING: This might be a memory leak
                         //printf("h:%f, w:%f, x:%f, y:%f\n", img_bounds.h, img_bounds.w, img_bounds.x, img_bounds.y); // TEMP BOUND PRINT
-                        if (nk_button_image(ctx, nki)) {
+                        nk_image(ctx, nki);
+                        /*if (nk_button_image(ctx, nki)) {
                             char dbgstr[10];
                             CardToString(cur[i]->card, dbgstr);
                             printf("Button image clicked: %s\n", dbgstr);
-                        }
+                        }*/
                         cur[i] = cur[i]->next;
                     } else {
                         // FILL RECT HERE!
