@@ -1,5 +1,5 @@
-#ifndef sdl_deck_h
-#define sdl_deck_h
+#ifndef SDL_DECK_H
+#define SDL_DECK_H
 
 #include "../controller/controller.h"
 #include "../model/deck.h"
@@ -7,7 +7,7 @@
 
 void SDL_initdeck(Controller *ctrl, SDL_Cardmanager *sdl_cm);
 
-ll_node_card* CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
+ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
 
 void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm);
 

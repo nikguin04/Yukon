@@ -1,5 +1,5 @@
-#ifndef sdl_image_loader_h
-#define sdl_image_loader_h
+#ifndef SDL_IMAGE_LOADER_H
+#define SDL_IMAGE_LOADER_H
 
 #include "sdlmanager.h"
 
