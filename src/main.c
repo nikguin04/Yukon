@@ -27,8 +27,8 @@ int main(int argc, char *argv[]) {
 	initController(ctrl, model);
 	initWriter(writer, ctrl);
 
-	//StartReadingLoop(writer);
-	printf("hello");
+//	StartReadingLoop(writer);
+//	printf("hello");
 	
 	#ifdef OS_Windows
 		SetProcessDPIAware(); // This disables scaling on screens (good for high res screens)

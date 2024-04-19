@@ -3,6 +3,7 @@
 #include <cardShuffler.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnusedParameter"
@@ -35,7 +36,7 @@ const char *ShowDeck(Controller *ctrl, char *_) {
 
 const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 	if (ctrl->model->yukon->play_phase)
-		return "Cannot shuffle deck interleaving while playing";
+		return "Cannot shuffle deck while playing";
 	if (ctrl->model->deck == NULL)
 		return "No deck to shuffle";
 	const char *msg;
@@ -50,7 +51,7 @@ const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 
 const char *ShuffleRandom(Controller *ctrl, char *_) {
 	if (ctrl->model->yukon->play_phase)
-		return "Cannot shuffle deck at random while playing";
+		return "Cannot shuffle deck while playing";
 	if (ctrl->model->deck == NULL)
 		return "No deck to shuffle";
 	const char *msg;

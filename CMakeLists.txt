@@ -21,7 +21,9 @@ foreach (_headerFile ${Yukon_HEADERS})
 endforeach ()
 list(REMOVE_DUPLICATES Yukon_INCLUDE_DIRS)
 
-add_executable(Yukon ${Yukon_SOURCES})
+add_executable(Yukon ${Yukon_SOURCES}
+		src/sdlview/sdl_command_parser.c
+		src/sdlview/sdl_command_parser.h)
 target_include_directories(Yukon PRIVATE ${Yukon_INCLUDE_DIRS})
 set(SDL2_IMAGE_LIBRARIES SDL2_image::SDL2_image)
 set(SDL2_TTF_LIBRARIES SDL2_ttf::SDL2_ttf)
