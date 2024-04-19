@@ -103,9 +103,10 @@ int sdl_view_init(Controller *ctrl) {
     SDL_initdeck(ctrl, &sdl_cm);
 
     char SI_input_buffer[256] = "";
-
     char LD_input_buffer[256] = "";
     char SD_input_buffer[256] = "";
+    const char *message_text = "";
+
 
     while (running)
     {
@@ -164,38 +165,57 @@ int sdl_view_init(Controller *ctrl) {
             // Add command buttons
             nk_layout_row_static(ctx, 30, 80, 5);
             if (nk_button_label(ctx, "SR")) {
-                printf(ShuffleRandom(ctrl, NULL));
+//                printf(ShuffleRandom(ctrl, NULL));
+                 message_text = ShuffleRandom(ctrl, NULL);
+//                 printf("Message: %s\n", message_text);
             }
             if (nk_button_label(ctx, "SI")) {
-                printf(ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer)));
+//                printf(ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer)));
+                message_text = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
             }
             nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SI_input_buffer, 256, nk_filter_default);
+
             if (nk_button_label(ctx, "LD")) {
-                printf(LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer)));
+//                printf(LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer)));
+                message_text = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
             }
             nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, LD_input_buffer, 256, nk_filter_default);
+
             if (nk_button_label(ctx, "SD")) {
-                printf(SaveDeckToFile(ctrl, parseCommand(LD_input_buffer)));
+//                printf(SaveDeckToFile(ctrl, parseCommand(LD_input_buffer)));
+                message_text = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
             }
             nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SD_input_buffer, 256, nk_filter_default);
+
             if (nk_button_label(ctx, "QQ")) {
-                printf(QuitAndExit(ctrl, NULL));
+//                printf(QuitAndExit(ctrl, NULL));
+                message_text = QuitAndExit(ctrl, NULL);
             }
             if (nk_button_label(ctx, "Q")) {
-                printf(QuitGame(ctrl, NULL));
+//                printf(QuitGame(ctrl, NULL));
+                message_text = QuitGame(ctrl, NULL);
             }
             if (nk_button_label(ctx, "SW")) {
-                printf(ShowDeck(ctrl, NULL));
+//                printf(ShowDeck(ctrl, NULL));
+                message_text = ShowDeck(ctrl, NULL);
             }
             if (nk_button_label(ctx, "P")) {
-                printf(PlayGame(ctrl, NULL));
+//                printf(PlayGame(ctrl, NULL));
+                message_text = PlayGame(ctrl, NULL);
             }
 
 
             RenderCardColumns(ctrl, ctx, &sdl_cm);
             //CheckCardHover(ctrl, &ctx->input, &sdl_cm);
 
-
+            // Display message from commands
+//            struct nk_style_item styleItem;
+//            styleItem.data.font = 18;
+            const float item_widths[] = {50, 500};
+//            nk_layout_row_static(ctx, 30, 80, 2);
+            nk_layout_row(ctx, NK_STATIC, 30, 2, item_widths);
+            nk_label(ctx, "Message: ", NK_TEXT_LEFT);
+            nk_label(ctx, message_text, NK_TEXT_LEFT);
         }
         nk_end(ctx);
 
