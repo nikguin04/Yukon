@@ -86,3 +86,44 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	*destPointer = node;
 	return "OK";
 }
+
+// TODO: Be able to grab card from specific index
+ActiveMove GrabCard(Controller *ctrl, char source) {
+	ActiveMove activeMove = {};
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card **from = NULL;
+	ll_node_card *card;
+	if (source > 0) {
+		// Take from a column
+		ll_node_card *prev = NULL;
+		card = yukon->columnFront[source - 1];
+		if (card == NULL) return activeMove;
+		while (card->next != NULL) {
+			prev = card;
+			card = card->next;
+		}
+		from = &prev->next;
+		activeMove.cardToUnhide = prev;
+		*from = NULL;
+	} else {
+		// Take from a foundation pile
+		from = &yukon->foundationPile[-source - 1];
+		card = *from;
+		if (card == NULL) return activeMove;
+		*from = card->next;
+		card->next = NULL;
+	}
+	activeMove.card = card;
+	activeMove.from = from;
+	activeMove.fromIsFoundation = source < 0;
+	return activeMove;
+}
+
+void CancelMove(Controller *ctrl, ActiveMove move) {
+	if (!move.fromIsFoundation) {
+		*move.from = move.card;
+	} else {
+		move.card->next = *move.from;
+		*move.from = move.card;
+	}
+}
