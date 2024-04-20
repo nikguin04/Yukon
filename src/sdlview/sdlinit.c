@@ -180,7 +180,7 @@ int sdl_view_init(Controller *ctrl) {
             nk_style_push_font(ctx, &messageFont->handle);
             nk_layout_row_push(ctx, 105);
             nk_label(ctx, "Message: ", NK_TEXT_LEFT);
-            nk_layout_row_push(ctx, 800);
+            nk_layout_row_push(ctx, 650);
             nk_label(ctx, message_text, NK_TEXT_LEFT);
             nk_style_pop_font(ctx);
             nk_layout_row_end(ctx);
