@@ -140,37 +140,43 @@ int sdl_view_init(Controller *ctrl) {
 //			}
 
 			// Add command buttons
-			nk_layout_row_static(ctx, 30, 80, 8);
-			if (nk_button_label(ctx, "LD")) {
-				message_text = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
-			}
-			if (nk_button_label(ctx, "SD")) {
-				message_text = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
-			}
-			if (nk_button_label(ctx, "SI")) {
-				message_text = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
-			}
-			if (nk_button_label(ctx, "SR")) {
-				message_text = ShuffleRandom(ctrl, NULL);
-			}
-			if (nk_button_label(ctx, "SW")) {
-				message_text = ShowDeck(ctrl, NULL);
-			}
-			if (nk_button_label(ctx, "P")) {
-				message_text = PlayGame(ctrl, NULL);
-			}
-			if (nk_button_label(ctx, "Q")) {
-				message_text = QuitGame(ctrl, NULL);
-			}
-			if (nk_button_label(ctx, "QQ")) {
+			nk_layout_row_static(ctx, 30, 100, 8);
+            if (!ctrl->model->yukon->play_phase) {
+                if (nk_button_label(ctx, "Load")) {
+                    message_text = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
+                }
+                if (nk_button_label(ctx, "Save")) {
+                    message_text = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
+                }
+                if (nk_button_label(ctx, "Interleave Shuffle")) {
+                    message_text = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
+                }
+                if (nk_button_label(ctx, "Random Shuffle")) {
+                    message_text = ShuffleRandom(ctrl, NULL);
+                }
+                if (nk_button_label(ctx, "Show Cards")) {
+                    message_text = ShowDeck(ctrl, NULL);
+                }
+                if (nk_button_label(ctx, "Play")) {
+                    message_text = PlayGame(ctrl, NULL);
+                }
+            } else {
+                if (nk_button_label(ctx, "Quit")) {
+                    message_text = QuitGame(ctrl, NULL);
+                }
+            }
+			
+			if (nk_button_label(ctx, "Quit And Exit")) {
 				message_text = QuitAndExit(ctrl, NULL);
 			}
 
             // Add input boxes for command buttons
-            nk_layout_row_static(ctx, 30, 80, 3);
-			nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, LD_input_buffer, 256, nk_filter_default);
-			nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SD_input_buffer, 256, nk_filter_default);
-			nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SI_input_buffer, 256, nk_filter_default);
+            nk_layout_row_static(ctx, 30, 100, 3);
+            if (!ctrl->model->yukon->play_phase) {
+                nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, LD_input_buffer, 256, nk_filter_default);
+                nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SD_input_buffer, 256, nk_filter_default);
+                nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SI_input_buffer, 256, nk_filter_default);
+            }
 
 			RenderCardColumns(ctrl, ctx, &sdl_cm);
 			//CheckCardHover(ctrl, &ctx->input, &sdl_cm);
