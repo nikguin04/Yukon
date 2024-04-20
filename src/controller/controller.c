@@ -157,7 +157,7 @@ const char *ValidateMove(Controller *ctrl, ActiveMove move, char destination, Mo
 	return "OK";
 }
 
-void CancelMove(Controller *ctrl, ActiveMove move) {
+void CancelMove(ActiveMove move) {
 	if (!move.fromIsFoundation) {
 		*move.from = move.card;
 	} else {
@@ -166,7 +166,7 @@ void CancelMove(Controller *ctrl, ActiveMove move) {
 	}
 }
 
-void CompleteMove(Controller *ctrl, ActiveMove move, MoveDestination dest) {
+void CompleteMove(ActiveMove move, MoveDestination dest) {
 	if (move.cardToUnhide != NULL) {
 		move.cardToUnhide->hidden = false;
 	}
