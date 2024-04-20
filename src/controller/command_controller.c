@@ -1,4 +1,5 @@
 #include "command_controller.h"
+#include "controller.h"
 #include "yukon_model.h"
 #include <cardShuffler.h>
 #include <stdio.h>
@@ -8,12 +9,15 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnusedParameter"
 
+
+
 const char *LoadDeckFromFile(Controller *ctrl, char *path) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot load a deck while playing game";
 	const char *msg;
 	ctrl->model->deck = LoadDeck(path, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	ctrl->last_command = LOAD;
 	return msg;
 }
 
@@ -22,6 +26,7 @@ const char *SaveDeckToFile(Controller *ctrl, char *path) {
 		return "Cannot save a deck while playing game";
 	const char *msg;
 	SaveDeck(ctrl->model->deck, path, &msg);
+	ctrl->last_command = SAVE;
 	return msg;
 }
 
@@ -31,6 +36,7 @@ const char *ShowDeck(Controller *ctrl, char *_) {
 	if (ctrl->model->deck == NULL)
 		return "Cannot show an empty deck!";
 	ctrl->model->optionIgnoreHidden = true;
+	ctrl->last_command = SHOW;
 	return "OK";
 }
 
@@ -46,6 +52,7 @@ const char *ShuffleInterleaving(Controller *ctrl, char *split) {
 		ctrl->model->deck = shuffleInterleaving(ctrl->model->deck, atoi(split), &msg, false);
 	}
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	ctrl->last_command = SHUFFLEI;
 	return msg;
 }
 
@@ -57,11 +64,13 @@ const char *ShuffleRandom(Controller *ctrl, char *_) {
 	const char *msg;
 	ctrl->model->deck = shuffleRandom(ctrl->model->deck, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	ctrl->last_command = SHUFFLEI;
 	return "Deck randomly shuffled";
 }
 
 const char *QuitAndExit(Controller *ctrl, char *_) {
 	printf("Exiting game\n");
+	ctrl->last_command = QQ;
 	exit(1);
 }
 
@@ -71,6 +80,7 @@ const char *QuitGame(Controller *ctrl, char *_) {
 	ctrl->model->yukon->play_phase = false;
 	ClearGame(ctrl->model->yukon);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_LOADSIZE);
+	ctrl->last_command = Q;
 	return "OK";
 }
 
@@ -82,6 +92,7 @@ const char *PlayGame(Controller *ctrl, char *_) {
 	ctrl->model->yukon->play_phase = true;
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
 	ExposeYukonCards(ctrl->model->yukon, 5, COLUMN_STARTSIZE);
+	ctrl->last_command = PLAY;
 	return "OK";
 }
 
