@@ -119,6 +119,40 @@ ActiveMove GrabCard(Controller *ctrl, char source) {
 	return activeMove;
 }
 
+const char *ValidateMove(Controller *ctrl, ActiveMove move, char destination, MoveDestination *result) {
+	*result = (MoveDestination) {};
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card **destPointer = NULL;
+	if (destination > 0) {
+		// Move to a column
+		destPointer = &yukon->columnFront[destination - 1];
+		ll_node_card *dest = *destPointer;
+		if (dest == NULL) {
+			if (move.card->card.value != 13) return "Can only move a king to an empty column";
+		} else {
+			while (*(destPointer = &dest->next) != NULL) {
+				dest = *destPointer;
+			}
+			if (dest->card.suit == move.card->card.suit) return "Suits have to differ";
+			if (dest->card.value - 1 != move.card->card.value) return "Rank must be one lower";
+		}
+	} else {
+		// Move to a foundation pile
+		if (move.card->next != NULL) return "Can only move one card to a foundation pile at a time";
+		destPointer = &yukon->foundationPile[-destination - 1];
+		if (*destPointer == NULL) {
+			if (move.card->card.value > 1) return "Can only move an ace to an empty foundation pile";
+		} else {
+			Card destCard = (*destPointer)->card;
+			if (destCard.suit != move.card->card.suit) return "Suits have to match";
+			if (destCard.value + 1 != move.card->card.value) return "Rank must be one higher";
+		}
+	}
+	result->destPointer = destPointer;
+	result->isFoundation = destination < 0;
+	return "OK";
+}
+
 void CancelMove(Controller *ctrl, ActiveMove move) {
 	if (!move.fromIsFoundation) {
 		*move.from = move.card;
