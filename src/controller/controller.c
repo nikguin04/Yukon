@@ -87,8 +87,8 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	return "OK";
 }
 
-// TODO: Be able to grab card from specific index
-ActiveMove GrabCard(Controller *ctrl, char source) {
+// y and height are relative to column card spacing
+ActiveMove GrabCard(Controller *ctrl, char source, float y, float height) {
 	ActiveMove activeMove = {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **from = NULL;
@@ -98,10 +98,14 @@ ActiveMove GrabCard(Controller *ctrl, char source) {
 		ll_node_card *prev = NULL;
 		card = yukon->columnFront[source - 1];
 		if (card == NULL) return activeMove;
-		while (card->next != NULL) {
+		int i = 0;
+		int index = (int) y;
+		while (i != index && card->next != NULL) {
 			prev = card;
 			card = card->next;
+			i++;
 		}
+		if (i != index && (int) (y - height) >= i) return activeMove;
 		from = &prev->next;
 		activeMove.cardToUnhide = prev;
 		*from = NULL;
@@ -119,11 +123,55 @@ ActiveMove GrabCard(Controller *ctrl, char source) {
 	return activeMove;
 }
 
-void CancelMove(Controller *ctrl, ActiveMove move) {
+const char *ValidateMove(Controller *ctrl, ActiveMove move, char destination, MoveDestination *result) {
+	*result = (MoveDestination) {};
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card **destPointer = NULL;
+	if (destination > 0) {
+		// Move to a column
+		destPointer = &yukon->columnFront[destination - 1];
+		ll_node_card *dest = *destPointer;
+		if (dest == NULL) {
+			if (move.card->card.value != 13) return "Can only move a king to an empty column";
+		} else {
+			while (*(destPointer = &dest->next) != NULL) {
+				dest = *destPointer;
+			}
+			if (dest->card.suit == move.card->card.suit) return "Suits have to differ";
+			if (dest->card.value - 1 != move.card->card.value) return "Rank must be one lower";
+		}
+	} else {
+		// Move to a foundation pile
+		if (move.card->next != NULL) return "Can only move one card to a foundation pile at a time";
+		destPointer = &yukon->foundationPile[-destination - 1];
+		if (*destPointer == NULL) {
+			if (move.card->card.value > 1) return "Can only move an ace to an empty foundation pile";
+		} else {
+			Card destCard = (*destPointer)->card;
+			if (destCard.suit != move.card->card.suit) return "Suits have to match";
+			if (destCard.value + 1 != move.card->card.value) return "Rank must be one higher";
+		}
+	}
+	result->destPointer = destPointer;
+	result->isFoundation = destination < 0;
+	return "OK";
+}
+
+void CancelMove(ActiveMove move) {
 	if (!move.fromIsFoundation) {
 		*move.from = move.card;
 	} else {
 		move.card->next = *move.from;
 		*move.from = move.card;
 	}
+}
+
+void CompleteMove(ActiveMove move, MoveDestination dest) {
+	if (move.cardToUnhide != NULL) {
+		move.cardToUnhide->hidden = false;
+	}
+	if (dest.isFoundation) {
+		move.card->next = *dest.destPointer;
+	}
+	*dest.destPointer = move.card;
 }

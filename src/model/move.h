@@ -21,4 +21,9 @@ typedef struct ActiveMoveStruct {
 	ll_node_card *cardToUnhide;
 } ActiveMove;
 
+typedef struct MoveDestinationStruct {
+	ll_node_card **destPointer;
+	bool isFoundation;
+} MoveDestination;
+
 #endif
