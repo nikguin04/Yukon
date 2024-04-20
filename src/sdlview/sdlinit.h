@@ -18,6 +18,7 @@
 
 #define WIDTH 1600
 #define HEIGHT 900
+
 #define FPS 120
 
 #include "sdltext.h"
