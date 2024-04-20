@@ -87,8 +87,8 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	return "OK";
 }
 
-// TODO: Be able to grab card from specific index
-ActiveMove GrabCard(Controller *ctrl, char source) {
+// y and height are relative to column card spacing
+ActiveMove GrabCard(Controller *ctrl, char source, float y, float height) {
 	ActiveMove activeMove = {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **from = NULL;
@@ -98,10 +98,14 @@ ActiveMove GrabCard(Controller *ctrl, char source) {
 		ll_node_card *prev = NULL;
 		card = yukon->columnFront[source - 1];
 		if (card == NULL) return activeMove;
-		while (card->next != NULL) {
+		int i = 0;
+		int index = (int) y;
+		while (i != index && card->next != NULL) {
 			prev = card;
 			card = card->next;
+			i++;
 		}
+		if (i != index && (int) (y - height) >= i) return activeMove;
 		from = &prev->next;
 		activeMove.cardToUnhide = prev;
 		*from = NULL;
