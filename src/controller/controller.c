@@ -161,3 +161,13 @@ void CancelMove(Controller *ctrl, ActiveMove move) {
 		*move.from = move.card;
 	}
 }
+
+void CompleteMove(Controller *ctrl, ActiveMove move, MoveDestination dest) {
+	if (move.cardToUnhide != NULL) {
+		move.cardToUnhide->hidden = false;
+	}
+	if (dest.isFoundation) {
+		move.card->next = *dest.destPointer;
+	}
+	*dest.destPointer = move.card;
+}
