@@ -59,24 +59,26 @@ int sdl_view_init(Controller *ctrl) {
 	ctx = nk_sdl_init(win, renderer);
 	/* Load Fonts: if none of these are loaded a default font will be used  */
 	/* Load Cursor: if you uncomment cursor loading please hide the cursor */
-	{
-		struct nk_font_atlas *atlas;
-		struct nk_font_config config = nk_font_config(0);
-		struct nk_font *font;
 
-		/* set up the font atlas and add desired font; note that font sizes are
-		 * multiplied by font_scale to produce better results at higher DPIs */
-		nk_sdl_font_stash_begin(&atlas);
-		//font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
-		font = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 14 * font_scale, &config);
-		nk_sdl_font_stash_end();
+    struct nk_font_atlas *atlas;
+    struct nk_font_config config = nk_font_config(0);
+    struct nk_font *font;
+    struct nk_font *messageFont;
 
-		/* this hack makes the font appear to be scaled down to the desired
-		 * size and is only necessary when font_scale > 1 */
-		font->handle.height /= font_scale;
-		/*nk_style_load_all_cursors(ctx, atlas->cursors);*/
-		nk_style_set_font(ctx, &font->handle);
-	}
+    /* set up the font atlas and add desired font; note that font sizes are
+     * multiplied by font_scale to produce better results at higher DPIs */
+    nk_sdl_font_stash_begin(&atlas);
+    //font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
+    font = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 14 * font_scale, &config);
+    messageFont = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 30 * font_scale, &config);
+    nk_sdl_font_stash_end();
+
+    /* this hack makes the font appear to be scaled down to the desired
+     * size and is only necessary when font_scale > 1 */
+    font->handle.height /= font_scale;
+    /*nk_style_load_all_cursors(ctx, atlas->cursors);*/
+    nk_style_set_font(ctx, &font->handle);
+
 	bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
 
 	SDL_Cardmanager sdl_cm;
@@ -89,10 +91,6 @@ int sdl_view_init(Controller *ctrl) {
 	const char *message_text = "";
 
 	while (running) {
-//		if (strcmp(SI_input_buffer, "") == 0) {
-//			SI_input_buffer = NULL;
-//		}
-
 		/* Input */
 		SDL_Event evt;
 		nk_input_begin(ctx);
@@ -146,7 +144,6 @@ int sdl_view_init(Controller *ctrl) {
 			if (nk_button_label(ctx, "LD")) {
 				message_text = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
 			}
-
 			if (nk_button_label(ctx, "SD")) {
 				message_text = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
 			}
@@ -169,7 +166,7 @@ int sdl_view_init(Controller *ctrl) {
 				message_text = QuitAndExit(ctrl, NULL);
 			}
 
-            // Add input boxes
+            // Add input boxes for command buttons
             nk_layout_row_static(ctx, 30, 80, 3);
 			nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, LD_input_buffer, 256, nk_filter_default);
 			nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SD_input_buffer, 256, nk_filter_default);
@@ -180,19 +177,13 @@ int sdl_view_init(Controller *ctrl) {
 
 			// Display message from commands
             nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
-//            nk_style_set_font(ctx, &messageFont->handle);
-            nk_layout_row_push(ctx, 50);
+            nk_style_push_font(ctx, &messageFont->handle);
+            nk_layout_row_push(ctx, 105);
             nk_label(ctx, "Message: ", NK_TEXT_LEFT);
-            nk_layout_row_push(ctx, 500);
+            nk_layout_row_push(ctx, 800);
             nk_label(ctx, message_text, NK_TEXT_LEFT);
-
+            nk_style_pop_font(ctx);
             nk_layout_row_end(ctx);
-
-//			const float item_widths[] = {50, 500};
-//			nk_layout_row_static(ctx, 30, 80, 2);
-//			nk_layout_row(ctx, NK_STATIC, 30, 2, item_widths);
-//			nk_label(ctx, "Message: ", NK_TEXT_LEFT);
-//			nk_label(ctx, message_text, NK_TEXT_LEFT);
 
 
 		}
