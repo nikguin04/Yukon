@@ -118,3 +118,12 @@ ActiveMove GrabCard(Controller *ctrl, char source) {
 	activeMove.fromIsFoundation = source < 0;
 	return activeMove;
 }
+
+void CancelMove(Controller *ctrl, ActiveMove move) {
+	if (!move.fromIsFoundation) {
+		*move.from = move.card;
+	} else {
+		move.card->next = *move.from;
+		*move.from = move.card;
+	}
+}
