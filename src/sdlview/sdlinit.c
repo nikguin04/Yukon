@@ -106,12 +106,12 @@ int sdl_view_init(Controller *ctrl) {
 		nk_input_end(ctx);
 
 		/* GUI */
-		if (nk_begin(ctx, "Yukon Solitaire", nk_rect(50, 50, 1500, 800),
-			NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE |
-			NK_WINDOW_MINIMIZABLE | NK_WINDOW_TITLE)
+		if (nk_begin(ctx, "Yukon Solitaire", nk_rect(0, 0, WIDTH, HEIGHT),
+			0)
 		) {
+
             
-            nk_layout_row_dynamic(ctx, 355, 1); // Adjust text to bottom
+            nk_layout_row_dynamic(ctx, 425, 1); // Adjust text to bottom
 	        nk_spacing(ctx, 1);
 
 			// Display message from commands
@@ -124,7 +124,10 @@ int sdl_view_init(Controller *ctrl) {
             nk_style_pop_font(ctx);
             nk_layout_row_end(ctx);
 
-            nk_layout_row_dynamic(ctx, -385, 1); // Cancel out the gap
+            nk_layout_row_dynamic(ctx, -455, 1); // Cancel out the gap
+	        nk_spacing(ctx, 1);
+
+            nk_layout_row_dynamic(ctx, 2, 1); // General top gap so everything is not completely at the top
 	        nk_spacing(ctx, 1);
 
 			// Add command buttons
