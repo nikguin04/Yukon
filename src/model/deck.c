@@ -26,6 +26,8 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 		return OpenDefaultDeck();
 	}
 
+	bool card_scanned[DECK_LENGTH];
+	for (int i = 0; i < DECK_LENGTH; i++) { card_scanned[i] = false; }
 	ll_node_card *first_card = NULL;
 	ll_node_card *current_card = NULL;
 	int depth_counter = 0;
@@ -38,6 +40,11 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 			if (card == NULL) {
 				return OpenDefaultDeck();
 			}
+			int card_index = getCardAbsoluteIndex(&card->card);
+			if (card_scanned[card_index]) {
+				*msg = "File included duplicate card (Opened default deck)";
+				return OpenDefaultDeck();
+			}
 			if (first_card == NULL) {
 				first_card = card;
 				current_card = card;
@@ -46,6 +53,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 				current_card = current_card->next;
 				current_card->next = NULL;
 			}
+			card_scanned[card_index] = true;
 
 			ch = readbuffer;
 		} else if (ch - readbuffer >= 2) {
