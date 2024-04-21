@@ -1,6 +1,8 @@
 #include "sdlinit.h"
 #include "nuklear.h"
 #include "nuklear/nuklear_sdl_renderer.h"
+#include "sdl_cards.h"
+#include "yukon_model.h"
 
 #define NK_ASSERT
 
@@ -111,21 +113,8 @@ int sdl_view_init(Controller *ctrl) {
 		) {
 
             
-            nk_layout_row_dynamic(ctx, 425, 1); // Adjust text to bottom
-	        nk_spacing(ctx, 1);
-
-			// Display message from commands
-            nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
-            nk_style_push_font(ctx, &messageFont->handle);
-            nk_layout_row_push(ctx, 105);
-            nk_label(ctx, "Message: ", NK_TEXT_LEFT);
-            nk_layout_row_push(ctx, 650);
-            nk_label(ctx, message_text, NK_TEXT_LEFT);
-            nk_style_pop_font(ctx);
-            nk_layout_row_end(ctx);
-
-            nk_layout_row_dynamic(ctx, -455, 1); // Cancel out the gap
-	        nk_spacing(ctx, 1);
+            renderMsgText(ctx, message_text, messageFont);
+            renderFoundationPile(ctx, ctrl, &sdl_cm);
 
             nk_layout_row_dynamic(ctx, 2, 1); // General top gap so everything is not completely at the top
 	        nk_spacing(ctx, 1);
@@ -196,4 +185,44 @@ int sdl_view_init(Controller *ctrl) {
 	SDL_DestroyWindow(win);
 	SDL_Quit();
 	return 0;
+}
+
+void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_font *messageFont) {
+    nk_layout_row_dynamic(ctx, HEIGHT/2-25, 1); // Adjust text to bottom
+    nk_spacing(ctx, 1);
+
+    // Display message from commands
+    nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
+    nk_style_push_font(ctx, &messageFont->handle);
+    nk_layout_row_push(ctx, 105);
+    nk_label(ctx, "Message: ", NK_TEXT_LEFT);
+    nk_layout_row_push(ctx, 650);
+    nk_label(ctx, message_text, NK_TEXT_LEFT);
+    nk_style_pop_font(ctx);
+    nk_layout_row_end(ctx);
+
+    nk_layout_row_dynamic(ctx, -(HEIGHT/2-25)-30, 1); // Cancel out the gap
+    nk_spacing(ctx, 1);
+}
+
+void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmanager *sdl_cm) {
+    nk_layout_row_dynamic(ctx, HEIGHT/8, 1); // Adjust text to bottom
+    nk_spacing(ctx, 1);
+
+    for (int i = 0; i < NUM_FOUNDATIONS; i++) {
+        //nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
+        nk_layout_row_dynamic(ctx, HEIGHT/9, NUM_COLUMNS+2);
+        nk_spacing(ctx, NUM_COLUMNS+1);
+
+        struct nk_image nki =
+            (ctrl->model->yukon->foundationPile[i] != NULL) ?
+            nk_image_ptr(sdl_cm->card_textures[getCardAbsoluteIndex(&ctrl->model->yukon->foundationPile[i]->card)]) :
+            nk_image_ptr(sdl_cm->back_texture);
+        struct nk_rect img_bounds = nk_widget_bounds(ctx); // Use this later for grabbing
+        nk_image(ctx, nki);
+    }
+
+    nk_layout_row_dynamic(ctx, -(HEIGHT/8) - HEIGHT/9*4, 1); // Cancel out the gap
+    nk_spacing(ctx, 1);
+
 }
