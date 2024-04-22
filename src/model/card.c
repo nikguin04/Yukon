@@ -7,7 +7,7 @@ Card *CreateCard(char value, CardSuit suit) {
 	return card;
 }
 
-ll_node_card *ParseCharCard(const char *card, const char **msg) {
+ll_node_card *ParseCharCard(const char *card, char *msg, int lineNumber) {
 	CardSuit suit = (CardSuit) card[1];
 	char value;
 	switch (suit) {
@@ -18,7 +18,7 @@ ll_node_card *ParseCharCard(const char *card, const char **msg) {
 			break;
 
 		default:
-			*msg = "Format of file is wrong, did not read suit correctly";
+			sprintf(msg, "Format of file is wrong, invalid suit at line %d", lineNumber);
 			return NULL;
 	}
 
@@ -38,7 +38,7 @@ ll_node_card *ParseCharCard(const char *card, const char **msg) {
 		case 'K': value = 13; break;
 
 		default:
-			*msg = "Format of file is wrong, did not read rank correctly";
+			sprintf(msg, "Format of file is wrong, invalid rank at line %d", lineNumber);
 			return NULL;
 	}
 

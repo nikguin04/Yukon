@@ -9,7 +9,10 @@ void PrintDeck(ll_node_card *deck) {
 	}
 }
 
+char msgBuffer[128];
+
 ll_node_card *LoadDeck(const char *path, const char **msg) {
+	*msg = msgBuffer;
 	FILE *ptr;
 	char readbuffer[4];
 	char *ch = readbuffer;
@@ -36,13 +39,13 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 		if (*ch == '\n' || *ch == EOF) {
 			depth_counter++;
 			//*ch == NULL;
-			ll_node_card *card = ParseCharCard(readbuffer, msg);
+			ll_node_card *card = ParseCharCard(readbuffer, msgBuffer, depth_counter);
 			if (card == NULL) {
 				return OpenDefaultDeck();
 			}
 			int card_index = getCardAbsoluteIndex(&card->card);
 			if (card_scanned[card_index]) {
-				*msg = "File included duplicate card (Opened default deck)";
+				sprintf(msgBuffer, "File included duplicate card at line %d", depth_counter);
 				return OpenDefaultDeck();
 			}
 			if (first_card == NULL) {
@@ -57,7 +60,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 			ch = readbuffer;
 		} else if (ch - readbuffer >= 2) {
-			*msg = "Format is wrong, read 3 or more characters on one line";
+			sprintf(msgBuffer, "Format is wrong, read 3 or more characters on line %d", depth_counter + 1);
 			return OpenDefaultDeck();
 		} else {
 			ch++;
@@ -68,7 +71,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 	// Close the file again
 	fclose(ptr);
 	if (depth_counter != DECK_LENGTH) {
-		*msg = "Wrong size of deck loaded. Expected 52"; // hardcoded to 52
+		sprintf(msgBuffer, "Wrong size of deck loaded. Expected 52, got %d", depth_counter); // hardcoded to 52
 		return OpenDefaultDeck();
 	}
 	*msg = "OK";
@@ -76,6 +79,11 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 }
 
 bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
+	if (deck == NULL) {
+		*msg = "Can't save empty deck";
+		return false;
+	}
+
 	if (path == NULL) {
 		path = "cards.txt";
 	}
