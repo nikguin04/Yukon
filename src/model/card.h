@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MIN_CARD 1
 #define MAX_CARD 13
@@ -30,7 +31,7 @@ bool CardEquals(Card a, Card b);
 #define CARD_LL_H
 
 Card *CreateCard(char value, CardSuit suit);
-ll_node_card *ParseCharCard(const char *card, const char **msg);
+ll_node_card *ParseCharCard(const char *card, char *msg, int lineNumber);
 ll_node_card *NewCardAllocate(char value, CardSuit suit);
 ll_node_card *CardToLinkedCard(Card *card);
 
