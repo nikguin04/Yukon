@@ -25,7 +25,7 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 	ptr = fopen(path, "r");
 
 	if (NULL == ptr) {
-		*msg = "File can't be opened";
+		*msg = "File can't be opened (Default deck loaded)";
 		return OpenDefaultDeck();
 	}
 
