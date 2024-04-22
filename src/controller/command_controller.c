@@ -9,8 +9,6 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnusedParameter"
 
-
-
 const char *LoadDeckFromFile(Controller *ctrl, char *path) {
 	if (ctrl->model->yukon->play_phase)
 		return "Cannot load a deck while playing game";
