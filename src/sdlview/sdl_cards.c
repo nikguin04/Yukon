@@ -4,12 +4,7 @@
 #include "sdl_image_loader.h"
 #include "sdlinit.h"
 
-void Cards_GetEvent(SDLManager *manager, SDL_Event *event) {
-	printf("Got event in cards: %d", event->type);
-}
-
 void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend) {
-//	card_texturebuffer = (SDL_Texture **) malloc(sizeof(SDL_Texture *) * DECK_LENGTH);
 	cardmanager->back_texture = LoadSDLImage("resource\\Backs\\Card-Back-04.png", rend);
 	for (int i = 0; i < DECK_LENGTH; i++) {
 		char cardstr[3];
@@ -42,10 +37,6 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
 	}
 }
 
-struct nk_rect *getCardRect(YukonStructure *yukon, int column, int ll_index) {
-	return NULL;
-}
-
 void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager *sdl_cm) {
 	// Set option to ignore false if command is not show
 	if (ctrl->last_command != SHOW && ctrl->model->optionIgnoreHidden) { ctrl->model->optionIgnoreHidden = false; }
@@ -69,13 +60,7 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
 				struct nk_image nki = (!cur[i]->hidden || ctrl->model->optionIgnoreHidden) ? nk_image_ptr(sdl_cm->card_textures[index]) : nk_image_ptr(sdl_cm->back_texture);
 				struct nk_rect img_bounds = nk_widget_bounds(ctx);
 				sdl_cm->cardRects[index] = img_bounds; // WARNING: This might be a memory leak
-//				printf("h:%f, w:%f, x:%f, y:%f\n", img_bounds.h, img_bounds.w, img_bounds.x, img_bounds.y); // TEMP BOUND PRINT
 				nk_image(ctx, nki);
-//				if (nk_button_image(ctx, nki)) {
-//					char dbgstr[10];
-//					CardToString(cur[i]->card, dbgstr);
-//					printf("Button image clicked: %s\n", dbgstr);
-//				}
 				cur[i] = cur[i]->next;
 			} else {
 				// FILL RECT HERE!

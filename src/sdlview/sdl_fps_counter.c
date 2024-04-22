@@ -13,7 +13,6 @@ FpsCounterManager *InitFpsCounter(SDLManager *manager) {
 
 void UpdateFpsCounter(FpsCounterManager *fcm) {
 	clock_t now = clock();
-//	int elapsed = ((double) (now - fcm->start)) / CLOCKS_PER_SEC;
 	clock_t elapsedms = (now - fcm->start);
 	fcm->count++;
 	if (elapsedms - fcm->last_update >= 1000) { // 1 second has gone by since last update

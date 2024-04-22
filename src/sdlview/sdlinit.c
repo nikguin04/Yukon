@@ -6,10 +6,6 @@
 
 #define NK_ASSERT
 
-//#define NK_INTERNAL_H
-//#define NK_INCLUDE_FIXED_TYPES
-//#include "nuklear/nuklear_sdl_renderer.h"
-
 int sdl_view_init(Controller *ctrl) {
 
 	SDL_Window *win;
@@ -71,7 +67,6 @@ int sdl_view_init(Controller *ctrl) {
 	/* set up the font atlas and add desired font; note that font sizes are
 	 * multiplied by font_scale to produce better results at higher DPIs */
 	nk_sdl_font_stash_begin(&atlas);
-//	font = nk_font_atlas_add_default(atlas, 13 * font_scale, &config);
 	font = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 14 * font_scale, &config);
 	messageFont = nk_font_atlas_add_from_file(atlas, "resource/aptos.ttf", 30 * font_scale, &config);
 	nk_sdl_font_stash_end();
@@ -79,7 +74,6 @@ int sdl_view_init(Controller *ctrl) {
 	/* this hack makes the font appear to be scaled down to the desired
 	 * size and is only necessary when font_scale > 1 */
 	font->handle.height /= font_scale;
-//	nk_style_load_all_cursors(ctx, atlas->cursors);
 	nk_style_set_font(ctx, &font->handle);
 
 	bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
@@ -156,7 +150,6 @@ int sdl_view_init(Controller *ctrl) {
 			}
 
 			RenderCardColumns(ctrl, ctx, &sdl_cm);
-//			CheckCardHover(ctrl, &ctx->input, &sdl_cm);
 		}
 		nk_end(ctx);
 
@@ -198,12 +191,9 @@ void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmana
 	int offsetHeight = 30 + 3 + 30 + 3 + 3 + 3 + 3 + 1;
 	int cardHeight = HEIGHT / 45 * 7;
 	nk_layout_row_static(ctx, offsetHeight, 1, 1); // Adjust text to bottom
-//	nk_spacing(ctx, 1);
 
 	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
-//		nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
 		nk_layout_row_static(ctx, cardHeight, HEIGHT / 9, NUM_COLUMNS + 2);
-//		nk_layout_row_dynamic(ctx, HEIGHT / 45 * 7, NUM_COLUMNS + 2);
 		nk_spacing(ctx, NUM_COLUMNS + 1);
 
 		struct nk_image nki =

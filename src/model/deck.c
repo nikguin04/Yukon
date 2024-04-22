@@ -1,14 +1,5 @@
 #include "deck.h"
 
-void PrintDeck(ll_node_card *deck) {
-	ll_node_card *current = deck;
-	int progress = 0;
-	while (current != NULL) {
-		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.value, current->card.suit);
-		current = current->next;
-	}
-}
-
 char msgBuffer[128];
 
 ll_node_card *LoadDeck(const char *path, const char **msg) {
@@ -38,7 +29,6 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 		*ch = (char) fgetc(ptr);
 		if (*ch == '\n' || *ch == EOF) {
 			depth_counter++;
-			//*ch == NULL;
 			ll_node_card *card = ParseCharCard(readbuffer, msgBuffer, depth_counter);
 			if (card == NULL) {
 				return OpenDefaultDeck();

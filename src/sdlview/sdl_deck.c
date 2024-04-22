@@ -38,10 +38,6 @@ ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Card
 		}
 		if (hover) {
 			return hover;
-//			char cardstr[8];
-//			CardToString(hover->card, cardstr);
-//			printf("Mouse is hovering over the card: %s\n", cardstr);
-//			break;
 		}
 	}
 }
