@@ -5,12 +5,12 @@
 #include "sdlinit.h"
 
 void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend) {
-	cardmanager->back_texture = LoadSDLImage("resource\\Backs\\Card-Back-04.png", rend);
+	cardmanager->back_texture = LoadSDLImage("resource/Backs/Card-Back-04.png", rend);
 	for (int i = 0; i < DECK_LENGTH; i++) {
 		char cardstr[3];
 		char path[64];
 		CardToString(defaultDeck[i], cardstr);
-		sprintf(path, "resource\\ModernCards\\%s.png", cardstr);
+		sprintf(path, "resource/ModernCards/%s.png", cardstr);
 		SDL_Texture *texture = LoadSDLImage(path, rend);
 		cardmanager->card_textures[i] = texture;
 	}
