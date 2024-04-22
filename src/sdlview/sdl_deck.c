@@ -36,10 +36,11 @@ ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Card
 
 			curcard = curcard->next;
 		}
-		if (hover) {
+		if (hover != NULL) {
 			return hover;
 		}
 	}
+	return NULL;
 }
 
 void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm) {

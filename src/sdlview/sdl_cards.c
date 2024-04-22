@@ -52,7 +52,7 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
 
 		nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
 		for (int i = 0; i < NUM_COLUMNS; i++) {
-			if (cur[i]) {
+			if (cur[i] != NULL) {
 				all_cur_done = false;
 				int index = getCardAbsoluteIndex(&cur[i]->card);
 
