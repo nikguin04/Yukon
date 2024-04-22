@@ -10,7 +10,7 @@ int sdl_view_init(Controller *ctrl) {
 
 	SDL_Window *win;
 	SDL_Renderer *renderer;
-	int running = 1;
+	bool running = true;
 	int flags = 0;
 	float font_scale = 1;
 
@@ -196,10 +196,10 @@ void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmana
 		nk_layout_row_static(ctx, cardHeight, HEIGHT / 9, NUM_COLUMNS + 2);
 		nk_spacing(ctx, NUM_COLUMNS + 1);
 
-		struct nk_image nki =
-			(ctrl->model->yukon->foundationPile[i] != NULL) ?
-			nk_image_ptr(sdl_cm->card_textures[getCardAbsoluteIndex(&ctrl->model->yukon->foundationPile[i]->card)]) :
-			nk_image_ptr(sdl_cm->back_texture);
+		struct nk_image nki
+			= ctrl->model->yukon->foundationPile[i] != NULL
+			? nk_image_ptr(sdl_cm->card_textures[GetCardAbsoluteIndex(ctrl->model->yukon->foundationPile[i]->card)])
+			: nk_image_ptr(sdl_cm->back_texture);
 		struct nk_rect img_bounds = nk_widget_bounds(ctx); // Use this later for grabbing
 		nk_image(ctx, nki);
 	}

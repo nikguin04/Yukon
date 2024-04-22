@@ -27,7 +27,7 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
 		ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
 		int b = 0;
 		while (curcard != NULL) {
-			int cardIndex = getCardAbsoluteIndex(&curcard->card);
+			int cardIndex = GetCardAbsoluteIndex(curcard->card);
 			SDL_Texture *tex = cardmanager->card_textures[cardIndex];
 
 			SDL_Rect cardrect = {WIDTH * xGap * (a + 1), WIDTH * yGap * (++b), WIDTH * xSize, WIDTH * ySize};
@@ -54,7 +54,7 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
 		for (int i = 0; i < NUM_COLUMNS; i++) {
 			if (cur[i] != NULL) {
 				all_cur_done = false;
-				int index = getCardAbsoluteIndex(&cur[i]->card);
+				int index = GetCardAbsoluteIndex(cur[i]->card);
 
 				// Ternary operator to show card only if it is not hidden or hidden is ignored, else, show back texture
 				struct nk_image nki = (!cur[i]->hidden || ctrl->model->optionIgnoreHidden) ? nk_image_ptr(sdl_cm->card_textures[index]) : nk_image_ptr(sdl_cm->back_texture);
