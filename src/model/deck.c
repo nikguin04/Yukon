@@ -68,6 +68,11 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 }
 
 bool SaveDeck(ll_node_card *deck, const char *path, const char **msg) {
+	if (deck == NULL) {
+		*msg = "Can't save empty deck";
+		return false;
+	}
+
 	if (path == NULL) {
 		path = "cards.txt";
 	}
