@@ -116,7 +116,7 @@ int sdl_view_init(Controller *ctrl) {
             renderMsgText(ctx, message_text, messageFont);
             renderFoundationPile(ctx, ctrl, &sdl_cm);
 
-            nk_layout_row_dynamic(ctx, 2, 1); // General top gap so everything is not completely at the top
+            nk_layout_row_dynamic(ctx, 3, 1); // General top gap so everything is not completely at the top
 	        nk_spacing(ctx, 1);
 
 			// Add command buttons
@@ -206,12 +206,15 @@ void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_f
 }
 
 void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmanager *sdl_cm) {
-    nk_layout_row_dynamic(ctx, HEIGHT/8, 1); // Adjust text to bottom
-    nk_spacing(ctx, 1);
+    int offsetHeight = 30+3+30+3+3+3+3+1;
+    int cardHeight = HEIGHT/45*7;
+    nk_layout_row_static(ctx, offsetHeight, 1, 1); // Adjust text to bottom
+    //nk_spacing(ctx, 1);
 
     for (int i = 0; i < NUM_FOUNDATIONS; i++) {
         //nk_layout_row_static(ctx, 140, 100, NUM_COLUMNS); // SIZE IS NOT CORRECT!
-        nk_layout_row_dynamic(ctx, HEIGHT/9, NUM_COLUMNS+2);
+        nk_layout_row_static(ctx, cardHeight, HEIGHT/9, NUM_COLUMNS+2);
+        //nk_layout_row_dynamic(ctx, HEIGHT/45*7, NUM_COLUMNS+2);
         nk_spacing(ctx, NUM_COLUMNS+1);
 
         struct nk_image nki =
@@ -221,8 +224,7 @@ void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmana
         struct nk_rect img_bounds = nk_widget_bounds(ctx); // Use this later for grabbing
         nk_image(ctx, nki);
     }
-
-    nk_layout_row_dynamic(ctx, -(HEIGHT/8) - HEIGHT/9*4, 1); // Cancel out the gap
+    nk_layout_row_dynamic(ctx, (-offsetHeight - (cardHeight*4))/2 - (3*5), 1); // Cancel out the gap (this works like shit when scaling resolution up)
     nk_spacing(ctx, 1);
 
 }
