@@ -6,6 +6,8 @@
 
 #define NK_ASSERT
 
+int WIDTH, HEIGHT;
+
 int sdl_view_init(Controller *ctrl) {
 
 	SDL_Window *win;
@@ -23,8 +25,8 @@ int sdl_view_init(Controller *ctrl) {
 	SDL_Init(SDL_INIT_VIDEO);
 
 	win = SDL_CreateWindow("Yukon Solitaire",
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		WIDTH, HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI);
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1600, 900,
+		SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 
 	if (win == NULL) {
 		SDL_Log("Error SDL_CreateWindow %s", SDL_GetError());
@@ -44,12 +46,11 @@ int sdl_view_init(Controller *ctrl) {
 	/* scale the renderer output for High-DPI displays */
 	{
 		int render_w, render_h;
-		int window_w, window_h;
 		float scale_x, scale_y;
 		SDL_GetRendererOutputSize(renderer, &render_w, &render_h);
-		SDL_GetWindowSize(win, &window_w, &window_h);
-		scale_x = (float) (render_w) / (float) (window_w);
-		scale_y = (float) (render_h) / (float) (window_h);
+		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
+		scale_x = (float) (render_w) / (float) (WIDTH);
+		scale_y = (float) (render_h) / (float) (HEIGHT);
 		SDL_RenderSetScale(renderer, scale_x, scale_y);
 		font_scale = scale_y;
 	}
@@ -88,6 +89,7 @@ int sdl_view_init(Controller *ctrl) {
 	const char *message_text = "";
 
 	while (running) {
+		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
 		/* Input */
 		SDL_Event evt;
 		nk_input_begin(ctx);
