@@ -4,19 +4,19 @@
 #include "sdl_image_loader.h"
 #include "sdlinit.h"
 
-void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend) {
-	cardmanager->back_texture = LoadSDLImage("resource/Backs/Card-Back-04.png", rend);
+void InitCardTextures(SDL_CardManager *cardManager, SDL_Renderer *renderer) {
+	cardManager->back_texture = LoadSDLImage("resource/Backs/Card-Back-04.png", renderer);
 	for (int i = 0; i < DECK_LENGTH; i++) {
 		char cardstr[3];
 		char path[64];
 		CardToString(defaultDeck[i], cardstr);
 		sprintf(path, "resource/ModernCards/%s.png", cardstr);
-		SDL_Texture *texture = LoadSDLImage(path, rend);
-		cardmanager->card_textures[i] = texture;
+		SDL_Texture *texture = LoadSDLImage(path, renderer);
+		cardManager->card_textures[i] = texture;
 	}
 }
 
-void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager) {
+void SDL_cards_render(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager *cardManager) {
 	// Change all the sizes and gaps later, size is 768x1063
 	float xSize = 0.10;
 	float ySize = 0.1384;
@@ -28,16 +28,16 @@ void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *car
 		int b = 0;
 		while (curcard != NULL) {
 			int cardIndex = GetCardAbsoluteIndex(curcard->card);
-			SDL_Texture *tex = cardmanager->card_textures[cardIndex];
+			SDL_Texture *tex = cardManager->card_textures[cardIndex];
 
 			SDL_Rect cardrect = {WIDTH * xGap * (a + 1), WIDTH * yGap * (++b), WIDTH * xSize, WIDTH * ySize};
-			SDL_RenderCopy(rend, tex, NULL, &cardrect);
+			SDL_RenderCopy(renderer, tex, NULL, &cardrect);
 			curcard = curcard->next;
 		}
 	}
 }
 
-void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager *sdl_cm) {
+void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_CardManager *sdl_cm) {
 	// Set option to ignore false if command is not show
 	if (ctrl->last_command != SHOW && ctrl->model->optionIgnoreHidden) { ctrl->model->optionIgnoreHidden = false; }
 
@@ -59,7 +59,7 @@ void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager
 				// Ternary operator to show card only if it is not hidden or hidden is ignored, else, show back texture
 				struct nk_image nki = (!cur[i]->hidden || ctrl->model->optionIgnoreHidden) ? nk_image_ptr(sdl_cm->card_textures[index]) : nk_image_ptr(sdl_cm->back_texture);
 				struct nk_rect img_bounds = nk_widget_bounds(ctx);
-				sdl_cm->cardRects[index] = img_bounds; // WARNING: This might be a memory leak
+				sdl_cm->cardRects[index] = img_bounds;
 				nk_image(ctx, nki);
 				cur[i] = cur[i]->next;
 			} else {

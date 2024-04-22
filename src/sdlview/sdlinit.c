@@ -14,7 +14,7 @@ int sdl_view_init(Controller *ctrl) {
 	SDL_Renderer *renderer;
 	bool running = true;
 	int flags = 0;
-	float font_scale = 1;
+	float font_scale;
 
 	/* GUI */
 	struct nk_context *ctx;
@@ -79,8 +79,8 @@ int sdl_view_init(Controller *ctrl) {
 
 	bg.r = 0.10f, bg.g = 0.18f, bg.b = 0.24f, bg.a = 1.0f;
 
-	SDL_Cardmanager sdl_cm;
-	initCard_Textures(&sdl_cm, renderer);
+	SDL_CardManager sdl_cm;
+	InitCardTextures(&sdl_cm, renderer);
 	SDL_initdeck(ctrl, &sdl_cm);
 
 	char SI_input_buffer[256] = "";
@@ -106,8 +106,8 @@ int sdl_view_init(Controller *ctrl) {
 		/* GUI */
 		if (nk_begin(ctx, "Yukon Solitaire", nk_rect(0, 0, WIDTH, HEIGHT), 0)) {
 
-			renderMsgText(ctx, message_text, messageFont);
-			renderFoundationPile(ctx, ctrl, &sdl_cm);
+			RenderMsgText(ctx, message_text, messageFont);
+			RenderFoundationPiles(ctx, ctrl, &sdl_cm);
 
 			nk_layout_row_dynamic(ctx, 3, 1); // General top gap so everything is not completely at the top
 			nk_spacing(ctx, 1);
@@ -171,7 +171,7 @@ int sdl_view_init(Controller *ctrl) {
 	return 0;
 }
 
-void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_font *messageFont) {
+void RenderMsgText(struct nk_context *ctx, const char *messageText, struct nk_font *messageFont) {
 	nk_layout_row_dynamic(ctx, HEIGHT / 2 - 25, 1); // Adjust text to bottom
 	nk_spacing(ctx, 1);
 
@@ -181,7 +181,7 @@ void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_f
 	nk_layout_row_push(ctx, 105);
 	nk_label(ctx, "Message: ", NK_TEXT_LEFT);
 	nk_layout_row_push(ctx, 650);
-	nk_label(ctx, message_text, NK_TEXT_LEFT);
+	nk_label(ctx, messageText, NK_TEXT_LEFT);
 	nk_style_pop_font(ctx);
 	nk_layout_row_end(ctx);
 
@@ -189,7 +189,7 @@ void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_f
 	nk_spacing(ctx, 1);
 }
 
-void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmanager *sdl_cm) {
+void RenderFoundationPiles(struct nk_context *ctx, Controller *ctrl, SDL_CardManager *sdl_cm) {
 	int offsetHeight = 30 + 3 + 30 + 3 + 3 + 3 + 3 + 1;
 	int cardHeight = HEIGHT / 45 * 7;
 	nk_layout_row_static(ctx, offsetHeight, 1, 1); // Adjust text to bottom

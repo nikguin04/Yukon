@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 // TODO: This should call the proper lock deck with path, and init the sdl texture arrays, etc.. after
-void SDL_initdeck(Controller *ctrl, SDL_Cardmanager *sdl_cm) {
+void SDL_initdeck(Controller *ctrl, SDL_CardManager *sdl_cm) {
 	// TEMP INIT OF DECK
 	const char *msg;
 	ctrl->model->deck = LoadDeck("", &msg);
@@ -23,7 +23,7 @@ void SDL_initdeck(Controller *ctrl, SDL_Cardmanager *sdl_cm) {
 	}
 }
 
-ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm) {
+ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm) {
 	for (int a = 0; a < NUM_COLUMNS; a++) {
 		ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
 		ll_node_card *hover = NULL;
@@ -41,7 +41,7 @@ ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Card
 	return NULL;
 }
 
-void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_Cardmanager *sdl_cm) {
+void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm) {
 	// NOTE: Needs extra arg that tells if a card has been picked up, and if so which
 	SDL_MouseButtonEvent mouse_evt = evt->button;
 	if (mouse_evt.button != SDL_BUTTON_LEFT) return;

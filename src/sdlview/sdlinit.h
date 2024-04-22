@@ -21,7 +21,7 @@ extern int WIDTH, HEIGHT;
 
 int sdl_view_init(Controller *ctrl);
 
-void renderMsgText(struct nk_context *ctx, const char *message_text, struct nk_font *messageFont);
-void renderFoundationPile(struct nk_context *ctx, Controller *ctrl, SDL_Cardmanager *sdl_cm);
+void RenderMsgText(struct nk_context *ctx, const char *messageText, struct nk_font *messageFont);
+void RenderFoundationPiles(struct nk_context *ctx, Controller *ctrl, SDL_CardManager *sdl_cm);
 
 #endif

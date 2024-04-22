@@ -7,7 +7,6 @@
 #include <SDL_render.h>
 #include <SDL_surface.h>
 #include <SDL_events.h>
-#include "linkedlist.h"
 #include "sdlmanager.h"
 #include "sdl_image_loader.h"
 #include "../model/deck.h"
@@ -26,18 +25,17 @@
 #define NK_SDL_RENDERER_IMPLEMENTATION
 #include "nuklear/nuklear.h"
 
-typedef struct SDL_Cardmanager_struct {
+typedef struct SDL_CardManager_struct {
 	SDL_Texture *back_texture;
 	SDL_Texture *card_textures[DECK_LENGTH];
 	ll_node_card *cardRefs[DECK_LENGTH];
 	struct nk_rect cardRects[DECK_LENGTH];
-} SDL_Cardmanager;
+} SDL_CardManager;
 
-void initCard_Textures(SDL_Cardmanager *cardmanager, SDL_Renderer *rend);
+void InitCardTextures(SDL_CardManager *cardManager, SDL_Renderer *renderer);
 
-void SDL_cards_render(SDL_Renderer *rend, Controller *ctrl, SDL_Cardmanager *cardmanager);
+void SDL_cards_render(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager *cardManager);
 
-struct nk_context;
-void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_Cardmanager *sdl_cm);
+void RenderCardColumns(Controller *ctrl, struct nk_context *ctx, SDL_CardManager *sdl_cm);
 
 #endif
