@@ -1,7 +1,9 @@
 #include "sdlinit.h"
+#include "linkedlist.h"
 #include "nuklear.h"
 #include "nuklear/nuklear_sdl_renderer.h"
 #include "sdl_cards.h"
+#include "sdl_deck.h"
 #include "yukon_model.h"
 
 #define NK_ASSERT
@@ -88,6 +90,8 @@ int sdl_view_init(Controller *ctrl) {
 	char SD_input_buffer[256] = "";
 	const char *message_text = "";
 
+    PickupCard pucard;
+
 	while (running) {
 		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
 		/* Input */
@@ -97,7 +101,7 @@ int sdl_view_init(Controller *ctrl) {
 			if (evt.type == SDL_QUIT) goto cleanup;
 			nk_sdl_handle_event(&evt);
 			if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP) {
-				CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm);
+				CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm, &pucard);
 			}
 		}
 		nk_sdl_handle_grab(); /* optional grabbing behavior */

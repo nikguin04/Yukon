@@ -23,7 +23,7 @@ void SDL_initdeck(Controller *ctrl, SDL_CardManager *sdl_cm) {
 	}
 }
 
-ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm) {
+void CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm, PickupCard *pucard) {
 	for (int a = 0; a < NUM_COLUMNS; a++) {
 		ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
 		ll_node_card *hover = NULL;
@@ -41,7 +41,7 @@ ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Card
 	return NULL;
 }
 
-void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm) {
+void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm, PickupCard *pucard) {
 	// NOTE: Needs extra arg that tells if a card has been picked up, and if so which
 	SDL_MouseButtonEvent mouse_evt = evt->button;
 	if (mouse_evt.button != SDL_BUTTON_LEFT) return;
@@ -49,5 +49,16 @@ void CardEventHandler(SDL_Event *evt, Controller *ctrl, struct nk_input *nk_inp,
 	if (hover == NULL) return;
 	char cardstr[8];
 	CardToString(hover->card, cardstr);
+    switch (evt->type) {
+        case SDL_MOUSEBUTTONDOWN:
+            *card_picked_up = hover;
+            break;
+        case SDL_MOUSEBUTTONUP:
+
+            *card_picked_up = NULL;
+            break;
+        default:
+            break;
+    }
 	printf("Mouse event (%s) on card: %s\n", (evt->type == SDL_MOUSEBUTTONDOWN ? "DOWN" : "UP"), cardstr);
 }
