@@ -203,6 +203,7 @@ void RenderFoundationPiles(struct nk_context *ctx, Controller *ctrl, SDL_CardMan
 			? nk_image_ptr(sdl_cm->card_textures[GetCardAbsoluteIndex(ctrl->model->yukon->foundationPile[i]->card)])
 			: nk_image_ptr(sdl_cm->back_texture);
 		struct nk_rect img_bounds = nk_widget_bounds(ctx); // Use this later for grabbing
+        sdl_cm->foundationRects[i] = img_bounds;
 		nk_image(ctx, nki);
 	}
 	nk_layout_row_dynamic(ctx, (-offsetHeight - (cardHeight * 4)) / 2 - (3 * 5), 1); // Cancel out the gap (this works like shit when scaling resolution up)

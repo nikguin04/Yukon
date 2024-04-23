@@ -1,5 +1,6 @@
 #include "sdl_deck.h"
 #include "linkedlist.h"
+#include "yukon_model.h"
 #include <SDL_events.h>
 #include <SDL_mouse.h>
 #include <stdio.h>
@@ -24,7 +25,7 @@ void SDL_initdeck(Controller *ctrl, SDL_CardManager *sdl_cm) {
 }
 
 ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_CardManager *sdl_cm) {
-	for (int a = 0; a < NUM_COLUMNS; a++) {
+	for (int a = 0; a < NUM_COLUMNS; a++) { // Check columns
 		ll_node_card *curcard = ctrl->model->yukon->columnFront[a];
 		ll_node_card *hover = NULL;
 		while (curcard != NULL) {
@@ -37,6 +38,13 @@ ll_node_card *CheckCardHover(Controller *ctrl, struct nk_input *nk_inp, SDL_Card
 			curcard = curcard->next;
 		}
 		if (hover != NULL) return hover;
+	}
+
+	for (int a = 0; a < NUM_FOUNDATIONS; a++) { // Check foundations
+		//sdl_cm->foundationRects[i]
+		if (nk_input_is_mouse_hovering_rect(nk_inp, sdl_cm->foundationRects[a])) {
+			hover = ctrl->model->yukon->foundationPile[a]; // This will loop to last card in column
+		}
 	}
 	return NULL;
 }

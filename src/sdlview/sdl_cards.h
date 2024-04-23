@@ -30,6 +30,7 @@ typedef struct SDL_CardManager_struct {
 	SDL_Texture *card_textures[DECK_LENGTH];
 	ll_node_card *cardRefs[DECK_LENGTH];
 	struct nk_rect cardRects[DECK_LENGTH];
+    struct nk_rect foundationRects[NUM_FOUNDATIONS];
 } SDL_CardManager;
 
 void InitCardTextures(SDL_CardManager *cardManager, SDL_Renderer *renderer);
