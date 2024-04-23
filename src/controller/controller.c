@@ -69,18 +69,18 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	// ------------------------------
 	// This is done afterwards to make sure the move is completely valid before actually changing anything,
 	// so we don't do half a move operation, which could result in memory leaks, lost cards... just general nightmares...
-	if (move.from > 0) {
-		if (prev == NULL) {
+	if (move.from > 0) { // Move is column pile
+		if (prev == NULL) { // Card being moved is first card in the column
 			yukon->columnFront[move.from - 1] = NULL;
-		} else {
+		} else { // Card being moved is a card buried somewhere in the column
 			prev->next = NULL;
 			prev->hidden = false;
 		}
-	} else {
+	} else { // Move is foundation pile
 		yukon->foundationPile[-move.from - 1] = node->next;
 		node->next = NULL;
 	}
-	if (move.to < 0) {
+	if (move.to < 0) { // If move is a foundation, put on top of pile
 		node->next = *destPointer;
 	}
 	*destPointer = node;

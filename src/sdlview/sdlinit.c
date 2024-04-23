@@ -1,7 +1,10 @@
 #include "sdlinit.h"
+#include "controller.h"
+#include "move.h"
 #include "nuklear.h"
 #include "nuklear/nuklear_sdl_renderer.h"
 #include "sdl_cards.h"
+#include "sdl_deck.h"
 #include "yukon_model.h"
 
 #define NK_ASSERT
@@ -83,6 +86,9 @@ int sdl_view_init(Controller *ctrl) {
 	InitCardTextures(&sdl_cm, renderer);
 	SDL_initdeck(ctrl, &sdl_cm);
 
+    PickupCard pucard;
+    pucard.active = false;
+
 	char SI_input_buffer[256] = "";
 	char LD_input_buffer[256] = "";
 	char SD_input_buffer[256] = "";
@@ -97,8 +103,13 @@ int sdl_view_init(Controller *ctrl) {
 			if (evt.type == SDL_QUIT) goto cleanup;
 			nk_sdl_handle_event(&evt);
 			if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP) {
-				CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm);
+				CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm, &pucard);
 			}
+            if (pucard.active && evt.type == SDL_MOUSEBUTTONUP) {
+                pucard.active = false;
+                Move move = {pucard.is_column ? pucard.column_index+1 : -pucard.foundation_index-1, pucard.release, pucard.pickup->card};
+                PerformMove(ctrl, move);
+            }
 		}
 		nk_sdl_handle_grab(); /* optional grabbing behavior */
 		nk_input_end(ctx);
