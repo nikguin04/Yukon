@@ -51,7 +51,7 @@ void RenderFoundationPiles(SDL_Renderer *renderer, Controller *ctrl, SDL_CardMan
 			(!card->hidden || ctrl->model->optionIgnoreHidden
 				? cardManager->card_textures[GetCardAbsoluteIndex(card->card)]
 				: cardManager->back_texture);
-		SDL_Rect cardRect = {x, y + (cardHeight + cardGap) * i, cardWidth, cardHeight};
+		SDL_Rect cardRect = {x, y + (cardHeight + cardGap / 2) * i, cardWidth, cardHeight};
 		SDL_RenderCopy(renderer, tex, NULL, &cardRect);
 	}
 }

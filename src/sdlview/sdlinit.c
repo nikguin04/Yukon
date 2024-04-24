@@ -92,10 +92,11 @@ int sdl_view_init(Controller *ctrl) {
 
 	while (running) {
 		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
-		int cardMargin = WIDTH * 0.02f;
-		cardWidth = WIDTH * 0.08f;
-		cardHeight = cardWidth / sdl_cm.cardAspectRatio;
+		cardHeight = HEIGHT * 0.175f;
+		cardWidth = cardHeight * sdl_cm.cardAspectRatio;
 		cardGap = cardHeight * 0.25f;
+		int cardMargin = cardWidth * 0.5f;
+		int foundationX = cardMargin + 8 * cardWidth + 6 * (cardGap / 2);
 
 		YukonStructure *yukon = ctrl->model->yukon;
 
@@ -171,10 +172,10 @@ int sdl_view_init(Controller *ctrl) {
 
 		// Set option to ignore false if command is not show
 		if (ctrl->last_command != SHOW && ctrl->model->optionIgnoreHidden) { ctrl->model->optionIgnoreHidden = false; }
-		RenderCardColumns(renderer, ctrl, &sdl_cm, cardMargin, cardMargin + 73);
+		RenderCardColumns(renderer, ctrl, &sdl_cm, cardMargin, cardGap + 73);
 
 		if (ctrl->model->yukon->play_phase)
-			RenderFoundationPiles(renderer, ctrl, &sdl_cm, 2 * cardMargin + 7 * cardWidth + 6 * cardGap, cardMargin);
+			RenderFoundationPiles(renderer, ctrl, &sdl_cm, foundationX, cardGap + 73);
 
 		SDL_RenderPresent(renderer);
 	}
