@@ -18,10 +18,10 @@
 #define FPS 120
 
 extern int WIDTH, HEIGHT;
+extern int cardWidth, cardHeight, cardGap;
 
 int sdl_view_init(Controller *ctrl);
 
 void RenderMsgText(struct nk_context *ctx, const char *messageText, struct nk_font *messageFont);
-void RenderFoundationPiles(struct nk_context *ctx, Controller *ctrl, SDL_CardManager *sdl_cm);
 
 #endif

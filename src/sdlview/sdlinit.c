@@ -7,6 +7,7 @@
 #define NK_ASSERT
 
 int WIDTH, HEIGHT;
+int cardWidth, cardHeight, cardGap;
 
 int sdl_view_init(Controller *ctrl) {
 
@@ -91,6 +92,13 @@ int sdl_view_init(Controller *ctrl) {
 
 	while (running) {
 		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
+		int cardMargin = WIDTH * 0.02f;
+		cardWidth = WIDTH * 0.08f;
+		cardHeight = cardWidth / sdl_cm.cardAspectRatio;
+		cardGap = cardHeight * 0.25f;
+
+		YukonStructure *yukon = ctrl->model->yukon;
+
 		/* Input */
 		SDL_Event evt;
 		nk_input_begin(ctx);
@@ -108,7 +116,7 @@ int sdl_view_init(Controller *ctrl) {
 		if (nk_begin(ctx, "Yukon Solitaire", nk_rect(0, 0, WIDTH, HEIGHT), 0)) {
 
 			RenderMsgText(ctx, messageText, messageFont);
-			RenderFoundationPiles(ctx, ctrl, &sdl_cm);
+			//nkRenderFoundationPiles(ctx, ctrl, &sdl_cm);
 
 			nk_layout_row_dynamic(ctx, 3, 1); // General top gap so everything is not completely at the top
 			nk_spacing(ctx, 1);
@@ -152,7 +160,7 @@ int sdl_view_init(Controller *ctrl) {
 				nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SI_input_buffer, 256, nk_filter_default);
 			}
 
-			RenderCardColumns(ctrl, ctx, &sdl_cm);
+			//nkRenderCardColumns(ctrl, ctx, &sdl_cm);
 		}
 		nk_end(ctx);
 
@@ -160,6 +168,13 @@ int sdl_view_init(Controller *ctrl) {
 		SDL_RenderClear(renderer);
 
 		nk_sdl_render(NK_ANTI_ALIASING_ON);
+
+		// Set option to ignore false if command is not show
+		if (ctrl->last_command != SHOW && ctrl->model->optionIgnoreHidden) { ctrl->model->optionIgnoreHidden = false; }
+		RenderCardColumns(renderer, ctrl, &sdl_cm, cardMargin, cardMargin + 73);
+
+		if (ctrl->model->yukon->play_phase)
+			RenderFoundationPiles(renderer, ctrl, &sdl_cm, 2 * cardMargin + 7 * cardWidth + 6 * cardGap, cardMargin);
 
 		SDL_RenderPresent(renderer);
 	}
@@ -187,25 +202,5 @@ void RenderMsgText(struct nk_context *ctx, const char *messageText, struct nk_fo
 	nk_layout_row_end(ctx);
 
 	nk_layout_row_dynamic(ctx, -(HEIGHT / 2 - 25) - 30, 1); // Cancel out the gap
-	nk_spacing(ctx, 1);
-}
-
-void RenderFoundationPiles(struct nk_context *ctx, Controller *ctrl, SDL_CardManager *sdl_cm) {
-	int offsetHeight = 30 + 3 + 30 + 3 + 3 + 3 + 3 + 1;
-	int cardHeight = HEIGHT / 45 * 7;
-	nk_layout_row_static(ctx, offsetHeight, 1, 1); // Adjust text to bottom
-
-	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
-		nk_layout_row_static(ctx, cardHeight, HEIGHT / 9, NUM_COLUMNS + 2);
-		nk_spacing(ctx, NUM_COLUMNS + 1);
-
-		struct nk_image nki
-			= ctrl->model->yukon->foundationPile[i] != NULL
-			? nk_image_ptr(sdl_cm->card_textures[GetCardAbsoluteIndex(ctrl->model->yukon->foundationPile[i]->card)])
-			: nk_image_ptr(sdl_cm->back_texture);
-		struct nk_rect img_bounds = nk_widget_bounds(ctx); // Use this later for grabbing
-		nk_image(ctx, nki);
-	}
-	nk_layout_row_dynamic(ctx, (-offsetHeight - (cardHeight * 4)) / 2 - (3 * 5), 1); // Cancel out the gap (this works like shit when scaling resolution up)
 	nk_spacing(ctx, 1);
 }
