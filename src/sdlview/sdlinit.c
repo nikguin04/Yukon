@@ -98,7 +98,7 @@ int sdl_view_init(Controller *ctrl) {
 		cardWidth = cardHeight * sdl_cm.cardAspectRatio;
 		cardGap = cardHeight * 0.25f;
 		int cardMargin = cardWidth * 0.5f;
-		int foundationX = cardMargin + 8 * cardWidth + 6 * (cardGap / 2);
+		int foundationX = cardMargin + (NUM_COLUMNS + 1) * cardWidth + (NUM_COLUMNS - 1) * (cardGap / 2);
 
 		YukonStructure *yukon = ctrl->model->yukon;
 
@@ -118,7 +118,7 @@ int sdl_view_init(Controller *ctrl) {
 			if (y >= 0) {
 				x -= cardMargin;
 				int cardSpacing = cardWidth + cardGap / 2;
-				if (x >= 0 && x < 7 * cardSpacing && x % cardSpacing < cardWidth) {
+				if (x >= 0 && x < NUM_COLUMNS * cardSpacing && x % cardSpacing < cardWidth) {
 					x /= cardSpacing;
 					place = x + 1;
 					columnY = (float) y / (float) cardGap;
@@ -127,7 +127,7 @@ int sdl_view_init(Controller *ctrl) {
 				}
 				x -= foundationX - cardMargin;
 				cardSpacing = cardHeight + cardGap / 2;
-				if (x >= 0 && x < cardWidth && y < 4 * cardSpacing && y % cardSpacing < cardHeight) {
+				if (x >= 0 && x < cardWidth && y < NUM_FOUNDATIONS * cardSpacing && y % cardSpacing < cardHeight) {
 					y /= cardSpacing;
 					place = -(y + 1);
 					cardX = foundationX;
