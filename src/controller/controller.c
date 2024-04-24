@@ -124,7 +124,7 @@ void GrabCard(Controller *ctrl, int source, float y, float height) {
 	ctrl->model->yukon->activeMove.fromIsFoundation = source < 0;
 }
 
-const char *ValidateMove(Controller *ctrl, char destination, MoveDestination *result) {
+const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *result) {
 	*result = (MoveDestination) {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **destPointer = NULL;
@@ -178,4 +178,5 @@ void CompleteMove(Controller *ctrl, MoveDestination dest) {
 		move->card->next = *dest.destPointer;
 	}
 	*dest.destPointer = move->card;
+	move->card = NULL;
 }

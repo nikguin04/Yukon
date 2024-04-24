@@ -25,7 +25,7 @@ void initController(Controller *ctrl, Model *model);
 const char *PerformMove(Controller *ctrl, Move move);
 
 void GrabCard(Controller *ctrl, int source, float y, float height);
-const char *ValidateMove(Controller *ctrl, char destination, MoveDestination *result);
+const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *result);
 void CancelMove(Controller *ctrl);
 void CompleteMove(Controller *ctrl, MoveDestination dest);
 
