@@ -8,7 +8,7 @@
 void SDL_initdeck(Controller *ctrl, SDL_CardManager *sdl_cm) {
 	// TEMP INIT OF DECK
 	const char *msg;
-	ctrl->model->deck = LoadDeck("", &msg);
+	ctrl->model->deck = LoadDeck(NULL, &msg);
 	DeckToYukon(ctrl->model->deck, ctrl->model->yukon, COLUMN_STARTSIZE);
 
 	for (int a = 0; a < NUM_COLUMNS; a++) {

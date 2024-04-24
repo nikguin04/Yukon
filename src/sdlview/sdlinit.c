@@ -21,6 +21,7 @@ int sdl_view_init(Controller *ctrl) {
 	struct nk_colorf bg;
 
 	/* SDL setup */
+	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 	SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -86,7 +87,7 @@ int sdl_view_init(Controller *ctrl) {
 	char SI_input_buffer[256] = "";
 	char LD_input_buffer[256] = "";
 	char SD_input_buffer[256] = "";
-	const char *message_text = "";
+	const char *messageText = "";
 
 	while (running) {
 		SDL_GetWindowSize(win, &WIDTH, &HEIGHT);
@@ -106,7 +107,7 @@ int sdl_view_init(Controller *ctrl) {
 		/* GUI */
 		if (nk_begin(ctx, "Yukon Solitaire", nk_rect(0, 0, WIDTH, HEIGHT), 0)) {
 
-			RenderMsgText(ctx, message_text, messageFont);
+			RenderMsgText(ctx, messageText, messageFont);
 			RenderFoundationPiles(ctx, ctrl, &sdl_cm);
 
 			nk_layout_row_dynamic(ctx, 3, 1); // General top gap so everything is not completely at the top
@@ -116,31 +117,31 @@ int sdl_view_init(Controller *ctrl) {
 			nk_layout_row_static(ctx, 30, 100, 8);
 			if (!ctrl->model->yukon->play_phase) {
 				if (nk_button_label(ctx, "Load")) {
-					message_text = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
+					messageText = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
 				}
 				if (nk_button_label(ctx, "Save")) {
-					message_text = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
+					messageText = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
 				}
 				if (nk_button_label(ctx, "Interleave Shuffle")) {
-					message_text = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
+					messageText = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
 				}
 				if (nk_button_label(ctx, "Random Shuffle")) {
-					message_text = ShuffleRandom(ctrl, NULL);
+					messageText = ShuffleRandom(ctrl, NULL);
 				}
 				if (nk_button_label(ctx, "Show Cards")) {
-					message_text = ShowDeck(ctrl, NULL);
+					messageText = ShowDeck(ctrl, NULL);
 				}
 				if (nk_button_label(ctx, "Play")) {
-					message_text = PlayGame(ctrl, NULL);
+					messageText = PlayGame(ctrl, NULL);
 				}
 			} else {
 				if (nk_button_label(ctx, "Quit")) {
-					message_text = QuitGame(ctrl, NULL);
+					messageText = QuitGame(ctrl, NULL);
 				}
 			}
 
 			if (nk_button_label(ctx, "Quit And Exit")) {
-				message_text = QuitAndExit(ctrl, NULL);
+				messageText = QuitAndExit(ctrl, NULL);
 			}
 
 			// Add input boxes for command buttons

@@ -88,7 +88,7 @@ const char *PerformMove(Controller *ctrl, Move move) {
 }
 
 // y and height are relative to column card spacing
-void GrabCard(Controller *ctrl, char source, float y, float height) {
+void GrabCard(Controller *ctrl, int source, float y, float height) {
 	ctrl->model->yukon->activeMove = (ActiveMove) {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **from = NULL;
@@ -164,6 +164,7 @@ void CancelMove(Controller *ctrl) {
 		move->card->next = *move->from;
 		*move->from = move->card;
 	}
+	move->card = NULL;
 }
 
 void CompleteMove(Controller *ctrl, MoveDestination dest) {
