@@ -2,6 +2,7 @@
 #include "linkedlist.h"
 
 void DeckToYukon(ll_node_card *deck, YukonStructure *yukon, const int *columnHeightArray) { // Puts the deck into column structure according to yukon rules
+	ClearGame(yukon); // Avoid memory leaks by clearing any previous stuff
 	ll_node_card *columnTail[NUM_COLUMNS];
 	ll_node_card *deckIndex = deck;
 	if (!deckIndex) {
