@@ -33,7 +33,7 @@ const Command commands[] = {
 			writer->last_command_result = "";
 		} else if (cmd != NULL) {
 			char *parsed_arg = CmdArgParse(string + strlen(cmd->input));
-			writer->last_command_result = cmd->function(writer->ctrl, parsed_arg);
+			writer->last_command_result = cmd->function(writer->ctrl, (parsed_arg != NULL && parsed_arg[0] != NULL) ? parsed_arg : NULL);
 		} else {
 			Move move = MatchMove(string);
 			if (move.from != 0) {
