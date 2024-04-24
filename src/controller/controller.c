@@ -96,17 +96,18 @@ void GrabCard(Controller *ctrl, int source, float y, float height) {
 	if (source > 0) {
 		// Take from a column
 		ll_node_card *prev = NULL;
-		card = yukon->columnFront[source - 1];
+		from = &yukon->columnFront[source - 1];
+		card = *from;
 		if (card == NULL) return;
 		int i = 0;
 		int index = (int) y;
 		while (i != index && card->next != NULL) {
 			prev = card;
-			card = card->next;
+			from = &card->next;
+			card = *from;
 			i++;
 		}
 		if (i != index && (int) (y - height) >= i) return;
-		from = &prev->next;
 		ctrl->model->yukon->activeMove.cardToUnhide = prev;
 		*from = NULL;
 	} else {
