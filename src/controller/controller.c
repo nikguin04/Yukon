@@ -86,7 +86,7 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	*destPointer = node;
 
     for (int i = 0; i < NUM_FOUNDATIONS; i++) {
-        if (yukon->foundationPile == NULL) {
+        if (yukon->foundationPile[i] == NULL) {
             break;
         }
         if (yukon->foundationPile[i]->card.value != 13) {
