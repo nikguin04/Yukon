@@ -84,5 +84,15 @@ const char *PerformMove(Controller *ctrl, Move move) {
 		node->next = *destPointer;
 	}
 	*destPointer = node;
+
+    for (int i = 0; i < NUM_FOUNDATIONS; i++) {
+        if (yukon->foundationPile != NULL) {
+            break;
+        }
+        if (yukon->foundationPile[i]->card.value != 13) {
+            break;
+        }
+        return "YOU WIN!";
+    }
 	return "OK";
 }

@@ -39,17 +39,6 @@ const Command commands[] = {
 			if (move.from != 0) {
 				if (writer->ctrl->model->yukon->play_phase) {
                     writer->last_command_result = PerformMove(writer->ctrl, move);
-
-                    for (int i = 0; i < sizeof(writer->ctrl->model->yukon->foundationPile); i++) {
-                        if (writer->ctrl->model->yukon->foundationPile != NULL) {
-                            break;
-                        }
-                        if (writer->ctrl->model->yukon->foundationPile[i]->card.value != 13) {
-                            break;
-                        }
-                        writer->last_command_result = "YOU WIN!";
-                    }
-
                 }
 				else
 					writer->last_command_result = "Can't make moves when not playing";
