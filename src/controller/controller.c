@@ -89,18 +89,18 @@ const char *PerformMove(Controller *ctrl, Move move) {
 }
 
 // y and height are relative to column card spacing
-void GrabCard(Controller *ctrl, int source, float y, float height) {
+int GrabCard(Controller *ctrl, int source, float y, float height) {
 	ctrl->model->yukon->activeMove = (ActiveMove) {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **from = NULL;
 	ll_node_card *card;
+	int i = 0;
 	if (source > 0) {
 		// Take from a column
 		ll_node_card *prev = NULL;
 		from = &yukon->columnFront[source - 1];
 		card = *from;
-		if (card == NULL) return;
-		int i = 0;
+		if (card == NULL) return -1;
 		int index = (int) y;
 		while (i != index && card->next != NULL) {
 			prev = card;
@@ -108,27 +108,30 @@ void GrabCard(Controller *ctrl, int source, float y, float height) {
 			card = *from;
 			i++;
 		}
-		if (i != index && (int) floorf(y - height) >= i) return;
+		if (i != index && (int) floorf(y - height) >= i) return -1;
 		ctrl->model->yukon->activeMove.cardToUnhide = prev;
 		*from = NULL;
 	} else {
 		// Take from a foundation pile
 		from = &yukon->foundationPile[-source - 1];
 		card = *from;
-		if (card == NULL) return;
+		if (card == NULL) return -1;
 		*from = card->next;
 		card->next = NULL;
 	}
 	ctrl->model->yukon->activeMove.card = card;
 	ctrl->model->yukon->activeMove.from = from;
 	ctrl->model->yukon->activeMove.fromIsFoundation = source < 0;
+	return i;
 }
 
 const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *result) {
 	*result = (MoveDestination) {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **destPointer = NULL;
-	if (destination > 0) {
+	if (destination == 0) {
+		return "";
+	} else if (destination > 0) {
 		// Move to a column
 		destPointer = &yukon->columnFront[destination - 1];
 		ll_node_card *dest = *destPointer;

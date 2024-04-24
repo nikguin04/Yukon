@@ -17,6 +17,8 @@ int sdl_view_init(Controller *ctrl) {
 	int flags = 0;
 	float font_scale;
 
+	int moveX, moveY;
+
 	/* GUI */
 	struct nk_context *ctx;
 	struct nk_colorf bg;
@@ -103,11 +105,49 @@ int sdl_view_init(Controller *ctrl) {
 		/* Input */
 		SDL_Event evt;
 		nk_input_begin(ctx);
-		while (SDL_PollEvent(&evt)) { // make this a switch case??
+		while (SDL_PollEvent(&evt)) {
 			if (evt.type == SDL_QUIT) goto cleanup;
 			nk_sdl_handle_event(&evt);
-			if (evt.type == SDL_MOUSEBUTTONDOWN || evt.type == SDL_MOUSEBUTTONUP) {
-				CardEventHandler(&evt, ctrl, &ctx->input, &sdl_cm);
+			if (evt.type != (yukon->activeMove.card == NULL ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP)) continue;
+			if (evt.button.button != SDL_BUTTON_LEFT || !yukon->play_phase) continue;
+			int x = evt.button.x, y = evt.button.y;
+			int place = 0;
+			int cardX = 0, cardY = cardGap + 73;
+			float columnY = 0, columnHeight = 0;
+			y -= cardY;
+			if (y >= 0) {
+				x -= cardMargin;
+				int cardSpacing = cardWidth + cardGap / 2;
+				if (x >= 0 && x < 7 * cardSpacing && x % cardSpacing < cardWidth) {
+					x /= cardSpacing;
+					place = x + 1;
+					columnY = (float) y / (float) cardGap;
+					columnHeight = (float) cardHeight / (float) cardGap;
+					cardX = x * cardSpacing + cardMargin;
+				}
+				x -= foundationX - cardMargin;
+				cardSpacing = cardHeight + cardGap / 2;
+				if (x >= 0 && x < cardWidth && y < 4 * cardSpacing && y % cardSpacing < cardHeight) {
+					y /= cardSpacing;
+					place = -(y + 1);
+					cardX = foundationX;
+					cardY += y * cardSpacing;
+				}
+			}
+			if (yukon->activeMove.card == NULL) {
+				if (place == 0) continue;
+				int ret = GrabCard(ctrl, place, columnY, columnHeight);
+				if (place > 0) cardY += ret * cardGap;
+				moveX = evt.button.x - cardX;
+				moveY = evt.button.y - cardY;
+			} else {
+				MoveDestination moveDest;
+				messageText = ValidateMove(ctrl, place, &moveDest);
+				if (moveDest.destPointer != NULL) {
+					CompleteMove(ctrl, moveDest);
+				} else {
+					CancelMove(ctrl);
+				}
 			}
 		}
 		nk_sdl_handle_grab(); /* optional grabbing behavior */
@@ -176,6 +216,12 @@ int sdl_view_init(Controller *ctrl) {
 
 		if (ctrl->model->yukon->play_phase)
 			RenderFoundationPiles(renderer, ctrl, &sdl_cm, foundationX, cardGap + 73);
+
+		if (ctrl->model->yukon->activeMove.card != NULL) {
+			int mouseX, mouseY;
+			SDL_GetMouseState(&mouseX, &mouseY);
+			RenderCardColumn(renderer, ctrl, &sdl_cm, ctrl->model->yukon->activeMove.card, mouseX - moveX, mouseY - moveY);
+		}
 
 		SDL_RenderPresent(renderer);
 	}
