@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <math.h>
 
 void initController(Controller *ctrl, Model *model) {
 	ctrl->model = model;
@@ -107,7 +108,7 @@ void GrabCard(Controller *ctrl, int source, float y, float height) {
 			card = *from;
 			i++;
 		}
-		if (i != index && (int) (y - height) >= i) return;
+		if (i != index && (int) floorf(y - height) >= i) return;
 		ctrl->model->yukon->activeMove.cardToUnhide = prev;
 		*from = NULL;
 	} else {
