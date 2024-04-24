@@ -5,6 +5,7 @@
 #include "sdlinit.h"
 
 void InitCardTextures(SDL_CardManager *cardManager, SDL_Renderer *renderer) {
+	cardManager->placeholder_texture = LoadSDLImage("resource/Card-Placeholder.png", renderer);
 	cardManager->back_texture = LoadSDLImage("resource/Backs/Card-Back-04.png", renderer);
 	int w, h;
 	SDL_QueryTexture(cardManager->back_texture, NULL, NULL, &w, &h);
@@ -27,6 +28,11 @@ void RenderCardColumns(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager
 }
 
 void RenderCardColumn(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager *cardManager, ll_node_card *card, int x, int y) {
+	if (card == NULL) {
+		SDL_Rect cardRect = {x, y, cardWidth, cardHeight};
+		SDL_RenderCopy(renderer, cardManager->placeholder_texture, NULL, &cardRect);
+		return;
+	}
 	int i = 0;
 	while (card != NULL) {
 		int cardIndex = GetCardAbsoluteIndex(card->card);
@@ -41,9 +47,10 @@ void RenderCardColumn(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager 
 void RenderFoundationPiles(SDL_Renderer *renderer, Controller *ctrl, SDL_CardManager *cardManager, int x, int y) {
 	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
 		ll_node_card *card = ctrl->model->yukon->foundationPile[i];
-		SDL_Texture *tex = !card->hidden || ctrl->model->optionIgnoreHidden
-			? cardManager->card_textures[GetCardAbsoluteIndex(card->card)]
-			: cardManager->back_texture;
+		SDL_Texture *tex = card == NULL ? cardManager->placeholder_texture :
+			(!card->hidden || ctrl->model->optionIgnoreHidden
+				? cardManager->card_textures[GetCardAbsoluteIndex(card->card)]
+				: cardManager->back_texture);
 		SDL_Rect cardRect = {x, y + (cardHeight + cardGap) * i, cardWidth, cardHeight};
 		SDL_RenderCopy(renderer, tex, NULL, &cardRect);
 	}

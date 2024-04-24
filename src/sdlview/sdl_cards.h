@@ -27,6 +27,7 @@
 #include "nuklear/nuklear.h"
 
 typedef struct SDL_CardManager_struct {
+	SDL_Texture *placeholder_texture;
 	SDL_Texture *back_texture;
 	SDL_Texture *card_textures[DECK_LENGTH];
 	ll_node_card *cardRefs[DECK_LENGTH];
