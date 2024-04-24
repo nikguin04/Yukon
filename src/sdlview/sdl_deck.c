@@ -17,7 +17,6 @@ void SDL_initdeck(Controller *ctrl, SDL_CardManager *sdl_cm) {
 			int index = GetCardAbsoluteIndex(curcard->card);
 			struct nk_rect nkr = {0, 0, 0, 0};
 			sdl_cm->cardRects[index] = nkr;
-			sdl_cm->cardRefs[index] = curcard;
 			curcard = curcard->next;
 		}
 	}
