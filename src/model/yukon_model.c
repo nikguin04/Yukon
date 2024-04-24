@@ -56,4 +56,5 @@ ll_node_card *DuplicateCardNode(ll_node_card *card, bool hidden) {
 void ClearGame(YukonStructure *yukon) {
 	for (int i = 0; i < NUM_COLUMNS; i++) { freeList(&yukon->columnFront[i]); }
 	for (int i = 0; i < NUM_FOUNDATIONS; i++) { freeList(&yukon->foundationPile[i]); }
+	freeList(&yukon->activeMove.card);
 }

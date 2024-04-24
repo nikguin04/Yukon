@@ -6,6 +6,7 @@ void initModel(Model *model) {
 	model->optionIgnoreHidden = false;
 
 	model->yukon = (YukonStructure *) malloc(sizeof(YukonStructure));
+	model->yukon->activeMove.card = NULL;
 	model->yukon->play_phase = false;
 
 	// Initialise all the yukon pointers to NULL
