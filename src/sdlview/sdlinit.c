@@ -85,7 +85,6 @@ int sdl_view_init(Controller *ctrl) {
 
 	SDL_CardManager sdl_cm;
 	InitCardTextures(&sdl_cm, renderer);
-	SDL_initdeck(ctrl, &sdl_cm);
 
 	char SI_input_buffer[256] = "";
 	char LD_input_buffer[256] = "";
