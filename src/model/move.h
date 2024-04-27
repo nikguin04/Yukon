@@ -18,6 +18,7 @@ typedef struct ActiveMoveStruct {
 	ll_node_card *card;
 	ll_node_card **from;
 	bool fromIsFoundation;
+	char fromIndex;
 	ll_node_card *cardToUnhide;
 } ActiveMove;
 

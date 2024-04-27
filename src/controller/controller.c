@@ -135,6 +135,7 @@ int GrabCard(Controller *ctrl, int source, float y, float height) {
 	ctrl->model->yukon->activeMove.card = card;
 	ctrl->model->yukon->activeMove.from = from;
 	ctrl->model->yukon->activeMove.fromIsFoundation = source < 0;
+	ctrl->model->yukon->activeMove.fromIndex = (char) source;
 	return i;
 }
 
@@ -142,8 +143,8 @@ const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *res
 	*result = (MoveDestination) {};
 	YukonStructure *yukon = ctrl->model->yukon;
 	ll_node_card **destPointer = NULL;
-	if (destination == 0) {
-		return "";
+	if (destination == 0 || ctrl->model->yukon->activeMove.fromIndex == destination) {
+		return "Returned card(s)";
 	} else if (destination > 0) {
 		// Move to a column
 		destPointer = &yukon->columnFront[destination - 1];
