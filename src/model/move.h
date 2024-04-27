@@ -14,4 +14,16 @@ typedef struct MoveStruct {
 	Card card;
 } Move;
 
+typedef struct ActiveMoveStruct {
+	ll_node_card *card;
+	ll_node_card **from;
+	bool fromIsFoundation;
+	ll_node_card *cardToUnhide;
+} ActiveMove;
+
+typedef struct MoveDestinationStruct {
+	ll_node_card **destPointer;
+	bool isFoundation;
+} MoveDestination;
+
 #endif

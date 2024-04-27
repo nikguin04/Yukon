@@ -1,14 +1,5 @@
 #include "deck.h"
 
-void PrintDeck(ll_node_card *deck) {
-	ll_node_card *current = deck;
-	int progress = 0;
-	while (current != NULL) {
-		printf("card number %d = val: %d, suit: %d\n", progress++, current->card.value, current->card.suit);
-		current = current->next;
-	}
-}
-
 char msgBuffer[128];
 
 ll_node_card *LoadDeck(const char *path, const char **msg) {
@@ -17,28 +8,35 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 	char readbuffer[4];
 	char *ch = readbuffer;
 
-	// Open the file in read mode
 	if (path == NULL) {
 		*msg = "OK";
 		return OpenDefaultDeck();
 	}
+	// Open the file in read mode
 	ptr = fopen(path, "r");
+
 
 	if (NULL == ptr) {
 		*msg = "File can't be opened (Default deck loaded)";
 		return OpenDefaultDeck();
 	}
 
+	bool card_scanned[DECK_LENGTH];
+	for (int i = 0; i < DECK_LENGTH; i++) { card_scanned[i] = false; }
 	ll_node_card *first_card = NULL;
 	ll_node_card *current_card = NULL;
-	int depth_counter = 0;
+	int cardNumber = 0;
 	do {
 		*ch = (char) fgetc(ptr);
 		if (*ch == '\n' || *ch == EOF) {
-			depth_counter++;
-			//*ch == NULL;
-			ll_node_card *card = ParseCharCard(readbuffer, msgBuffer, depth_counter);
+			cardNumber++;
+			ll_node_card *card = ParseCharCard(readbuffer, msgBuffer, cardNumber);
 			if (card == NULL) {
+				return OpenDefaultDeck();
+			}
+			int card_index = GetCardAbsoluteIndex(card->card);
+			if (card_scanned[card_index]) {
+				sprintf(msgBuffer, "File included duplicate card on line %d", cardNumber);
 				return OpenDefaultDeck();
 			}
 			if (first_card == NULL) {
@@ -49,10 +47,11 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 				current_card = current_card->next;
 				current_card->next = NULL;
 			}
+			card_scanned[card_index] = true;
 
 			ch = readbuffer;
 		} else if (ch - readbuffer >= 2) {
-			sprintf(msgBuffer, "Format is wrong, read 3 or more characters on line %d", depth_counter + 1);
+			sprintf(msgBuffer, "Format is wrong, read 3 or more characters on line %d", cardNumber + 1);
 			return OpenDefaultDeck();
 		} else {
 			ch++;
@@ -62,8 +61,8 @@ ll_node_card *LoadDeck(const char *path, const char **msg) {
 
 	// Close the file again
 	fclose(ptr);
-	if (depth_counter != DECK_LENGTH) {
-		sprintf(msgBuffer, "Wrong size of deck loaded. Expected 52, got %d", depth_counter); // hardcoded to 52
+	if (cardNumber != DECK_LENGTH) {
+		sprintf(msgBuffer, "Wrong size of deck loaded. Expected 52, got %d", cardNumber); // hardcoded to 52
 		return OpenDefaultDeck();
 	}
 	*msg = "OK";

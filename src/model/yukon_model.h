@@ -2,6 +2,7 @@
 #define YUKON_MODEL_H
 
 #include "linkedlist.h"
+#include "move.h"
 
 #define NUM_COLUMNS 7
 #define NUM_FOUNDATIONS 4
@@ -11,6 +12,7 @@ static const int COLUMN_LOADSIZE[7] = {8, 8, 8, 7, 7, 7, 7};
 typedef struct yukonStruct {
 	ll_node_card *columnFront[NUM_COLUMNS];
 	ll_node_card *foundationPile[NUM_FOUNDATIONS];
+	ActiveMove activeMove;
 	bool play_phase;
 } YukonStructure;
 

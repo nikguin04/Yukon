@@ -1,4 +1,5 @@
 #include "controller.h"
+#include <math.h>
 
 void initController(Controller *ctrl, Model *model) {
 	ctrl->model = model;
@@ -98,4 +99,100 @@ bool CheckWin(Controller *ctrl) {
 		if (node == NULL || node->card.value != 13) return false;
 	}
 	return true;
+}
+
+// y and height are relative to column card spacing
+int GrabCard(Controller *ctrl, int source, float y, float height) {
+	ctrl->model->yukon->activeMove = (ActiveMove) {};
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card **from = NULL;
+	ll_node_card *card;
+	int i = 0;
+	if (source > 0) {
+		// Take from a column
+		ll_node_card *prev = NULL;
+		from = &yukon->columnFront[source - 1];
+		card = *from;
+		if (card == NULL) return -1;
+		int index = (int) y;
+		while (i != index && card->next != NULL) {
+			prev = card;
+			from = &card->next;
+			card = *from;
+			i++;
+		}
+		if (i != index && (int) floorf(y - height) >= i) return -1;
+		ctrl->model->yukon->activeMove.cardToUnhide = prev;
+		*from = NULL;
+	} else {
+		// Take from a foundation pile
+		from = &yukon->foundationPile[-source - 1];
+		card = *from;
+		if (card == NULL) return -1;
+		*from = card->next;
+		card->next = NULL;
+	}
+	ctrl->model->yukon->activeMove.card = card;
+	ctrl->model->yukon->activeMove.from = from;
+	ctrl->model->yukon->activeMove.fromIsFoundation = source < 0;
+	return i;
+}
+
+const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *result) {
+	*result = (MoveDestination) {};
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card **destPointer = NULL;
+	if (destination == 0) {
+		return "";
+	} else if (destination > 0) {
+		// Move to a column
+		destPointer = &yukon->columnFront[destination - 1];
+		ll_node_card *dest = *destPointer;
+		if (dest == NULL) {
+			if (yukon->activeMove.card->card.value != 13) return "Can only move a king to an empty column";
+		} else {
+			while (*(destPointer = &dest->next) != NULL) {
+				dest = *destPointer;
+			}
+			if (dest->card.suit == yukon->activeMove.card->card.suit) return "Suits have to differ";
+			if (dest->card.value - 1 != yukon->activeMove.card->card.value) return "Rank must be one lower";
+		}
+	} else {
+		// Move to a foundation pile
+		if (yukon->activeMove.card->next != NULL) return "Can only move one card to a foundation pile at a time";
+		destPointer = &yukon->foundationPile[-destination - 1];
+		if (*destPointer == NULL) {
+			if (yukon->activeMove.card->card.value > 1) return "Can only move an ace to an empty foundation pile";
+		} else {
+			Card destCard = (*destPointer)->card;
+			if (destCard.suit != yukon->activeMove.card->card.suit) return "Suits have to match";
+			if (destCard.value + 1 != yukon->activeMove.card->card.value) return "Rank must be one higher";
+		}
+	}
+	result->destPointer = destPointer;
+	result->isFoundation = destination < 0;
+	return "OK";
+}
+
+void CancelMove(Controller *ctrl) {
+	ActiveMove *move = &ctrl->model->yukon->activeMove;
+	if (!move->fromIsFoundation) {
+		*move->from = move->card;
+	} else {
+		move->card->next = *move->from;
+		*move->from = move->card;
+	}
+	move->card = NULL;
+}
+
+void CompleteMove(Controller *ctrl, MoveDestination dest) {
+	ActiveMove *move = &ctrl->model->yukon->activeMove;
+	if (move->cardToUnhide != NULL) {
+		move->cardToUnhide->hidden = false;
+	}
+	if (dest.isFoundation) {
+		move->card->next = *dest.destPointer;
+	}
+	*dest.destPointer = move->card;
+	move->card = NULL;
 }

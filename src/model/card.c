@@ -91,3 +91,13 @@ char *CardToString(Card card, char *cardStr) {
 inline bool CardEquals(Card a, Card b) {
 	return a.suit == b.suit && a.value == b.value;
 }
+
+int GetCardAbsoluteIndex(Card card) {
+	switch (card.suit) {
+		case CLUBS: return card.value + 13 * 0 - 1;
+		case DIAMONDS: return card.value + 13 * 1 - 1;
+		case HEARTS: return card.value + 13 * 2 - 1;
+		case SPADES: return card.value + 13 * 3 - 1;
+		default: return -1;
+	}
+}
