@@ -86,18 +86,19 @@ const char *PerformMove(Controller *ctrl, Move move) {
 	}
 	*destPointer = node;
 
-    for (int i = 0; i < NUM_FOUNDATIONS; i++) {
-        if (yukon->foundationPile[i] == NULL) {
-            break;
-        }
-        if (yukon->foundationPile[i]->card.value != 13) {
-            break;
-        }
-        if (i == NUM_FOUNDATIONS - 1) {
-            return "YOU WIN!";
-        }
-    }
+	if (CheckWin(ctrl)) return "YOU WIN!";
+
 	return "OK";
+}
+
+bool CheckWin(Controller *ctrl) {
+	YukonStructure *yukon = ctrl->model->yukon;
+	ll_node_card *node;
+	for (int i = 0; i < NUM_FOUNDATIONS; i++) {
+		node = yukon->foundationPile[i];
+		if (node == NULL || node->card.value != 13) return false;
+	}
+	return true;
 }
 
 // y and height are relative to column card spacing
