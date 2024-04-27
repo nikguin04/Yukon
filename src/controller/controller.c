@@ -171,6 +171,7 @@ const char *ValidateMove(Controller *ctrl, int destination, MoveDestination *res
 	}
 	result->destPointer = destPointer;
 	result->isFoundation = destination < 0;
+	if (CheckWin(ctrl)) return "YOU WIN!";
 	return "OK";
 }
 
