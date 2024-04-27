@@ -12,4 +12,6 @@ void initController(Controller *ctrl, Model *model);
 
 const char *PerformMove(Controller *ctrl, Move move);
 
+bool CheckWin(Controller *ctrl);
+
 #endif
