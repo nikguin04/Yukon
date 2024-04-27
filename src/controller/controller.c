@@ -122,6 +122,7 @@ int GrabCard(Controller *ctrl, int source, float y, float height) {
 			i++;
 		}
 		if (i != index && (int) floorf(y - height) >= i) return -1;
+		if (card->hidden) return -1;
 		ctrl->model->yukon->activeMove.cardToUnhide = prev;
 		*from = NULL;
 	} else {
