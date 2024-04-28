@@ -144,6 +144,7 @@ int sdl_view_init(Controller *ctrl) {
 				messageText = ValidateMove(ctrl, place, &moveDest);
 				if (moveDest.destPointer != NULL) {
 					CompleteMove(ctrl, moveDest);
+                    if (CheckWin(ctrl)) messageText = "YOU WIN!";
 				} else {
 					CancelMove(ctrl);
 				}
