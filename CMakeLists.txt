@@ -30,5 +30,9 @@ set(SDL2_TTF_LIBRARIES SDL2_ttf::SDL2_ttf)
 target_include_directories(YukonGUI PRIVATE ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS})
 target_link_libraries(YukonGUI ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
+# File dialog library
+add_subdirectory("nativefiledialog-extended")
+target_link_libraries(YukonGUI nfd)
+
 # Copy resources
 file(COPY src/resource/ DESTINATION "${CMAKE_BINARY_DIR}/resource/")

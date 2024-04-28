@@ -1,6 +1,7 @@
 #include "sdlinit.h"
 #include "nuklear.h"
 #include "nuklear/nuklear_sdl_renderer.h"
+#include <nfd.h>
 #include "sdl_cards.h"
 #include "yukon_model.h"
 
@@ -27,6 +28,11 @@ int sdl_view_init(Controller *ctrl) {
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 	SDL_SetHint(SDL_HINT_VIDEO_HIGHDPI_DISABLED, "0");
 	SDL_Init(SDL_INIT_VIDEO);
+
+	if (NFD_Init() != NFD_OKAY) {
+		printf("Couldn't init NFD library");
+		exit(-1);
+	}
 
 	win = SDL_CreateWindow("Yukon Solitaire",
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1600, 900,
@@ -87,8 +93,6 @@ int sdl_view_init(Controller *ctrl) {
 	InitCardTextures(&sdl_cm, renderer);
 
 	char SI_input_buffer[256] = "";
-	char LD_input_buffer[256] = "";
-	char SD_input_buffer[256] = "";
 	const char *messageText = "";
 
 	while (running) {
@@ -166,10 +170,20 @@ int sdl_view_init(Controller *ctrl) {
 			nk_layout_row_static(ctx, 30, 100, 8);
 			if (!ctrl->model->yukon->play_phase) {
 				if (nk_button_label(ctx, "Load")) {
-					messageText = LoadDeckFromFile(ctrl, parseCommand(LD_input_buffer));
+					nfdchar_t *path;
+					nfdfilteritem_t filter[] = {{"Card Decks", "txt"}};
+					if (NFD_OpenDialog(&path, filter, 1, NULL) == NFD_OKAY) {
+						messageText = LoadDeckFromFile(ctrl, path);
+						NFD_FreePath(path);
+					}
 				}
 				if (nk_button_label(ctx, "Save")) {
-					messageText = SaveDeckToFile(ctrl, parseCommand(SD_input_buffer));
+					nfdchar_t *path;
+					nfdfilteritem_t filter[] = {{"Card Decks", "txt"}};
+					if (NFD_SaveDialog(&path, filter, 1, NULL, NULL) == NFD_OKAY) {
+						messageText = SaveDeckToFile(ctrl, path);
+						NFD_FreePath(path);
+					}
 				}
 				if (nk_button_label(ctx, "Interleave Shuffle")) {
 					messageText = ShuffleInterleaving(ctrl, parseCommand(SI_input_buffer));
@@ -196,8 +210,6 @@ int sdl_view_init(Controller *ctrl) {
 			// Add input boxes for command buttons
 			nk_layout_row_static(ctx, 30, 100, 3);
 			if (!ctrl->model->yukon->play_phase) {
-				nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, LD_input_buffer, 256, nk_filter_default);
-				nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SD_input_buffer, 256, nk_filter_default);
 				nk_edit_string_zero_terminated(ctx, NK_EDIT_FIELD, SI_input_buffer, 256, nk_filter_default);
 			}
 
@@ -228,6 +240,7 @@ int sdl_view_init(Controller *ctrl) {
 
 	cleanup:
 	nk_sdl_shutdown();
+	NFD_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(win);
 	SDL_Quit();
