@@ -1,0 +1,26 @@
+@startuml MVC Concept
+
+class Model {
+
+}
+class Controller {
+
+}
+
+class GUI_View {
+    
+}
+class CLI_View {
+
+}
+
+Model *-- Controller : Updates Model
+Controller *-- GUI_View : Notifies Change
+Controller *-- CLI_View : Notifies Change
+
+Model --> GUI_View : Provides Data
+Model --> CLI_View : Provides Data
+
+
+
+@enduml

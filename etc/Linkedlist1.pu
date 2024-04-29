@@ -1,0 +1,40 @@
+@startuml
+
+
+struct Card {
+	char value;
+	CardSuit suit;
+}
+
+enum CardSuit {
+	CLUBS = 'C',
+	DIAMONDS = 'D',
+	HEARTS = 'H',
+	SPADES = 'S'
+}
+
+struct ll_node_card {
+	Card card;
+	bool hidden;
+	struct ll_node_card *next;
+}
+
+struct YukonStructure {
+	ll_node_card *columnFront[NUM_COLUMNS];
+	ll_node_card *foundationPile[NUM_FOUNDATIONS];
+}
+
+struct Model {
+	ll_node_card *deck;
+	YukonStructure *yukon;
+}
+
+Card --> CardSuit : Uses enum syntax
+Model --> YukonStructure : Points to gameplay structures
+ll_node_card --> Card : Uses card struct to describe playing card
+Model --> ll_node_card : Uses linked list of cards to implement deck
+YukonStructure --> ll_node_card : Uses linked list of cards to implement play phase card structure
+
+
+
+@enduml
