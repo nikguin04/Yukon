@@ -204,7 +204,7 @@ int sdl_view_init(Controller *ctrl) {
 			}
 
 			if (nk_button_label(ctx, "Quit And Exit")) {
-				messageText = QuitAndExit(ctrl, NULL);
+				goto cleanup;
 			}
 
 			// Add input boxes for command buttons
