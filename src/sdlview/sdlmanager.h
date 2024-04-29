@@ -13,7 +13,6 @@ typedef struct GUI_Struct_struct {
 	TTF_Font *font;
 	char *statusmsg;
 	char *fpstext;
-	SDL_Texture *temptexture;
 } SDLManager;
 
 typedef const void (*EventTriggerFunction)(SDLManager *, SDL_Event *);
